@@ -1,4 +1,0 @@
-variloid
-========
-
-project varicela
