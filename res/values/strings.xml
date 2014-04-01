@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Variloid</string>
+    <string name="subtitulo_loading">Aplicativo android para controle de casos de Varicela</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="advertencia_conexao_off">Dispositivo não conectado à Internet. Verifique suas conexões.</string>
+    <string name="advertencia_conexao_lenta">A conexão à internet está muito lenta. Verifique suas conexões.</string>
+    <string name="nid">NID:</string>
+    <string name="nenhum_valor_retornado">Nenhum valor retornado.</string>
+    <string name="nenhum_item_pendente">Nenhuma entrevista pendente.</string>
+    <string name="notificacao_login">Insira um Login!</string>
+    <string name="notificacao_add_controle">Tem certeza que deseja adicionar um novo controle?</string>
+    <string name="notificacao_remove_controle">Tem certeza que deseja remover o</string>
+    <string name="notificacao_senha">Insira uma Senha!</string>
+    <string name="notificacao_login_invalido">Login Inválido!</string>
+    <string name="notificacao_senha_invalida">Senha Inválida!</string>
+    <string name="notificacao_limpar_memoria">Para listar esta entrevista pendente nenhuma entrevista deve estar em andamento. Tem certeza que deseja continuar?</string>
+    <string name="btn_ok">OK</string>
+    <string name="edt_login">Login</string>
+    <string name="edt_senha">Senha</string>
+    <string name="btn_logar">Iniciar</string>
+    <string name="btn_reloader">Tente Novamente</string>
+    <string name="edt_id_auxiliar">ID do auxiliar</string>
+    <string name="edt_id_auxiliar_insira">Escolhe o nome do Auxiliar.</string>
+    <string name="btn_adicionar_controle">Adicionar novo controle</string>
+    <string name="btn_remover_controle">Remover este controle</string>
+
+    <!-- Formularios -->
+    <string name="formulario_alerta">Alerta</string>
+    <string name="formulario_imagem_carregada">Uma imagem já foi carregada, deseja substitui-la por outra imagem?</string>
+    <string name="formulario_campos_nao_preenchidos">Número de campos não preenchidos:</string>
+    <string name="formulario_deseja_continuar">Deseja Continuar?</string>
+    <string name="formulario_um">Formulário 1</string>
+    <string name="formulario_dois">Somente para casos de Varicela</string>
+    <string name="formulario_tres">Controle</string>
+    <string name="formulario_quatro">Somente para Escolares</string>
+    <string name="lista_de_pendentes">Entrevistas não finalizadas</string>
+    <string name="finalizar_caso_controle">Finalizar</string>
+    <string name="caso_controle_pendente">Enviar Como Pendente</string>
+    <string name="tirar_foto_cartao">Tirar foto do cartão</string>
+    <string name="tirar_foto_lesao">Tirar foto da Lesão Coletada</string>
+
+    <!-- Formulario 1 -->
+    <string name="faixa_etaria_titulo">Escolhe a Faixa Etária</string>
+    <string name="faixa_etaria1">12 a 23 meses</string>
+    <string name="faixa_etaria1_incompleta">Caso e Controle não finalizado</string>
+    <string name="faixa_etaria2">6 a 7 anos</string>
+    <string name="faixa_etaria2_incompleta">Escolares não finalizado</string>
+    <string name="faixa_etaria_btn">Escolhe uma Faixa Etária</string>
+
+</resources>

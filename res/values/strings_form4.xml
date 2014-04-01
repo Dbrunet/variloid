@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Formulário 4 -->
+    <string name="formulario4_nome">Nome da Criança</string>
+    <string name="formulario4_sexo">Sexo da Criança</string>
+    <string name="formulario4_data">Data de nascimento</string>
+    <string name="formulario4_escola">Escola</string>
+
+    <string name="formulario4_local">Escola</string>
+    <string name="formulario4_tcle">O TCLE foi assinado?</string>
+    <string name="formulario4_residencia">Residência</string>
+    <string name="formulario4_tipo_logradouro">Tipo de Logradouro</string>
+    <string name="formulario4_nome_logradouro">Nome do logradouro</string>
+    <string name="formulario4_qudra">Quadra</string>
+    <string name="formulario4_lote">Lote</string>
+    <string name="formulario4_numero">Número</string>
+    <string name="formulario4_complemento">Complemento</string>
+    <string name="formulario4_bairro">Bairro</string>
+    <string name="formulario4_nome_mae">Nome da Mãe</string>
+    <string name="formulario4_idade_mae">Idade da mãe (anos)</string>
+    <string name="formulario4_nome_pai">Nome do Pai</string>
+    <string name="formulario4_tel_fixo">Telefone fixo</string>
+    <string name="formulario4_tel_celular1">Celular 1</string>
+    <string name="formulario4_operadora1">Operadora do celular 1</string>
+    <string name="formulario4_tel_celular2">Celular 2</string>
+    <string name="formulario4_operadora2">Operadora do celular 2</string>
+    <string name="formulario4_cobertura_psf">A criança é cadastrada no PSF?</string>
+    <string name="formulario4_peso_nascer">Peso ao nascer em gramas</string>
+    <string name="formulario4_idade_gestacional">Idade Gestacional</string>
+    <string name="formulario4_raca">Raça</string>
+    <string name="formulario4_vac_pcv">A criança recebeu alguma vacina contra pneumonia?</string>
+    <string name="formulario4_motivo_nao_vacinacao">Quais são a(s) razões da não vacinação?</string>
+    <string name="formulario4_data_inicio_varicela">Data do início da catapora</string>
+
+    <!-- Título -->
+    <string name="formulario4_titulo_vacina_contra_pneumonia">VACINA CONTRA PNEUMONIA</string>
+    <string name="formulario4_n_doses_pcv">Número de doses recebidas</string>
+    <string name="formulario4_vac_pcv_dt_dose1">Data da 1a dose da vacina</string>
+    <string name="formulario4_vac_pcv_qual_dose1">Qual vacina foi utilizada na 1a dose?</string>
+    <string name="formulario4_vac_pcv_dt_dose2">Data da 2a dose</string>
+    <string name="formulario4_vac_pcv_qual_dose2">Qual vacina foi utilizada na 2a dose?</string>
+    <string name="formulario4_vac_pcv_dt_dose3">Data da 3a dose</string>
+    <string name="formulario4_vac_pcv_qual_dose3">Qual vacina foi utilizada na 3a dose?</string>
+    <string name="formulario4_vac_pcv_dt_dose4">Data da 4a dose</string>
+    <string name="formulario4_vac_pcv_qual_dose4">Qual vacina foi utilizada na 4a dose?</string>
+
+    <!-- Título -->
+    <string name="formulario4_titulo_vacina_contra_hib">VACINA CONTRA Hib</string>
+    <string name="formulario4_n_doses_hib">Número de doses recebidas</string>
+    <string name="formulario4_vac_hib_dt_dose1">Data da 1a dose da vacina</string>
+    <string name="formulario4_vac_hib_dt_dose2">Data da 2a dose da vacina</string>
+    <string name="formulario4_vac_hib_dt_dose3">Data da 3a dose da vacina</string>
+    
+    <!-- Título -->
+    <string name="formulario4_titulo_historia_pregressa_saude">História Pregressa de Saúde</string>
+    <string name="formulario4_freq_creche1">Alguém da família frequenta/frequentou creche nas últimas 3 semanas?</string>
+    <string name="formulario4_freq_creche2">Quem da família frequenta/frequentou creche?</string>
+    <string name="formulario4_freq_serv_saude1">Alguém da família frequenta/frequentou um serviço de saúde nas últimas 3 semanas?</string>
+    <string name="formulario4_freq_serv_saude2">Quem da família frequenta/frequentou serviço de saúde?</string>
+    
+    <!-- Título -->
+    <string name="formulario4_titulo_antecedentes_patologicos">Antecedentes Patológicos</string>
+    <string name="formulario4_otite6">Quantas vezes a criança teve infecção no ouvido (otite) nos últimos 6 meses?</string>
+    <string name="formulario4_otite12">Quantas vezes a criança teve infecção no ouvido (otite) nos últimos 12 meses?</string>
+    <string name="formulario4_hospitalizacao">A criança esteve internada nos últimas 3 meses?</string>
+    <string name="formulario4_pnm6">Quantas vezes a criança teve pneumonia nos últimos 6 meses?</string>
+    <string name="formulario4_pnm12">Quantas vezes a criança teve pneumonia nos últimos 12 meses?</string>
+    <string name="formulario4_hospitalizacao_pnm6">A criança esteve internada por pneumonia nos últimos 6 meses?</string>
+    <string name="formulario4_hospitalizacao_pnm12">A criança esteve internada por pneumonia nos últimos 12 meses?</string>
+    
+    <string name="formulario4_teve_chiado_no_peito_no_passado">Alguma vez, no passado, a criança teve sibilos (chiado no peito)?</string>
+    <string name="formulario4_qtd_crises_nos_ultimos_doze_meses">Quantas crises de sibilo (chiado no peito) a criança teve nos últimos 12 meses?</string>
+    <string name="formulario4_frequencia_de_sono_prejudicado_por_chiado_no_peito">Nos últimos 12 meses, com que frequência a criança teve o sono prejudicado por chiado no peito?</string>
+    <string name="formulario4_chiado_impediu_dizer_palavras">Nos últimos 12 meses, o chiado no peito foi tão forte a ponto de impedir que conseguisse dizer palavras entre cada respiração?</string>
+    <string name="formulario4_teve_asma">Alguma vez a criança teve asma?</string>
+    <string name="formulario4_chiado_apos_exercicios">Nos últimos 12 meses, a criança teve chiado no peito após exercícios físicos?</string>
+    <string name="formulario4_tosse_sem_estar_gripado">Nos últimos 12 meses, a criança teve tosse seca à noite, sem estar gripado ou com infecção respitatória?</string>
+    <string name="formulario4_teve_chiado_nos_ultimos_doze_meses">Nos útimos 12 meses seu filho(a) teve chiado no peito?</string>
+    
+    <string name="formulario4_esc_mae">Escolaridade da mãe (assinale escolaridade da mãe substituta se a criança não residir com a mãe)</string>
+    <string name="formulario4_nc_cas_casa5">Número de crianças (menores de 5 anos) no domicílio (incluindo a criança recrutada)</string>
+    <string name="formulario4_nc_cas_casa10">Número de crianças (menores de 10 anos) no domicílio (incluindo a criança recrutada)</string>
+    <string name="formulario4_qtd_pessoas_casa">Quantas pessoas existem na casa (incluindo a criança recrutada)?</string>
+    <string name="formulario4_qtd_pessoas_quarto">Quantas pessoas dormem no mesmo cômodo que a criança?</string>
+
+    <!-- Título -->
+    <string name="formulario4_doenca_titulo_falciforme">HISTÓRIA PREGRESSA DE SAÚDE</string>
+    <string name="formulario4_doenca_falciforme">Doença falciforme</string>
+    <string name="formulario4_prematuridade">Prematuridade</string>
+    <string name="formulario4_infec_hiv">Infecção por HIV e/ou AIDS</string>
+    <string name="formulario4_imuno_deficiencia">Imunodeficiência</string>
+    <string name="formulario4_asma">Doença reativa das vias aéreas (asma)</string>
+    <string name="formulario4_corticoide">Uso de corticóide sistêmico</string>
+    <string name="formulario4_cancer">Doença neoplásica crônica (câncer)</string>
+    <string name="formulario4_doenca_pulmonar_cronica">Doença pulmonar crônica</string>
+    <string name="formulario4_doenca_renal_cronica">Doença renal crônica</string>
+    <string name="formulario4_doenca_cardiaca">Doença cardíaca</string>
+    <string name="formulario4_doenca_hematologica">Doença hematológica crônica</string>
+    <string name="formulario4_doenca_hepatica">Doença hepática crônica</string>
+    <string name="formulario4_asplenia">Asplenia congênita ou funcional</string>
+    <string name="formulario4_diabetes">Diabetes</string>
+
+    <!-- Atividade Física -->
+    <string name="formulario4_titulo_atividade_fisica">ATIVIDADE FÍSICA</string>
+    <string name="formulario4_quadro_um_a_crianca_praticou">(Quadro 1) Marque se na última semana, a criança praticou:</string>
+    <string name="formulario4_seu_filho_faz_pelo_menos_sessenta_minutos">Seu filho faz pelo menos 60 minutos (1 hora) dessas atividades físicas TODOS OS DIAS, misturando atividades do quadro 1 acima?</string>
+    <string name="formulario4_quadro_dois_a_crianca_praticou">(Quadro 2) Marque se na última semana, a criança praticou:</string>
+    <string name="formulario4_seu_filho_faz_atividade_fisica_pelos_menos_tres_vezes">Seu filho faz essas atividades físicas pelo menos 3 vezes por semana, misturando atividades do quadro 2 acima?</string>
+
+    <!-- SWABs -->
+
+    <string name="formulario4_titulo_swab">SWAB</string>
+    <string name="formulario4_uso_atb">A criança fez uso de antibiótico nos últimos 7 dias?</string>
+    <string name="formulario4_qual_atb">Se sim, qual antibiótico?</string>
+    <string name="formulario4_titulo_atividade_fisica">ATIVIDADE FÍSICA</string>
+    <string name="formulario4_n_swabs">Número de swabs coletados</string>
+    <string name="formulario4_data_swab">Data de coleta do swab</string>
+    <string name="formulario4_id_swabs_coletado">ID do swab coletado</string>
+    <string name="formulario4_obs_caso">Observações relacionadas ao caso</string>
+    <!-- Fim do formulário 4 -->
+
+
+    <!-- Opções de resposta -->
+    <string name="formulario4_operadoras_tim">TIM</string>
+    <string name="formulario4_operadoras_claro">CLARO</string>
+    <string name="formulario4_operadoras_vivo">VIVO</string>
+    <string name="formulario4_operadoras_oi">OI</string>
+    <string name="formulario4_opcao_sim">Sim</string>
+    <string name="formulario4_opcao_nao">Não</string>
+    <string name="formulario4_opcao_nao_sabe">não sabe</string>
+    <string name="formulario4_opcao_masculino">Masculino</string>
+    <string name="formulario4_opcao_feminino">Feminino</string>
+    <string name="formulario4_opcao_ignorar">Ignorar</string>
+    <string name="formulario4_opcao_ignorado">Ignorado</string>
+    <string name="formulario4_opcao_cmei">CMEI/CEI/escola. Qual?</string>
+    <string name="formulario4_opcao_comunidade">comunidade</string>
+    <string name="formulario4_opcao_domicilio">domicílio</string>
+    <string name="formulario4_opcao_hospital">hospital</string>
+    <string name="formulario4_opcao_cais_ubs">CAIS/UBS</string>
+    <string name="formulario4_opcao_nao_se_aplica">não se aplica</string>
+    <string name="formulario4_opcao_outro">outro. Qual?</string>
+    <string name="formulario4_opcao_outros">outros. Qual?</string>
+    <string name="formulario4_opcao_outro_check">outros: </string>
+    <string name="formulario4_opcao_urbana">urbana</string>
+    <string name="formulario4_opcao_nao_urbana">não urbana</string>
+    <string name="formulario4_opcao_avenida">Avenida</string>
+    <string name="formulario4_opcao_rua">Rua</string>
+    <string name="formulario4_opcao_alameda">Alameda</string>
+    <string name="formulario4_opcao_rodovia">Rodovia</string>
+    <string name="formulario4_opcao_travessa">Travessa</string>
+    <string name="formulario4_opcao_generalizado">generalizado</string>
+    <string name="formulario4_opcao_focal">focal</string>
+    <string name="formulario4_opcao_face_cabeca">face/cabeça</string>
+    <string name="formulario4_opcao_torax">tórax</string>
+    <string name="formulario4_opcao_bracos">braços</string>
+    <string name="formulario4_opcao_pernas">pernas</string>
+    <string name="formulario4_opcao_cavidade_oral">cavidade oral</string>
+    <string name="formulario4_opcao_menor_cinquenta"> &lt; 50 </string>
+    <string name="formulario4_opcao_cinquenta_a_noventa_e_nove">50-99</string>
+    <string name="formulario4_opcao_cem_a_duzentos_e_quarenta_e_nove">100-249</string>
+    <string name="formulario4_opcao_duzentos_e_cinquenta_a_quatrocentos_e_noventa_e_nove">250-499</string>
+    <string name="formulario4_opcao_maior_que_quinhentos"> > 500 </string>
+    <string name="formulario4_opcao_maculo_papular">maculo-papular</string>
+    <string name="formulario4_opcao_vesicular">vesicular</string>
+    <string name="formulario4_opcao_crosta">crosta</string>
+    <string name="formulario4_opcao_medico">médico</string>
+    <string name="formulario4_opcao_outro_profissional_de_saude">outro profissional de saúde</string>
+    <string name="formulario4_opcao_professora_monitora">professora/monitora</string>
+    <string name="formulario4_opcao_pais_parentes">pais/parentes</string>
+    <string name="formulario4_opcao_amigos_outros">amigos/outros</string>
+    <string name="formulario4_opcao_branca">branca</string>
+    <string name="formulario4_opcao_parda">parda</string>
+    <string name="formulario4_opcao_negra">negra</string>
+    <string name="formulario4_opcao_asiatica">asiática</string>
+    <string name="formulario4_opcao_indigena">indígena</string>
+    <string name="formulario4_opcao_nao_sabe_e_nao_tem_cartao">não sabe e não tem o cartão</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao1">não sabia que existia a vacina</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao2">não sabia que a vacina era gratuita</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao3">a criança já teve pneumonia</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao4">a criança tem contra-indicação para vacinar</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao5">não sabia que a criança estava na idade para vacinar</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao6">não acredita que a vacina seja efetiva</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao7">faltou vacina na unidade de saúde</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao8">funcionário não estava na sala de vacina</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao9">não acredita que a vacina seja necessária</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao10">não recebi orientação para tomar a vacina</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao11">reações da vacina (efeitos adversos/colaterais)</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao12">esqueceu de levar a criança para vacinar</string>
+    <string name="formulario4_opcao_motivo_nao_vacinacao13">sem motivo</string>
+    <string name="formulario4_opcao_vacina_10_v">10V</string>
+    <string name="formulario4_opcao_vacina_13_v">13V</string>
+    <string name="formulario4_opcao_vacina_7_v">7V</string>
+    <string name="formulario4_opcao_crianca_com_catapora">a criança com catapora</string>
+    <string name="formulario4_opcao_crianca_com_pneumonia">a criança com pneumonia</string>
+    <string name="formulario4_opcao_pais_outra_crianca_menos_que_dez_anos">outra criança ( &lt; 10a )</string>
+    <string name="formulario4_opcao_familia_trabalha_creche">familiar que trabalha na creche</string>
+    <string name="formulario4_opcao_criancas_ate_dez_anos">outra criança até 10 anos</string>
+    <string name="formulario4_opcao_outro_adulto">outro adulto</string>
+    <string name="formulario4_opcao_crianca_recrutada">a criança recrutada</string>
+    <string name="formulario4_opcao_familia_trabalha_em_instituicao_de_saude">familiar que trabalha em instituição de saúde</string>
+    <string name="formulario4_opcao_nao_alfabetizada">não alfabetizada</string>
+    <string name="formulario4_opcao_ensino_fundamental">fundamental</string>
+    <string name="formulario4_opcao_ensino_medio">médio</string>
+    <string name="formulario4_opcao_ensino_superior">superior</string>
+    <string name="formulario4_opcao_nunca_acordou_por_chiado">nunca acordou por chiado</string>
+    <string name="formulario4_opcao_menos_de_uma_noite_por_semana">menos de uma noite por semana</string>
+    <string name="formulario4_opcao_uma_ou_mais_noites_por_semana">uma ou mais noites por semana</string>
+    <string name="formulario4_opcao_sim_mais_de_doze_meses">sim, há mais de 12 meses</string>
+    <string name="formulario4_opcao_sim_menos_de_doze_meses">sim, há menos de 12 meses</string>
+    <string name="formulario4_opcao_nenhuma">nenhuma</string>
+    <string name="formulario4_opcao_uma_a_tres">1 a 3</string>
+    <string name="formulario4_opcao_quatro_ou_mais">4 ou mais</string>
+    <string name="formulario4_opcao_caminhada">caminhada</string>
+    <string name="formulario4_opcao_corrida">corrida</string>
+    <string name="formulario4_opcao_parquinho">brincadeiras no parquinho</string>
+    <string name="formulario4_opcao_pula_corda">pular corda</string>
+    <string name="formulario4_opcao_andar_bicicleta">andar de bicicleta</string>
+    <string name="formulario4_opcao_ginastica">ginástica</string>
+    <string name="formulario4_opcao_andar_com_cachorro">andar com o cachorro</string>
+    <string name="formulario4_opcao_correr_bicicleta">correu com bicicleta</string>
+    <string name="formulario4_opcao_dancar">dançar</string>
+    <string name="formulario4_opcao_dancar_com_vigor">dançar vigorosamente</string>
+    <string name="formulario4_opcao_skate_patins">andou de skate ou patins</string>
+    <string name="formulario4_opcao_ginastica_futebol_basquetebol">ginástica, futebol, basquetebol, volei, peteca ou artes marciais</string>
+    <string name="formulario4_opcao_futebol_basquetebol">futebol, basquetebol, volei, peteca ou artes marciais</string>
+    <string name="formulario4_opcao_outra_atividade_aerobica1">praticou outra atividade aeróbica de intensidade moderada (exercício duro o suficiente para aumentar a frequência cardíaca e suar. Uma maneira de saber se a intensidade é moderada é verificar se a criança ainda pode falar, mas não consegue cantar). Qual?</string>
+    <string name="formulario4_opcao_caminhou_com_mochila">caminhou com mochila pesada</string>
+    <string name="formulario4_opcao_outra_atividade_aerobica2">praticou outra atividade aeróbica de intensidade vigorosa (exercício que produz respiração forte e rápida, e aumenta a freqüência cardíaca. A criança será capaz de dizer algumas palavras, mas precisa parar para respirar). Qual?</string>
+    <string name="formulario4_opcao_ginastica">ginástica</string>
+    <string name="formulario4_opcao_pular_e_escalar">pular e escalar, combinados com brinquedos de parquinho</string>
+    <string name="formulario4_opcao_flexoes_abdominais">flexões / abdominais</string>
+    <string name="formulario4_opcao_outro_esporte_na_agua">outro esporte na água (não natação)</string>
+    <string name="formulario4_opcao_cabo_de_guerra">cabo-de-guerra</string>
+    <string name="formulario4_opcao_correr_com_bicicleta">correr com bicicleta</string>
+    <string name="formulario4_opcao_outra_atividade_de_fortalecimento_muscular">outras atividades de fortalecimento muscular (necessita levantar seu próprio peso corporal ou a trabalhar contra uma resistência). Qual?</string>
+    <string name="formulario4_opcao_amarelinha">amarelinha</string>
+    <string name="formulario4_opcao_correr">correr</string>
+    <string name="formulario4_opcao_outra_atividade_de_fortalecimento_ossos">outra atividade de fortalecimento de ossos (atividades com impacto ou força de tensão sobre os ossos). Qual?</string>
+
+</resources>

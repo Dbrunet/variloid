@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_novo_controle"
+        android:icon="@drawable/ic_action_content_new"
+        android:showAsAction="ifRoom|collapseActionView"
+        android:title="@string/btn_adicionar_controle"
+        android:visible="false">
+    </item>
+    <item
+        android:id="@+id/menu_remover_controle"
+        android:icon="@drawable/ic_action_content_discard"
+        android:showAsAction="ifRoom|collapseActionView"
+        android:title="@string/btn_remover_controle"
+        android:visible="false">
+    </item>
+
+</menu>
