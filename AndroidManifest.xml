@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.ufg.iptsp.app.variloid"
+    android:versionCode="8"
+    android:versionName="8.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.PROVIDERS_CHANGED_ACTION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/pocoyo_varicela2"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
+        <activity
+            android:name=".LoadingActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NIDActivity"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" />
+        <activity
+            android:name=".VariloidActivity"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" />
+        <activity
+            android:name=".ListaPendentes"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" />
+        <activity
+            android:name=".Formulario2Activity"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" />
+        <activity
+            android:name=".Formulario3Activity"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" />
+        <activity
+            android:name=".Formulario4Activity"
+            android:theme="@style/Theme.Sherlock.Light.DarkActionBar" />
+    </application>
+
+</manifest>
