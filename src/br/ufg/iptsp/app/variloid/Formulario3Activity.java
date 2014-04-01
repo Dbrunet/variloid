@@ -3,7 +3,6 @@ package br.ufg.iptsp.app.variloid;
 import java.util.ArrayList;
 
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -88,9 +87,6 @@ public class Formulario3Activity extends SherlockFragmentActivity {
 		public void addItem(Fragment fragment) {
 			//adicionar um novo fragmento no pager
 			mFragments.add(fragment);
-			//adicionar um novo formulario na lista
-			Data.listaFormularioTres.add(new FormularioTres());
-			//adiciona um novo mapa no fragment criados
 		}
 		
 		public void removeItem(int position){
@@ -111,11 +107,20 @@ public class Formulario3Activity extends SherlockFragmentActivity {
 	public void addItemPager(int position) {
 		pagerAdapter.addItem(new Formulario3Fragment());
 		
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		Data.formularioTres = new FormularioTres();
+		Data.mapFormularioTres = new LinkedMultiValueMap<String, Object>();
+		
 		for (String strings : VariloidForm3.idCampos) {
-			map.add(Data.FORM3_KEY.concat("[").concat(String.valueOf(position)).concat("]").concat(strings), "");
+			Data.mapFormularioTres.add(Data.FORM3_KEY.concat("[").concat(String.valueOf(position)).concat("]").concat(strings), "");
+			
+			if (Data.formularioTres.getListInativar().size() != VariloidForm3.idCampos.length)
+				Data.formularioTres.getListInativar().add(false);
+			if (Data.formularioTres.getListSucesso().size() != VariloidForm3.idCampos.length)
+				Data.formularioTres.getListSucesso().add(false);
 		}
-		Data.listaMapFormularioTres.add(map);
+		
+		Data.listaFormularioTres.add(Data.formularioTres);
+		Data.listaMapFormularioTres.add(Data.mapFormularioTres);
 		
 		pagerAdapter.notifyDataSetChanged();
 		Toast.makeText(getApplicationContext(), "Um ".concat(String.valueOf(position + 1).concat("° ")

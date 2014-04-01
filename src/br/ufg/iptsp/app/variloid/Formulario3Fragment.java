@@ -1,13 +1,11 @@
 package br.ufg.iptsp.app.variloid;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -64,129 +62,51 @@ public class Formulario3Fragment extends SherlockFragment implements
 	private Uri imageUri;
 	private Button buttonTirarFotoCartao;
 
-	private FormularioTres formularioTres;
-	private MultiValueMap<String, Object> map;
 	private double latitude;
 	private double longitude;
 	private LocationManager locationManager;
 	private List<Integer> list;
 	private int paginaFragment;
 	
-	private void infoObjeto(Object object) throws IllegalArgumentException,
-			IllegalAccessException {
-		Class<?> classe = object.getClass();
-
-		for (int i = 0; i < VariloidForm3.idCampos.length; i++) {
-
-			for (Field f : classe.getDeclaredFields()) {
-				f.setAccessible(true);
-
-				if (VariloidForm3.idCampos[i].equals(f.getName())) {
-					switch (i) {
-					case 14:
-						formularioTres.getListInativar().add(false);
-						formularioTres.getListSucesso().add(false);
-						map.add(Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(paginaFragment))
-								.concat("]").concat(VariloidForm3.idCampos[i]),
-								VariloidForm3.idCampos[i]);
-						break;
-					case 28:
-						formularioTres.getListInativar().add(false);
-						formularioTres.getListSucesso().add(false);
-						map.add(Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(paginaFragment))
-								.concat("]").concat(VariloidForm3.idCampos[i]),
-								VariloidForm3.idCampos[i]);
-						break;
-					case 34:
-						formularioTres.getListInativar().add(false);
-						formularioTres.getListSucesso().add(false);
-						map.add(Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(paginaFragment))
-								.concat("]").concat(VariloidForm3.idCampos[i]),
-								VariloidForm3.idCampos[i]);
-						break;
-					case 50:
-						formularioTres.getListInativar().add(false);
-						formularioTres.getListSucesso().add(false);
-						map.add(Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(paginaFragment))
-								.concat("]").concat(VariloidForm3.idCampos[i]),
-								VariloidForm3.idCampos[i]);
-						break;
-					default:
-						if (f.get(object) != null) {
-							formularioTres.getListInativar().add(false);
-							formularioTres.getListSucesso().add(true);
-							map.add(Data.FORM3_KEY.concat("[")
-									.concat(String.valueOf(paginaFragment))
-									.concat("]")
-									.concat(VariloidForm3.idCampos[i]),
-									f.get(object));
-						} else {
-							formularioTres.getListInativar().add(false);
-							formularioTres.getListSucesso().add(false);
-							map.add(Data.FORM3_KEY.concat("[")
-									.concat(String.valueOf(paginaFragment))
-									.concat("]")
-									.concat(VariloidForm3.idCampos[i]), "");
-						}
-						break;
-
-					}
-				}
-			}
-		}
-		Data.listaMapFormularioTres.add(map);
-	}
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setHasOptionsMenu(true);
 		Bundle bundle = getArguments();
 		if (bundle != null) {
 			paginaFragment = bundle.getInt("paginaForm3");
 		}
 
-		if(Data.listaFormularioTres.isEmpty()){
-			formularioTres = new FormularioTres();
-			Data.listaFormularioTres.add(formularioTres);
-
-			map = new LinkedMultiValueMap<String, Object>();
-			for (String strings : VariloidForm3.idCampos) {
-				map.add(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(strings), "");
-				
-				if (formularioTres.getListInativar().size() != VariloidForm3.campos.length)
-					formularioTres.getListInativar().add(false);
-				if (formularioTres.getListSucesso().size() != VariloidForm3.campos.length)
-					formularioTres.getListSucesso().add(false);
-			}
+		Data.mapFormularioTres = new LinkedMultiValueMap<String, Object>();
+		
+		if (Data.listaFormularioTres.isEmpty()) {
 			
-			Data.listaMapFormularioTres.add(map);
+			Data.formularioTres = new FormularioTres();
+			Data.listaFormularioTres.add(Data.formularioTres);
+
+			for (String strings : VariloidForm3.idCampos) {
+				Data.mapFormularioTres.add(Data.FORM3_KEY.concat("[")
+						.concat(String.valueOf(paginaFragment)).concat("]")
+						.concat(strings), "");
+
+				if (Data.formularioTres.getListInativar().size() != VariloidForm3.idCampos.length)
+					Data.formularioTres.getListInativar().add(false);
+				if (Data.formularioTres.getListSucesso().size() != VariloidForm3.idCampos.length)
+					Data.formularioTres.getListSucesso().add(false);
+			}
+
+			Data.listaMapFormularioTres.add(Data.mapFormularioTres);
 			
 		}else{
-			formularioTres = Data.listaFormularioTres.get(paginaFragment);
-			map = new LinkedMultiValueMap<String, Object>();
-			
-			try {
-				infoObjeto(formularioTres);
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
 		}
-		
+
 		list = new ArrayList<Integer>();
 		for (Integer integer : VariloidForm3.campos) {
 			list.add(integer);
 		}
-		
+
 		ServicoConexao.verificaTipoConexao(getSherlockActivity());
 		layoutInflater = getSherlockActivity().getLayoutInflater();
 	}
@@ -206,7 +126,7 @@ public class Formulario3Fragment extends SherlockFragment implements
 				.findViewById(R.id.button_tirar_foto_cartao);
 		buttonTirarFotoCartao.setVisibility(View.VISIBLE);
 
-		if (map.get(Data.FORM3_KEY.concat("[")
+		if (Data.mapFormularioTres.get(Data.FORM3_KEY.concat("[")
 						.concat(String.valueOf(paginaFragment)).concat("]")
 						.concat(Variloid.FORM_FOTO_CARTAO_VACINA))==null) {
 			buttonTirarFotoCartao
@@ -5454,8 +5374,8 @@ public class Formulario3Fragment extends SherlockFragment implements
 
 	private void setPreferences(int posicao, String imput, boolean inativar,
 			boolean sucesso) {
-		formularioTres.setInativar(posicao, inativar);
-		formularioTres.setSucesso(posicao, sucesso);
+		Data.formularioTres.setInativar(posicao, inativar);
+		Data.formularioTres.setSucesso(posicao, sucesso);
 		setAtributos(posicao, imput);
 		myAdapter.notifyDataSetInvalidated();
 	}
@@ -5464,264 +5384,264 @@ public class Formulario3Fragment extends SherlockFragment implements
 
 		switch (posicao) {
 		case VariloidForm3.NOME:
-			formularioTres.setNomeCrianca(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setNomeCrianca(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.SEXO:
-			formularioTres.setSexo(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setSexo(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.DATA_NASCIMENTO:
-			formularioTres.setDataNascimento(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDataNascimento(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.JA_TEVE_CATAPORA:
-			formularioTres.setCriancaCataporaAnt(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setCriancaCataporaAnt(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.CONTATO_COM_QUEM_JA_TEVE:
-			formularioTres.setContatoPessoaCatapora(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setContatoPessoaCatapora(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.LOCAL_CONTATO:
-			formularioTres.setLocalContato(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setLocalContato(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.RESIDENCIA:
-			formularioTres.setResidencia(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setResidencia(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.TIPO_LOGRADOURO:
-			formularioTres.setTipoLogradouro(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setTipoLogradouro(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.NOME_LOGRADOURO:
-			formularioTres.setNomeLogradouro(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setNomeLogradouro(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.QUADRA:
-			formularioTres.setQuadra(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setQuadra(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.LOTE:
-			formularioTres.setLote(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setLote(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.NUMERO:
-			formularioTres.setNumero(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setNumero(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.COMPLEMENTO:
-			formularioTres.setComplemento(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setComplemento(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.BAIRRO:
-			formularioTres.setBairro(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setBairro(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.TITULO_CRITERIO_INCLUSAO:
 			//
 			break;
 		case VariloidForm3.TCLE:
-			formularioTres.setTcleAssinado(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setTcleAssinado(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.NOME_MAE:
-			formularioTres.setNomeMae(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setNomeMae(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.IDADE_MAE:
-			formularioTres.setIdadeMae(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setIdadeMae(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.NOME_PAI:
-			formularioTres.setNomePai(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setNomePai(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.TELEFONE:
-			formularioTres.setTelefoneFixo(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setTelefoneFixo(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.CELULAR1:
-			formularioTres.setCelular1(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setCelular1(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.OPER_CELULAR1:
-			formularioTres.setOperadoraCelular1(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setOperadoraCelular1(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.CELULAR2:
-			formularioTres.setCelular2(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setCelular2(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.OPER_CELULAR2:
-			formularioTres.setOperadoraCelular2(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setOperadoraCelular2(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.COBERTURA_PSF:
-			formularioTres.setCriancaCadastradaPSF(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setCriancaCadastradaPSF(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.PESONASCER:
-			formularioTres.setPesoNascimentoGramas(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setPesoNascimentoGramas(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.IDADEGESTACIONAL:
-			formularioTres.setIdadeGestacional(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setIdadeGestacional(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.RACA:
-			formularioTres.setRaca(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setRaca(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.TITULO_VACINA_CONTRA_VARICELA:
 			//
 			break;
 		case VariloidForm3.N_DOSES_VARIC:
-			formularioTres.setNumDosesRecebidasContraVaricela(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setNumDosesRecebidasContraVaricela(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.VAC_VARIC_DT_DOSE1:
-			formularioTres.setDataPrimeiraDose(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDataPrimeiraDose(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.VAC_VARIC_QUAL_DOSE1:
-			formularioTres.setQualVacinaUsadaPrimeiraDose(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setQualVacinaUsadaPrimeiraDose(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.VAC_VARIC_DT_DOSE2:
-			formularioTres.setDataSegundaDose(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDataSegundaDose(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.VAC_VARIC_QUAL_DOSE2:
-			formularioTres.setQualVacinaUsadaSegundaDose(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setQualVacinaUsadaSegundaDose(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.TITULO_VACINA_TRIPLICE:
 			//
 			break;
 		case VariloidForm3.VACTRIPLICE:
-			formularioTres.setCriancaRecebeuVacinaTripliceViral(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setCriancaRecebeuVacinaTripliceViral(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.N_DOSES_TRIPLICE:
-			formularioTres.setNumDosesRecebidasContraTripliceViral(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setNumDosesRecebidasContraTripliceViral(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.MMR1:
-			formularioTres.setDataPrimeiraDoseMMR(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDataPrimeiraDoseMMR(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.MMR2:
-			formularioTres.setDataSegundaDoseMMR(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDataSegundaDoseMMR(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.FREQCRECHE1:
-			formularioTres.setAlguemFrequentouCreche(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setAlguemFrequentouCreche(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.FREQCRECHE2:
-			formularioTres.setQuemFamiliaFrequentouCreche(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setQuemFamiliaFrequentouCreche(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.FREQSERVSAUDE1:
-			formularioTres.setAlguemFrequentouServicoSaude(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setAlguemFrequentouServicoSaude(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.FREQSERVSAUDE2:
-			formularioTres.setQuemFamiliaFrequentouServicoSaude(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setQuemFamiliaFrequentouServicoSaude(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.HOSPITALIZACAO:
-			formularioTres.setCriancaInternou(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setCriancaInternou(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.MAE_TRABALHA:
-			formularioTres.setMaeTrabalhaFora(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setMaeTrabalhaFora(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.ES_CMAE:
-			formularioTres.setEscolaridadeMae(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setEscolaridadeMae(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.NCCAS_CASA5:
-			formularioTres.setNumCriancasMenos5anosDomicilio(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setNumCriancasMenos5anosDomicilio(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.NCCAS_CASA10:
-			formularioTres.setNumCriancasMenos10anosDomicilio(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setNumCriancasMenos10anosDomicilio(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.QT_DE_PESSOAS_CASA:
-			formularioTres.setQuantasPessoasCasa(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setQuantasPessoasCasa(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.QTD_EPESSOAS_QTO:
-			formularioTres.setQuantasPessoasDormemMesmoComodoCrianca(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setQuantasPessoasDormemMesmoComodoCrianca(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.TITULO_DOENCAFALCIFORME:
 			//
 			break;
 		case VariloidForm3.DOENCAFALCIFORME:
-			formularioTres.setDoencaFalciforme(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDoencaFalciforme(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.PREMATURIDADE:
-			formularioTres.setPrematuridade(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setPrematuridade(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.INFECHIV:
-			formularioTres.setInfeccaoHIVeAIDS(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setInfeccaoHIVeAIDS(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.IMUNODEFICIENCIA:
-			formularioTres.setImunodeficiencia(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setImunodeficiencia(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.ASMA:
-			formularioTres.setAsma(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setAsma(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.CORTICOIDE:
-			formularioTres.setUsoCorticoideSistemico(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setUsoCorticoideSistemico(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.CANCER:
-			formularioTres.setCancer(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setCancer(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.DOENCAPULMONARCRONICA:
-			formularioTres.setDoencaPulmonarCronica(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDoencaPulmonarCronica(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.DOENCARENALCRONICA:
-			formularioTres.setDoencaRenalCronica(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDoencaRenalCronica(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.DOENCACARDIACA:
-			formularioTres.setDoencaCardiaca(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDoencaCardiaca(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.DOENCAHEMATOLOGICA:
-			formularioTres.setDoencaHematologicaCronica(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDoencaHematologicaCronica(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.DOENCAHEPATICA:
-			formularioTres.setDoencaHepaticaCronica(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDoencaHepaticaCronica(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.ASPLENIA:
-			formularioTres.setAspleniaCongenitaOuFuncional(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setAspleniaCongenitaOuFuncional(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.DIABETES:
-			formularioTres.setDiabetes(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setDiabetes(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		case VariloidForm3.OBS_CASO:
-			formularioTres.setObservacoesRelacionadasCaso(string);
-			map.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
+			Data.formularioTres.setObservacoesRelacionadasCaso(string);
+			Data.mapFormularioTres.set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("]").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
 		default:
 			break;

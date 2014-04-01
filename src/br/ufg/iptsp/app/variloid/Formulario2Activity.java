@@ -2,7 +2,6 @@ package br.ufg.iptsp.app.variloid;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,85 +53,7 @@ public class Formulario2Activity extends SherlockFragmentActivity implements OnI
 	private double latitude;
 	private double longitude;
 	private List<Integer> list;
-	
-	private int infoObjeto(Object object) throws IllegalArgumentException, IllegalAccessException {
-		// percorrendo as variáveis de instancia
-		int flag = 0;
-
-		Class<?> classe = object.getClass();
-
-		for (int i = 0; i < VariloidForm2.idCampos.length; i++) {
-
-			for (Field f : classe.getDeclaredFields()) {
-				f.setAccessible(true);
-				
-				if (VariloidForm2.idCampos[i].equals(f.getName())) {
-
-					switch (i) {
-					case 14:
-						Data.formularioDois.getListInativar().add(false);
-						Data.formularioDois.getListSucesso().add(false);
-						Data.mapFormularioDois.add(Data.FORM2_KEY
-								.concat(VariloidForm2.idCampos[i]),
-								VariloidForm2.idCampos[i]);
-						break;
-					case 27:
-						Data.formularioDois.getListInativar().add(false);
-						Data.formularioDois.getListSucesso().add(false);
-						Data.mapFormularioDois.add(Data.FORM2_KEY
-								.concat(VariloidForm2.idCampos[i]),
-								VariloidForm2.idCampos[i]);
-						break;
-					case 32:
-						Data.formularioDois.getListInativar().add(false);
-						Data.formularioDois.getListSucesso().add(false);
-						Data.mapFormularioDois.add(Data.FORM2_KEY
-								.concat(VariloidForm2.idCampos[i]),
-								VariloidForm2.idCampos[i]);
-						break;
-					case 47:
-						Data.formularioDois.getListInativar().add(false);
-						Data.formularioDois.getListSucesso().add(false);
-						Data.mapFormularioDois.add(Data.FORM2_KEY
-								.concat(VariloidForm2.idCampos[i]),
-								VariloidForm2.idCampos[i]);
-						break;
-					case 53:
-						Data.formularioDois.getListInativar().add(false);
-						Data.formularioDois.getListSucesso().add(false);
-						Data.mapFormularioDois.add(Data.FORM2_KEY
-								.concat(VariloidForm2.idCampos[i]),
-								VariloidForm2.idCampos[i]);
-						break;
-					case 69:
-						Data.formularioDois.getListInativar().add(false);
-						Data.formularioDois.getListSucesso().add(false);
-						Data.mapFormularioDois.add(Data.FORM2_KEY
-								.concat(VariloidForm2.idCampos[i]),
-								VariloidForm2.idCampos[i]);
-						break;
-					default:
-						if (f.get(object)!=null) {
-							Data.formularioDois.getListInativar().add(false);
-							Data.formularioDois.getListSucesso().add(true);
-							Data.mapFormularioDois.add(Data.FORM2_KEY
-									.concat(VariloidForm2.idCampos[i]), f.get(object));
-							flag++;
-						} else {
-							Data.formularioDois.getListInativar().add(false);
-							Data.formularioDois.getListSucesso().add(false);
-							Data.mapFormularioDois.add(Data.FORM2_KEY
-									.concat(VariloidForm2.idCampos[i]), "");
-						}
-						break;
-					}
-
-				}
-			}
-		}
-
-		return flag;
-	}
+	private boolean isPendente;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -145,34 +66,23 @@ public class Formulario2Activity extends SherlockFragmentActivity implements OnI
 		getSupportActionBar().setTitle(getString(R.string.formulario_dois));
 		layoutInflater = getLayoutInflater();
 		
-		int countField=0;
-		try {
-			countField = infoObjeto(Data.formularioDois);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		if (countField == 0) {
-			for (String strings : VariloidForm2.idCampos) {
-				if (Data.mapFormularioDois.size() != VariloidForm2.idCampos.length) {
-					Data.mapFormularioDois.add(Data.FORM2_KEY.concat(strings), "");
-				}
-
-				if (Data.formularioDois.getListInativar().size() != VariloidForm2.idCampos.length)
-					Data.formularioDois.getListInativar().add(false);
-				if (Data.formularioDois.getListSucesso().size() != VariloidForm2.idCampos.length)
-					Data.formularioDois.getListSucesso().add(false);
-			}
-		}
-		
 		list = new ArrayList<Integer>();
 		for (Integer integer : VariloidForm2.campos) {
 			list.add(integer);
 		}
+		
+		for (String strings : VariloidForm2.idCampos) {
+			
+			if (Data.mapFormularioDois.size() != VariloidForm2.idCampos.length) {
+				Data.mapFormularioDois.add(Data.FORM2_KEY.concat(strings), "");
+			}
+
+			if (Data.formularioDois.getListInativar().size() != VariloidForm2.idCampos.length)
+				Data.formularioDois.getListInativar().add(false);
+			if (Data.formularioDois.getListSucesso().size() != VariloidForm2.idCampos.length)
+				Data.formularioDois.getListSucesso().add(false);
+		}
+		
 		
 		View layoutFooter = layoutInflater.inflate(R.layout.button_layout, null);
 		
@@ -243,6 +153,7 @@ public class Formulario2Activity extends SherlockFragmentActivity implements OnI
 							Data.mapService.add(Data.FORM2_KEY.concat("longitude"), String.valueOf(longitude));
 							Data.mapService.add("faixaEtaria", getString(R.string.faixa_etaria1));
 							Intent intent = new Intent(Formulario2Activity.this, Formulario3Activity.class);
+							intent.putExtra("isPendente", isPendente);
 							startActivity(intent);
 							
 							dialog.cancel();
@@ -261,6 +172,7 @@ public class Formulario2Activity extends SherlockFragmentActivity implements OnI
 					Data.mapService.add(Data.FORM2_KEY.concat("longitude"), String.valueOf(longitude));
 					Data.mapService.add("faixaEtaria", getString(R.string.faixa_etaria1));
 					Intent intent = new Intent(Formulario2Activity.this, Formulario3Activity.class);
+					intent.putExtra("isPendente", isPendente);
 					startActivity(intent);
 				}
 			}
