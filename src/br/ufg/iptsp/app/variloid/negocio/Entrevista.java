@@ -13,7 +13,7 @@ public class Entrevista {
 
 	private FormularioDois formularioDois;
 
-	private List<FormularioTres> formularioTres;
+	private List<FormularioTres> formulariosTres;
 
 	private FormularioQuatro formularioQuatro;
 
@@ -77,12 +77,11 @@ public class Entrevista {
 		this.entrevistador = entrevistador;
 	}
 
-	public List<FormularioTres> getFormularioTres() {
-		return formularioTres;
+	public List<FormularioTres> getFormulariosTres() {
+		return formulariosTres;
 	}
 
-	public void setFormularioTres(List<FormularioTres> formularioTres) {
-		this.formularioTres = formularioTres;
+	public void setFormulariosTres(List<FormularioTres> formulariosTres) {
+		this.formulariosTres = formulariosTres;
 	}
-
 }
