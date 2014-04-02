@@ -3,6 +3,9 @@ package br.ufg.iptsp.app.variloid;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -30,7 +33,7 @@ public class ListaPendentes extends SherlockActivity implements
 
 	private ListView listView;
 	private AdapterPendentes adapter;
-
+	MultiValueMap<String, Object> mapFormularioTres;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -133,6 +136,8 @@ public class ListaPendentes extends SherlockActivity implements
 									.concat(VariloidForm2.idCampos[i]), "");
 						}
 						f.setAccessible(false);
+						Data.formularioDois.getListInativar().add(false);
+						Data.formularioDois.getListSucesso().add(false);
 					}
 				}
 
@@ -149,30 +154,30 @@ public class ListaPendentes extends SherlockActivity implements
 
 			switch (i) {
 			case 14:
-				Data.mapFormularioTres.add(
+				mapFormularioTres.add(
 						Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(posicao)).concat("]")
+								.concat(String.valueOf(posicao)).concat("].")
 								.concat(VariloidForm3.idCampos[i]),
 						VariloidForm3.idCampos[i]);
 				break;
 			case 28:
-				Data.mapFormularioTres.add(
+				mapFormularioTres.add(
 						Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(posicao)).concat("]")
+								.concat(String.valueOf(posicao)).concat("].")
 								.concat(VariloidForm3.idCampos[i]),
 						VariloidForm3.idCampos[i]);
 				break;
 			case 34:
-				Data.mapFormularioTres.add(
+				mapFormularioTres.add(
 						Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(posicao)).concat("]")
+								.concat(String.valueOf(posicao)).concat("].")
 								.concat(VariloidForm3.idCampos[i]),
 						VariloidForm3.idCampos[i]);
 				break;
 			case 50:
-				Data.mapFormularioTres.add(
+				mapFormularioTres.add(
 						Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(posicao)).concat("]")
+								.concat(String.valueOf(posicao)).concat("].")
 								.concat(VariloidForm3.idCampos[i]),
 						VariloidForm3.idCampos[i]);
 				break;
@@ -184,28 +189,30 @@ public class ListaPendentes extends SherlockActivity implements
 					if (VariloidForm3.idCampos[i].equals(f.getName())) {
 
 						if (f.get(object) != null) {
-							Data.mapFormularioTres.add(
+							mapFormularioTres.add(
 									Data.FORM3_KEY.concat("[")
 											.concat(String.valueOf(posicao))
-											.concat("]")
+											.concat("].")
 											.concat(VariloidForm3.idCampos[i]),
 									f.get(object));
 						} else {
-							Data.mapFormularioTres.add(
+							mapFormularioTres.add(
 									Data.FORM3_KEY.concat("[")
 											.concat(String.valueOf(posicao))
-											.concat("]")
+											.concat("].")
 											.concat(VariloidForm3.idCampos[i]),
 									"");
 						}
 						f.setAccessible(false);
+						Data.listaFormularioTres.get(posicao).getListInativar().add(false);
+						Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
 					}
 				}
 				break;
 			}
 
 		}
-		Data.listaMapFormularioTres.add(Data.mapFormularioTres);
+		Data.listaMapFormularioTres.add(mapFormularioTres);
 	}
 
 	private class ServiceStartActivity extends AsyncTask<Integer, Void, Boolean> {
@@ -219,10 +226,8 @@ public class ListaPendentes extends SherlockActivity implements
 
 		@Override
 		protected void onPreExecute() {
-			Data.formularioDois = new FormularioDois();
-			Data.formularioTres = new FormularioTres();
 			Data.listaFormularioTres.clear();
-			
+			Data.formularioDois = new FormularioDois();
 			super.onPreExecute();
 		}
 
@@ -245,15 +250,16 @@ public class ListaPendentes extends SherlockActivity implements
 			}
 
 			Data.listaFormularioTres = adapter.getEntrevista(params[0])
-					.getFormularioTres();
+					.getFormulariosTres();
 			
 			for (int i = 0; i < Data.listaFormularioTres.size(); i++) {
 
-				Data.formularioTres = adapter.getEntrevista(params[0])
-						.getFormularioTres().get(i);
+				FormularioTres formularioTres = adapter.getEntrevista(params[0])
+						.getFormulariosTres().get(i);
+				mapFormularioTres = new LinkedMultiValueMap<String, Object>();
 
 				try {
-					infoObjetoForm3(Data.formularioTres, params[0]);
+					infoObjetoForm3(formularioTres, params[0]);
 					sucesso=true;
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block

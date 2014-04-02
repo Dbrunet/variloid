@@ -19,6 +19,8 @@ import br.ufg.iptsp.app.variloid.VariloidForm2;
 import br.ufg.iptsp.app.variloid.VariloidForm3;
 import br.ufg.iptsp.app.variloid.VariloidForm4;
 import br.ufg.iptsp.app.variloid.negocio.Entrevista;
+import br.ufg.iptsp.app.variloid.negocio.FormularioDois;
+import br.ufg.iptsp.app.variloid.negocio.FormularioTres;
 import br.ufg.iptsp.app.variloid.negocio.Usuario;
 import br.ufg.iptsp.app.variloid.provider.Data;
 
@@ -30,8 +32,8 @@ public class Servico {
 
 	private static final String FORM4_KEY = "formularioQuatro.";
 
-	private static final String IP = "galfano.com.br";
-	// private static final String IP = "192.168.1.5";
+//	private static final String IP = "galfano.com.br";
+	 private static final String IP = "192.168.1.5";
 
 	private String urlEnviarEntrevista = "http://" + IP
 			+ "/variloid/rest/entrevistas/enviar";
@@ -168,19 +170,19 @@ public class Servico {
 				default:
 					if (!TextUtils.isEmpty(Data.listaMapFormularioTres.get(i)
 							.get(Data.FORM3_KEY.concat("[")
-									.concat(String.valueOf(i)).concat("]")
-									.concat(VariloidForm3.idCampos[j]))
+									.concat(String.valueOf(i)).concat("].")
+									.concat(VariloidForm3.idCampos[j])).get(0)
 							.toString())) {
 						
 						Data.mapService.add(Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(i)).concat("]")
+								.concat(String.valueOf(i)).concat("].")
 								.concat(VariloidForm3.idCampos[j]),
 								Data.listaMapFormularioTres
 										.get(i)
 										.get(Data.FORM3_KEY
 												.concat("[")
 												.concat(String.valueOf(i))
-												.concat("]")
+												.concat("].")
 												.concat(VariloidForm3.idCampos[j])).get(0)
 										.toString());
 					}
@@ -192,19 +194,21 @@ public class Servico {
 		
 		nid = "ok";
 
-//		try {
-//			nid = restTemplate.postForObject(urlEnviarEntrevista, Data.mapService,
-//					String.class);
-//
-//			Data.formularioDois = new FormularioDois();
-//			Data.mapFormularioDois = new LinkedMultiValueMap<String, Object>();
-//			Data.listaFormularioTres.clear();
-//			Data.listaMapFormularioTres.clear();
-//
-//		} catch (Exception e) {
-//			Log.w("e.printStackTrace()", e.toString());
-//			nid = null;
-//		}
+		try {
+			nid = restTemplate.postForObject(urlEnviarEntrevista, Data.mapService,
+					String.class);
+
+			Data.formularioDois = new FormularioDois();
+			Data.mapFormularioDois = new LinkedMultiValueMap<String, Object>();
+			Data.mapService = new LinkedMultiValueMap<String, Object>();
+			Data.listaFormularioTres.clear();
+			Data.listaMapFormularioTres.clear();
+			
+
+		} catch (Exception e) {
+			Log.w("e.printStackTrace()", e.toString());
+			nid = null;
+		}
 
 		return nid;
 	}
