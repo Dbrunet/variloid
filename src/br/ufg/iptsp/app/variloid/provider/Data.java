@@ -12,10 +12,8 @@ import br.ufg.iptsp.app.variloid.negocio.FormularioTres;
 public class Data {
 
 	//formulario 3
-	public static FormularioTres formularioTres;
 	public static List<FormularioTres> listaFormularioTres = new ArrayList<FormularioTres>();
 	public static List<MultiValueMap<String, Object>> listaMapFormularioTres = new ArrayList<MultiValueMap<String,Object>>();
-	public static MultiValueMap<String, Object> mapFormularioTres = new LinkedMultiValueMap<String, Object>();
 	
 	//formulario 2
 	public static FormularioDois formularioDois = new FormularioDois();
@@ -25,6 +23,6 @@ public class Data {
 	public static MultiValueMap<String, Object> mapService = new LinkedMultiValueMap<String, Object>();
 	
 	public static final String FORM2_KEY = "formularioDois.";
-	public static final String FORM3_KEY = "formularioTres.";
+	public static final String FORM3_KEY = "formulariosTres";
 	public static final String FORM4_KEY = "formularioQuatro.";
 }
