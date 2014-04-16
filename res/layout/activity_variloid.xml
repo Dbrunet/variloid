@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_radial" >
+        android:background="@color/background" >
     </LinearLayout>
 
     <RelativeLayout
@@ -15,16 +15,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="10dp" >
+        android:layout_margin="10dp"
+        android:background="@drawable/card_background"
+        android:padding="10dp" >
 
         <TextView
             android:id="@+id/titulo"
             style="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/box_arredondado"
             android:padding="15dp"
-            android:text="@string/faixa_etaria_titulo" />
+            android:text="@string/faixa_etaria_titulo"
+            android:textColor="@color/light_font"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/radioGroup1"
@@ -51,10 +54,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/radioGroup1"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:text="@string/faixa_etaria_btn"
             android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title" />
     </RelativeLayout>
+
+    <TextView
+        style="@style/TextAppearance.Sherlock.Widget.ActionBar.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:padding="10dp"
+        android:shadowColor="#e7e7e7"
+        android:shadowDx="-3"
+        android:shadowDy="-3"
+        android:shadowRadius="1"
+        android:text="@string/empresa"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
 </FrameLayout>

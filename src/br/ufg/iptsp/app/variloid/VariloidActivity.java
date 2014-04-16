@@ -13,12 +13,12 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import br.ufg.iptsp.app.variloid.servico.ServicoConexao;
+import br.ufg.iptsp.app.variloid.util.HelpUtils;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class VariloidActivity extends SherlockActivity {
+public class VariloidActivity extends BaseActivity {
 
 	private SharedPreferences pref;
 	private boolean isPreenchido2e3, isPreenchido4;
@@ -39,8 +39,6 @@ public class VariloidActivity extends SherlockActivity {
 
 		pref = getSharedPreferences(Variloid.PREFERENCIAS, 0);
 
-		getSupportActionBar().setBackgroundDrawable(
-				getResources().getDrawable(R.drawable.background_vermelho));
 		getSupportActionBar().setTitle(getString(R.string.app_name));
 		
 		final Button button = (Button) findViewById(R.id.button);
@@ -147,7 +145,7 @@ public class VariloidActivity extends SherlockActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
 		menu.add(0, 0, 0, "Lista de Pendentes");
-//		menu.add(1, 1, 0, "Limpar Tudo");
+		menu.add(1, 1, 0, "Sobre");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -161,7 +159,7 @@ public class VariloidActivity extends SherlockActivity {
 			startActivity(new Intent(VariloidActivity.this, ListaPendentes.class));
 			return true;
 		case 1:
-			limpandoFormularios();
+			HelpUtils.showAbout(this);
 			return true;
 		default:
 			break;

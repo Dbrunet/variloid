@@ -4,6 +4,7 @@
     <string name="app_name">Variloid</string>
     <string name="subtitulo_loading">Aplicativo android para controle de casos de Varicela</string>
     <string name="action_settings">Settings</string>
+    <string name="empresa">DESENVOLVEDOR / DoWave</string>
     <string name="hello_world">Hello world!</string>
     <string name="advertencia_conexao_off">Dispositivo não conectado à Internet. Verifique suas conexões.</string>
     <string name="advertencia_conexao_lenta">A conexão à internet está muito lenta. Verifique suas conexões.</string>
@@ -49,5 +50,21 @@
     <string name="faixa_etaria2">6 a 7 anos</string>
     <string name="faixa_etaria2_incompleta">Escolares não finalizado</string>
     <string name="faixa_etaria_btn">Escolhe uma Faixa Etária</string>
+
+    <!-- Sobre -->
+    <string name="string_title_about">Sobre</string>
+    <string name="string_sobre_aplicativo">Sobre o aplicativo</string>
+    <string name="string_sobre_empresa"><![CDATA[<br><b>DoWave</b> 2014 (contato@dowave.com.br)]]></string>
+    <string name="string_corpo_sobre">
+<![CDATA[
+        <b>Variloid</b><br>
+        Versão %s<br>
+    ]]>
+    </string>
+    <string name="sobre_text">
+<![CDATA[
+        Variloid é um aplicativo que foi criado para auxiliar ...
+    ]]>
+    </string>
 
 </resources>

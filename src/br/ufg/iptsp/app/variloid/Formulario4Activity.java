@@ -45,9 +45,7 @@ import br.ufg.iptsp.app.variloid.servico.Servico;
 import br.ufg.iptsp.app.variloid.servico.ServicoConexao;
 import br.ufg.iptsp.app.variloid.util.Mask;
 
-import com.actionbarsherlock.app.SherlockActivity;
-
-public class Formulario4Activity extends SherlockActivity implements OnItemClickListener, LocationListener{
+public class Formulario4Activity extends BaseActivity implements OnItemClickListener, LocationListener{
 	
 	private LayoutInflater layoutInflater;
 	private MyAdapterForm4 myAdapter;
@@ -64,7 +62,6 @@ public class Formulario4Activity extends SherlockActivity implements OnItemClick
 		setContentView(R.layout.activity_formulario);
 		ServicoConexao.verificaTipoConexao(this);
 		
-		getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.background_vermelho));
 		getSupportActionBar().setTitle(getString(R.string.formulario_quatro));
 		layoutInflater = getLayoutInflater();
 		

@@ -26,9 +26,7 @@ import br.ufg.iptsp.app.variloid.negocio.FormularioTres;
 import br.ufg.iptsp.app.variloid.provider.Data;
 import br.ufg.iptsp.app.variloid.servico.Servico;
 
-import com.actionbarsherlock.app.SherlockActivity;
-
-public class ListaPendentes extends SherlockActivity implements
+public class ListaPendentes extends BaseActivity implements
 		OnItemClickListener {
 
 	private ListView listView;
@@ -39,8 +37,6 @@ public class ListaPendentes extends SherlockActivity implements
 		// TODO Auto-generated method stub
 		setContentView(R.layout.activity_formulario);
 
-		getSupportActionBar().setBackgroundDrawable(
-				getResources().getDrawable(R.drawable.background_vermelho));
 		getSupportActionBar().setTitle(getString(R.string.lista_de_pendentes));
 
 		listView = (ListView) findViewById(R.id.listView);
@@ -131,16 +127,17 @@ public class ListaPendentes extends SherlockActivity implements
 							Data.mapFormularioDois.add(Data.FORM2_KEY
 									.concat(VariloidForm2.idCampos[i]), f
 									.get(object));
+							Data.formularioDois.getListSucesso().add(true);
 						} else {
 							Data.mapFormularioDois.add(Data.FORM2_KEY
 									.concat(VariloidForm2.idCampos[i]), "");
+							Data.formularioDois.getListSucesso().add(false);
 						}
 						f.setAccessible(false);
-						Data.formularioDois.getListInativar().add(false);
-						Data.formularioDois.getListSucesso().add(false);
+						
 					}
 				}
-
+				Data.formularioDois.getListInativar().add(false);
 				break;
 			}
 		}
@@ -280,6 +277,7 @@ public class ListaPendentes extends SherlockActivity implements
 			
 			if(result){
 				Intent intent = new Intent(context, Formulario2Activity.class);
+				intent.putExtra("listaPendentes", result);
 				context.startActivity(intent);
 			}
 			

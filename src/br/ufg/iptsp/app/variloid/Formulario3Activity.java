@@ -23,7 +23,7 @@ import br.ufg.iptsp.app.variloid.provider.Data;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class Formulario3Activity extends SherlockFragmentActivity implements LocationListener{
+public class Formulario3Activity extends BaseActivity implements LocationListener{
 
 	private ViewPager vp;
 	private PagerAdapter pagerAdapter;
@@ -39,8 +39,6 @@ public class Formulario3Activity extends SherlockFragmentActivity implements Loc
 		getSupportActionBar().setTitle(
 				String.valueOf(1).concat("° ")
 				.concat(getString(R.string.formulario_tres)));
-		getSupportActionBar().setBackgroundDrawable(
-				getResources().getDrawable(R.drawable.background_vermelho));
 		
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 

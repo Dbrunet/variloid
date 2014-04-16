@@ -43,7 +43,7 @@ import br.ufg.iptsp.app.variloid.util.Mask;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class Formulario2Activity extends SherlockFragmentActivity implements OnItemClickListener, LocationListener{
+public class Formulario2Activity extends BaseActivity implements OnItemClickListener, LocationListener{
 	
 	private LayoutInflater layoutInflater;
 	private MyAdapterForm2 myAdapter;
@@ -53,16 +53,16 @@ public class Formulario2Activity extends SherlockFragmentActivity implements OnI
 	private double latitude;
 	private double longitude;
 	private List<Integer> list;
-	private boolean isPendente;
+	private boolean isPendente, listaPendentes;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_formulario);
 		
-		ServicoConexao.verificaTipoConexao(this);
+		Bundle bundle = getIntent().getExtras();
 		
-		getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.background_vermelho));
+		ServicoConexao.verificaTipoConexao(this);
 		getSupportActionBar().setTitle(getString(R.string.formulario_dois));
 		layoutInflater = getLayoutInflater();
 		
@@ -77,7 +77,7 @@ public class Formulario2Activity extends SherlockFragmentActivity implements OnI
 				Data.mapFormularioDois.add(Data.FORM2_KEY.concat(strings), "");
 			}
 
-			if (Data.formularioDois.getListInativar().size() != VariloidForm2.idCampos.length)
+			if (Data.formularioDois.getListInativar().size() != VariloidForm2.idCampos.length && bundle==null)
 				Data.formularioDois.getListInativar().add(false);
 			if (Data.formularioDois.getListSucesso().size() != VariloidForm2.idCampos.length)
 				Data.formularioDois.getListSucesso().add(false);

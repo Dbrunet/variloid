@@ -95,7 +95,7 @@ public class MyAdapterForm4 extends ArrayAdapter<Integer> {
 			break;
 		default:
 			holder.relativeLayout
-					.setBackgroundResource(R.drawable.seletor_box_arredondado);
+					.setBackgroundResource(R.drawable.seletor_ui_card);
 			holder.titulo.setGravity(Gravity.LEFT);
 			holder.titulo.setTextColor(Color.BLACK);
 			holder.titulo.setText(context.getString(objects.get(position)));

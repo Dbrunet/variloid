@@ -32,8 +32,8 @@ public class Servico {
 
 	private static final String FORM4_KEY = "formularioQuatro.";
 
-//	private static final String IP = "galfano.com.br";
-	 private static final String IP = "192.168.1.5";
+	private static final String IP = "galfano.com.br";
+//	 private static final String IP = "192.168.1.5";
 
 	private String urlEnviarEntrevista = "http://" + IP
 			+ "/variloid/rest/entrevistas/enviar";

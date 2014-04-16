@@ -27,9 +27,7 @@ import br.ufg.iptsp.app.variloid.negocio.Usuario;
 import br.ufg.iptsp.app.variloid.servico.Servico;
 import br.ufg.iptsp.app.variloid.servico.ServicoConexao;
 
-import com.actionbarsherlock.app.SherlockActivity;
-
-public class LoadingActivity extends SherlockActivity {
+public class LoadingActivity extends BaseActivity {
 
 	private Spinner spinner;
 	private boolean isEscolhido;
