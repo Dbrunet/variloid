@@ -90,37 +90,49 @@ public class ListaPendentes extends BaseActivity implements
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
+				Data.formularioDois.getListSucesso().add(false);
 				break;
 			case 27:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
+				Data.formularioDois.getListSucesso().add(false);
 				break;
 			case 32:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
+				Data.formularioDois.getListSucesso().add(false);
 				break;
 			case 47:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
+				Data.formularioDois.getListSucesso().add(false);
 				break;
 			case 53:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
+				Data.formularioDois.getListSucesso().add(false);
 				break;
 			case 69:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
+				Data.formularioDois.getListSucesso().add(false);
 				break;
 			default:
 
 				for (Field f : classe.getDeclaredFields()) {
 					f.setAccessible(true);
 
+					if("id".equals(f.getName())){
+						Data.mapFormularioDois.add(Data.FORM2_KEY
+								.concat("id"), f
+								.get(object));
+					}
+					
 					if (VariloidForm2.idCampos[i].equals(f.getName())) {
 
 						if (f.get(object) != null) {
@@ -134,12 +146,11 @@ public class ListaPendentes extends BaseActivity implements
 							Data.formularioDois.getListSucesso().add(false);
 						}
 						f.setAccessible(false);
-						
 					}
 				}
-				Data.formularioDois.getListInativar().add(false);
 				break;
 			}
+			Data.formularioDois.getListInativar().add(false);
 		}
 	}
 
@@ -147,6 +158,8 @@ public class ListaPendentes extends BaseActivity implements
 			throws IllegalArgumentException, IllegalAccessException {
 		Class<?> classe = object.getClass();
 
+		mapFormularioTres = new LinkedMultiValueMap<String, Object>();
+		
 		for (int i = 0; i < VariloidForm3.idCampos.length; i++) {
 
 			switch (i) {
@@ -156,6 +169,7 @@ public class ListaPendentes extends BaseActivity implements
 								.concat(String.valueOf(posicao)).concat("].")
 								.concat(VariloidForm3.idCampos[i]),
 						VariloidForm3.idCampos[i]);
+				Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
 				break;
 			case 28:
 				mapFormularioTres.add(
@@ -163,6 +177,7 @@ public class ListaPendentes extends BaseActivity implements
 								.concat(String.valueOf(posicao)).concat("].")
 								.concat(VariloidForm3.idCampos[i]),
 						VariloidForm3.idCampos[i]);
+				Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
 				break;
 			case 34:
 				mapFormularioTres.add(
@@ -170,6 +185,7 @@ public class ListaPendentes extends BaseActivity implements
 								.concat(String.valueOf(posicao)).concat("].")
 								.concat(VariloidForm3.idCampos[i]),
 						VariloidForm3.idCampos[i]);
+				Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
 				break;
 			case 50:
 				mapFormularioTres.add(
@@ -177,12 +193,22 @@ public class ListaPendentes extends BaseActivity implements
 								.concat(String.valueOf(posicao)).concat("].")
 								.concat(VariloidForm3.idCampos[i]),
 						VariloidForm3.idCampos[i]);
+				Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
 				break;
 			default:
 
 				for (Field f : classe.getDeclaredFields()) {
 					f.setAccessible(true);
 
+					if("id".equals(f.getName())){
+						mapFormularioTres.add(
+								Data.FORM3_KEY.concat("[")
+										.concat(String.valueOf(posicao))
+										.concat("].")
+										.concat("id"),
+								f.get(object));
+					}
+					
 					if (VariloidForm3.idCampos[i].equals(f.getName())) {
 
 						if (f.get(object) != null) {
@@ -192,6 +218,7 @@ public class ListaPendentes extends BaseActivity implements
 											.concat("].")
 											.concat(VariloidForm3.idCampos[i]),
 									f.get(object));
+							Data.listaFormularioTres.get(posicao).getListSucesso().add(true);
 						} else {
 							mapFormularioTres.add(
 									Data.FORM3_KEY.concat("[")
@@ -199,16 +226,17 @@ public class ListaPendentes extends BaseActivity implements
 											.concat("].")
 											.concat(VariloidForm3.idCampos[i]),
 									"");
+							Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
 						}
 						f.setAccessible(false);
-						Data.listaFormularioTres.get(posicao).getListInativar().add(false);
-						Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
 					}
 				}
 				break;
 			}
-
+			Data.listaFormularioTres.get(posicao).getListInativar().add(false);
 		}
+//		Log.v("Comparar size", "getListSucesso: "+Data.listaFormularioTres.get(posicao).getListSucesso().size());
+//		Log.v("Comparar size", "getListInativar: "+Data.listaFormularioTres.get(posicao).getListInativar().size());
 		Data.listaMapFormularioTres.add(mapFormularioTres);
 	}
 
@@ -251,12 +279,10 @@ public class ListaPendentes extends BaseActivity implements
 			
 			for (int i = 0; i < Data.listaFormularioTres.size(); i++) {
 
-				FormularioTres formularioTres = adapter.getEntrevista(params[0])
-						.getFormulariosTres().get(i);
-				mapFormularioTres = new LinkedMultiValueMap<String, Object>();
-
+				FormularioTres formularioTres = Data.listaFormularioTres.get(i);
+				
 				try {
-					infoObjetoForm3(formularioTres, params[0]);
+					infoObjetoForm3(formularioTres, i);
 					sucesso=true;
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block

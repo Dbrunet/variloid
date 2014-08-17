@@ -67,21 +67,28 @@ public class Formulario3Fragment extends SherlockFragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setHasOptionsMenu(true);
 		Bundle bundle = getArguments();
 		if (bundle != null) {
 			paginaFragment = bundle.getInt("paginaForm3");
 		}
 
-		mapFormularioTres = new LinkedMultiValueMap<String, Object>();
+		list = new ArrayList<Integer>();
+		for (Integer integer : VariloidForm3.campos) {
+			list.add(integer);
+		}
 		
-		if (Data.listaFormularioTres.isEmpty()) {
+//		Log.v("Comparar size", "campos: "+VariloidForm3.campos.length);
+//		Log.v("Comparar size", "idCampos: "+VariloidForm3.idCampos.length);
+		
+		if (Data.listaMapFormularioTres.isEmpty()) {
 			
+			mapFormularioTres = new LinkedMultiValueMap<String, Object>();
 			formularioTres = new FormularioTres();
 			Data.listaFormularioTres.add(formularioTres);
 
 			for (String strings : VariloidForm3.idCampos) {
+				
 				mapFormularioTres.add(Data.FORM3_KEY.concat("[")
 						.concat(String.valueOf(paginaFragment)).concat("].")
 						.concat(strings), "");
@@ -96,10 +103,6 @@ public class Formulario3Fragment extends SherlockFragment implements
 			
 		}
 
-		list = new ArrayList<Integer>();
-		for (Integer integer : VariloidForm3.campos) {
-			list.add(integer);
-		}
 
 		ServicoConexao.verificaTipoConexao(getSherlockActivity());
 		layoutInflater = getSherlockActivity().getLayoutInflater();

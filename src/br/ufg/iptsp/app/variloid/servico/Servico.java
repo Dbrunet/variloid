@@ -32,7 +32,8 @@ public class Servico {
 
 	private static final String FORM4_KEY = "formularioQuatro.";
 
-	private static final String IP = "galfano.com.br";
+	private static final String IP = "dowave.com.br";
+//	private static final String IP = "galfano.com.br";
 //	 private static final String IP = "192.168.1.5";
 
 	private String urlEnviarEntrevista = "http://" + IP
@@ -282,46 +283,46 @@ public class Servico {
 				Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = pref.edit();
 
-		for (int i = 0; i < VariloidForm2.idCampos.length; i++) {
-			switch (i) {
-			case 14:
-				break;
-			case 27:
-				break;
-			case 32:
-				break;
-			case 47:
-				break;
-			case 53:
-				break;
-			case 69:
-				break;
-			default:
-				editor.putString(VariloidForm2.FORM2_CAMPO + i, "");
-				editor.putBoolean(VariloidForm2.FORM2_IMAGEM + i, false);
-				editor.putBoolean(VariloidForm2.FORM2_INATIVAR + i, false);
-				break;
-			}
-		}
-
-		for (int i = 0; i < VariloidForm3.idCampos.length; i++) {
-			switch (i) {
-			case 14:
-				break;
-			case 28:
-				break;
-			case 34:
-				break;
-			case 50:
-				break;
-			default:
-				editor.putString(VariloidForm3.FORM3_CAMPO + i, "");
-				editor.putBoolean(VariloidForm3.FORM3_IMAGEM + i, false);
-				editor.putBoolean(VariloidForm3.FORM3_INATIVAR + i, false);
-				break;
-			}
-
-		}
+//		for (int i = 0; i < VariloidForm2.idCampos.length; i++) {
+//			switch (i) {
+//			case 14:
+//				break;
+//			case 27:
+//				break;
+//			case 32:
+//				break;
+//			case 47:
+//				break;
+//			case 53:
+//				break;
+//			case 69:
+//				break;
+//			default:
+//				editor.putString(VariloidForm2.FORM2_CAMPO + i, "");
+//				editor.putBoolean(VariloidForm2.FORM2_IMAGEM + i, false);
+//				editor.putBoolean(VariloidForm2.FORM2_INATIVAR + i, false);
+//				break;
+//			}
+//		}
+//
+//		for (int i = 0; i < VariloidForm3.idCampos.length; i++) {
+//			switch (i) {
+//			case 14:
+//				break;
+//			case 28:
+//				break;
+//			case 34:
+//				break;
+//			case 50:
+//				break;
+//			default:
+//				editor.putString(VariloidForm3.FORM3_CAMPO + i, "");
+//				editor.putBoolean(VariloidForm3.FORM3_IMAGEM + i, false);
+//				editor.putBoolean(VariloidForm3.FORM3_INATIVAR + i, false);
+//				break;
+//			}
+//
+//		}
 
 		for (int i = 0; i < VariloidForm4.idCampos.length; i++) {
 			switch (i) {
@@ -345,22 +346,22 @@ public class Servico {
 			}
 		}
 
-		editor.putString(VariloidForm2.FORM2_CAMPO + "latitude", "");
-		editor.putString(VariloidForm2.FORM2_CAMPO + "longitude", "");
-		editor.putString(VariloidForm3.FORM3_CAMPO + "latitude", "");
-		editor.putString(VariloidForm3.FORM3_CAMPO + "longitude", "");
+//		editor.putString(VariloidForm2.FORM2_CAMPO + "latitude", "");
+//		editor.putString(VariloidForm2.FORM2_CAMPO + "longitude", "");
+//		editor.putString(VariloidForm3.FORM3_CAMPO + "latitude", "");
+//		editor.putString(VariloidForm3.FORM3_CAMPO + "longitude", "");
 		editor.putString(VariloidForm4.FORM4_CAMPO + "latitude", "");
 		editor.putString(VariloidForm4.FORM4_CAMPO + "longitude", "");
-		editor.putString(Variloid.ID_ENTREVISTA_PENDENTE, "");
-		editor.putString(Variloid.NOME_ENTREVISTADOR, "");
-		editor.putString(Variloid.ID_ENTREVISTADOR_PENDENTE, "");
-		editor.putString(Variloid.ID_FOTO_LESAO, "");
-		editor.putString(Variloid.ID_FOTO_CARTAO, "");
-		editor.putString(Variloid.ID_FORM3, "");
-		editor.putString(Variloid.ID_FORM2, "");
-		editor.putString(Variloid.FORM_FOTO_CARTAO_VACINA, "");
+//		editor.putString(Variloid.ID_ENTREVISTA_PENDENTE, "");
+//		editor.putString(Variloid.NOME_ENTREVISTADOR, "");
+//		editor.putString(Variloid.ID_ENTREVISTADOR_PENDENTE, "");
+//		editor.putString(Variloid.ID_FOTO_LESAO, "");
+//		editor.putString(Variloid.ID_FOTO_CARTAO, "");
+//		editor.putString(Variloid.ID_FORM3, "");
+//		editor.putString(Variloid.ID_FORM2, "");
+//		editor.putString(Variloid.FORM_FOTO_CARTAO_VACINA, "");
 		editor.putString(Variloid.FORM_FOTO_CARTAO_VACINA4, "");
-		editor.putString(Variloid.FORM_FOTO_LESAO_COLETADA, "");
+//		editor.putString(Variloid.FORM_FOTO_LESAO_COLETADA, "");
 
 		editor.commit();
 	}

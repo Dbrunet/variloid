@@ -42,29 +42,29 @@ public class VariloidActivity extends BaseActivity {
 		getSupportActionBar().setTitle(getString(R.string.app_name));
 		
 		final Button button = (Button) findViewById(R.id.button);
+
+//		for (int i = 0; i < VariloidForm2.campos.length; i++) {
+//			if (!TextUtils.isEmpty(pref
+//					.getString(VariloidForm2.FORM2_CAMPO + i, ""))){
+//				isPreenchido2e3=true;
+//			}
+//		}
+//		
+//		for (int i = 0; i < VariloidForm3.campos.length; i++) {
+//			if (!TextUtils.isEmpty(pref
+//					.getString(VariloidForm3.FORM3_CAMPO + i, ""))){
+//				isPreenchido2e3=true;
+//			}
+//		}
+//		
+//		if(isPreenchido2e3){
+//			radioButton1.setText(getString(R.string.faixa_etaria1) + " ("
+//					+ getString(R.string.faixa_etaria1_incompleta) + ")");
+//		}else{
+//			radioButton1.setText(getString(R.string.faixa_etaria1));
+//		}
+
 		final RadioButton radioButton1 = (RadioButton) findViewById(R.id.radioButton1);
-
-		for (int i = 0; i < VariloidForm2.campos.length; i++) {
-			if (!TextUtils.isEmpty(pref
-					.getString(VariloidForm2.FORM2_CAMPO + i, ""))){
-				isPreenchido2e3=true;
-			}
-		}
-		
-		for (int i = 0; i < VariloidForm3.campos.length; i++) {
-			if (!TextUtils.isEmpty(pref
-					.getString(VariloidForm3.FORM3_CAMPO + i, ""))){
-				isPreenchido2e3=true;
-			}
-		}
-		
-		if(isPreenchido2e3){
-			radioButton1.setText(getString(R.string.faixa_etaria1) + " ("
-					+ getString(R.string.faixa_etaria1_incompleta) + ")");
-		}else{
-			radioButton1.setText(getString(R.string.faixa_etaria1));
-		}
-
 		radioButton1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -75,24 +75,48 @@ public class VariloidActivity extends BaseActivity {
 				}
 			}
 		});
-
-		final RadioButton radioButton2 = (RadioButton) findViewById(R.id.radioButton2);
-
-		for (int i = 0; i < VariloidForm4.campos.length; i++) {
-			if (!TextUtils.isEmpty(pref
-					.getString(VariloidForm4.FORM4_CAMPO + i, ""))){
-				isPreenchido4=true;
-			}
-		}
 		
-		if (isPreenchido4) {
-			radioButton2.setText(getString(R.string.faixa_etaria2) + " ("
-					+ getString(R.string.faixa_etaria2_incompleta) + ")");
-		} else {
-			radioButton2.setText(getString(R.string.faixa_etaria2));
-		}
-
+		final RadioButton radioButton2 = (RadioButton) findViewById(R.id.radioButton2);
 		radioButton2.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				// TODO Auto-generated method stub
+				if (arg1) {
+					button.setText(getString(R.string.formulario_dois));
+				}
+			}
+		});
+		
+		final RadioButton radioButton3 = (RadioButton) findViewById(R.id.radioButton3);
+		radioButton3.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				// TODO Auto-generated method stub
+				if (arg1) {
+					button.setText(getString(R.string.formulario_dois));
+				}
+			}
+		});
+
+		final RadioButton radioButton4 = (RadioButton) findViewById(R.id.radioButton4);
+
+//		for (int i = 0; i < VariloidForm4.campos.length; i++) {
+//			if (!TextUtils.isEmpty(pref
+//					.getString(VariloidForm4.FORM4_CAMPO + i, ""))){
+//				isPreenchido4=true;
+//			}
+//		}
+		
+//		if (isPreenchido4) {
+//			radioButton2.setText(getString(R.string.faixa_etaria2) + " ("
+//					+ getString(R.string.faixa_etaria2_incompleta) + ")");
+//		} else {
+//			radioButton2.setText(getString(R.string.faixa_etaria2));
+//		}
+
+		radioButton4.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
@@ -104,7 +128,7 @@ public class VariloidActivity extends BaseActivity {
 		});
 
 		button.setOnClickListener(new OnClickListener() {
-			boolean check1, check2;
+			boolean check1, check2, check3, check4;
 
 			@Override
 			public void onClick(View arg0) {
@@ -121,7 +145,19 @@ public class VariloidActivity extends BaseActivity {
 					check2 = false;
 				}
 
-				if (!check1 && !check2) {
+				if (radioButton3.isChecked()) {
+					check3 = true;
+				} else {
+					check3 = false;
+				}
+				
+				if (radioButton4.isChecked()) {
+					check4 = true;
+				} else {
+					check4 = false;
+				}
+				
+				if (!check1 && !check2 && !check3 && !check4) {
 					Toast.makeText(VariloidActivity.this,
 							getString(R.string.faixa_etaria_btn),
 							Toast.LENGTH_LONG).show();
@@ -133,6 +169,16 @@ public class VariloidActivity extends BaseActivity {
 				}
 
 				if (check2) {
+					startActivity(new Intent(VariloidActivity.this,
+							Formulario2Activity.class));
+				}
+				
+				if (check3) {
+					startActivity(new Intent(VariloidActivity.this,
+							Formulario2Activity.class));
+				}
+				
+				if (check4) {
 					startActivity(new Intent(VariloidActivity.this,
 							Formulario4Activity.class));
 				}

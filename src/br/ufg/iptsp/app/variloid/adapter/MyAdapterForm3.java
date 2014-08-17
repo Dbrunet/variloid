@@ -55,25 +55,37 @@ public class MyAdapterForm3 extends BaseAdapter {
 		}
 
 		switch (position) {
-		case 14:
+		case 0:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
 			holder.titulo.setText(context.getString(getItem(position)));
 			break;
-		case 28:
+		case 4:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
 			holder.titulo.setText(context.getString(getItem(position)));
 			break;
-		case 34:
+		case 29:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
 			holder.titulo.setText(context.getString(getItem(position)));
 			break;
-		case 50:
+		case 37:
+			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
+			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
+			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
+			holder.titulo.setText(context.getString(getItem(position)));
+			break;
+		case 42:
+			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
+			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
+			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
+			holder.titulo.setText(context.getString(getItem(position)));
+			break;
+		case 59:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));

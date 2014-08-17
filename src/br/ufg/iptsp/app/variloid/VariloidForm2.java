@@ -8,104 +8,116 @@ public class VariloidForm2 {
 	public static final String FORM2_INATIVAR = "form2_inativar_";
 
 	/** id campo Formlario 2 */
-	public static final String[] idCampos = new String[] { "nomeCrianca",
-			"sexo", "dataNascimento", "criancaCataporaAnt",
-			"contatoPessoaCatapora", "localContato", "residencia",
-			"tipoLogradouro", "nomeLogradouro", "quadra", "lote", "numero",
-			"complemento", "bairro", "????1", "erupcaoDifusaAgudo", "tcleAssinado",
-			"nomeMae", "idadeMae", "nomePai", "telefoneFixo", "celular1",
-			"operadoraCelular1", "celular2", "operadoraCelular2",
-			"criancaCadastradaPSF", "dataInicioCatapora","????2", "febre", "anorexia",
-			"malEstar", "dorAbdominal","????3", "dataInicioRash", "localizacaoRash",
-			"primeiralocalizacaoRash", "numLesoes", "maculoPapular",
-			"vesicular", "crosta", "maioriaLesoes", "diagnosticoFeitoPor",
-			"pesoNascimentoGramas", "idadeGestacional", "raca",
-			"criancaRecebeuVacinaCatapora", "razoesNaoVacinacao", "????4",
-			"numDosesRecebidasContraVaricela", "dataPrimeiraDose",
-			"qualVacinaUsadaPrimeiraDose", "dataSegundaDose",
-			"qualVacinaUsadaSegundaDose", "????5" ,
-			"criancaRecebeuVacinaTripliceViral", "numDosesRecebidasContraTripliceViral",//DOIS CASOS NOVOS
-			"dataPrimeiraDoseMMR","dataSegundaDoseMMR", "alguemFrequentouCreche",
-			"quemFamiliaFrequentouCreche", "alguemFrequentouServicoSaude",
-			"quemFamiliaFrequentouServicoSaude", "criancaInternou",
-			"maeTrabalhaFora", "escolaridadeMae",
-			"numCriancasMenos5anosDomicilio",
-			"numCriancasMenos10anosDomicilio", "quantasPessoasCasa",
-			"quantasPessoasDormemMesmoComodoCrianca", "????6","doencaFalciforme",
-			"prematuridade", "infeccaoHIVeAIDS", "imunodeficiencia", "asma",
-			"usoCorticoideSistemico", "cancer", "doencaPulmonarCronica",
-			"doencaRenalCronica", "doencaCardiaca",
-			"doencaHematologicaCronica", "doencaHepaticaCronica",
-			"aspleniaCongenitaOuFuncional", "diabetes", "numeroSwabsColetados",
-			"idSwabColetadoMaculoPapular", "idSwabColetadoVesicula",
-			"idSwabColetadoCrosta", "observacoesRelacionadasCaso" };
+//	public static final String[] idCampos = new String[] { "nomeCrianca",
+//			"sexo", "dataNascimento", "criancaCataporaAnt",
+//			"contatoPessoaCatapora", "localContato", "residencia",
+//			"tipoLogradouro", "nomeLogradouro", "quadra", "lote", "numero",
+//			"complemento", "bairro", "????1", "erupcaoDifusaAgudo", "tcleAssinado",
+//			"nomeMae", "idadeMae", "nomePai", "telefoneFixo", "celular1",
+//			"operadoraCelular1", "celular2", "operadoraCelular2",
+//			"criancaCadastradaPSF", "dataInicioCatapora","????2", "febre", "anorexia",
+//			"malEstar", "dorAbdominal","????3", "dataInicioRash", "localizacaoRash",
+//			"primeiralocalizacaoRash", "numLesoes", "maculoPapular",
+//			"vesicular", "crosta", "maioriaLesoes", "diagnosticoFeitoPor",
+//			"pesoNascimentoGramas", "idadeGestacional", "raca",
+//			"criancaRecebeuVacinaCatapora", "razoesNaoVacinacao", "????4",
+//			"numDosesRecebidasContraVaricela", "dataPrimeiraDose",
+//			"qualVacinaUsadaPrimeiraDose", "dataSegundaDose",
+//			"qualVacinaUsadaSegundaDose", "????5" ,
+//			"criancaRecebeuVacinaTripliceViral", "numDosesRecebidasContraTripliceViral",//DOIS CASOS NOVOS
+//			"dataPrimeiraDoseMMR","dataSegundaDoseMMR", "alguemFrequentouCreche",
+//			"quemFamiliaFrequentouCreche", "alguemFrequentouServicoSaude",
+//			"quemFamiliaFrequentouServicoSaude", "criancaInternou",
+//			"maeTrabalhaFora", "escolaridadeMae",
+//			"numCriancasMenos5anosDomicilio",
+//			"numCriancasMenos10anosDomicilio", "quantasPessoasCasa",
+//			"quantasPessoasDormemMesmoComodoCrianca", "????6","doencaFalciforme",
+//			"prematuridade", "infeccaoHIVeAIDS", "imunodeficiencia", "asma",
+//			"usoCorticoideSistemico", "cancer", "doencaPulmonarCronica",
+//			"doencaRenalCronica", "doencaCardiaca",
+//			"doencaHematologicaCronica", "doencaHepaticaCronica",
+//			"aspleniaCongenitaOuFuncional", "diabetes", "numeroSwabsColetados",
+//			"idSwabColetadoMaculoPapular", "idSwabColetadoVesicula",
+//			"idSwabColetadoCrosta", "observacoesRelacionadasCaso" };
 
+	public static final String[] idCampos = new String[] { 
+		//Elegibilidade do caso
+		"????1", "lesaoSugestivaVaricela", "tcleAssinado", 
+		//Identificação
+		"????2", "nomeCrianca", "sexo", "dataNascimento", "residencia", "tipoLogradouro", "nomeLogradouro", "quadra", "lote", "numero",
+		"complemento", "bairro", "municipio", "nomeMae", "idadeMae", "nomePai", "pesoNascimentoGramas", "idadeGestacional",
+		"raca","telefoneFixo", "celular1", "operadoraCelular1", "celular2", "operadoraCelular2", "criancaCadastradaPSF",
+		 //Sinais 24 - 48 horas antes do RASH
+		"????3", "febre", "anorexia","malEstar", "dorAbdominal",
+		// Descrição do RASH Cutâneo
+		"????4", "dataInicioRash", "localizacaoRash","primeiralocalizacaoRash", "numLesoes", "maculoPapular",
+		"vesicular", "crosta", "maioriaLesoes","erupcaoDifusaAgudo", "diagnosticoFeitoPor",
+		//Vacina contra varicela
+		"????5", "criancaRecebeuVacinaCatapora", "razoesNaoVacinacao", "numDosesRecebidasContraVaricela", "dataPrimeiraDose",
+		"qualVacinaUsadaPrimeiraDose","dataSegundaDose", "qualVacinaUsadaSegundaDose",
+		//Vacina MMR
+		"????6" , "criancaRecebeuVacinaTripliceViral", "numDosesRecebidasContraTripliceViral", "dataPrimeiraDoseMMR","dataSegundaDoseMMR",
+		//História pregressa de saúde da criança
+		"????7", "criancaCataporaAnt", "contatoPessoaCatapora", "localContato", "doencaFalciforme", "prematuridade", "infeccaoHIVeAIDS", 
+		"imunodeficiencia", "asma", "usoCorticoideSistemico", "cancer", "doencaPulmonarCronica", "doencaRenalCronica", "doencaCardiaca",
+		"doencaHematologicaCronica", "doencaHepaticaCronica", "aspleniaCongenitaOuFuncional", "diabetes", 
+		//Antecedentes Familiares
+		"????8", "alguemFrequentouCreche", "quemFamiliaFrequentouCreche", "alguemFrequentouServicoSaude", "quemFamiliaFrequentouServicoSaude", "criancaInternou",
+		 "escolaridadeMae", "numCriancasMenos5anosDomicilio", "numCriancasMenos10anosDomicilio", "quantasPessoasCasa", "quantasPessoasDormemMesmoComodoCrianca", 
+		//Swabs Coletados
+		"????9", "casoCasaCrianca",  "numeroSwabsColetados", "idSwabColetadoMaculoPapular", "idSwabColetadoVesicula", "idSwabColetadoCrosta", "observacoesRelacionadasCaso" };
+	
+	
 	/** campos Formlario 2 */
-	public static final int[] campos = new int[] { R.string.formulario2_nome,
-			R.string.formulario2_sexo, R.string.formulario2_data,
-			R.string.formulario2_ja_teve_catapora,
-			R.string.formulario2_contato_com_ja_teve_catapora,
-			R.string.formulario2_local_contato,
-			R.string.formulario2_residencia,
-			R.string.formulario2_tipo_logradouro,
-			R.string.formulario2_nome_logradouro, R.string.formulario2_qudra,
-			R.string.formulario2_lote, R.string.formulario2_numero,
-			R.string.formulario2_complemento, R.string.formulario2_bairro,
-			R.string.formulario2_titulo_criterio_inclusao,
-			R.string.formulario2_rash, R.string.formulario2_tcle,
-			R.string.formulario2_nome_mae, R.string.formulario2_idade_mae,
-			R.string.formulario2_nome_pai, R.string.formulario2_tel_fixo,
-			R.string.formulario2_tel_celular1, R.string.formulario2_operadora1,
-			R.string.formulario2_tel_celular2, R.string.formulario2_operadora2,
-			R.string.formulario2_cobertura_psf,
-			R.string.formulario2_data_inicio_varicela,
-			R.string.formulario2_titulo_rash_sinais,
-			R.string.formulario2_febre, R.string.formulario2_anorexia,
-			R.string.formulario2_malestar, R.string.formulario2_dor_abdominal,
-			R.string.formulario2_titulo_rash, R.string.formulario2_dt_rash,
-			R.string.formulario2_loc_rash, R.string.formulario2_loc_rash2,
-			R.string.formulario2_n_lesoes, R.string.formulario2_rash_mp,
-			R.string.formulario2_rash_v, R.string.formulario2_rash_c,
-			R.string.formulario2_lesoes, R.string.formulario2_diag_quem,
-			R.string.formulario2_peso_nascer,
-			R.string.formulario2_idade_gestacional, R.string.formulario2_raca,
-			R.string.formulario2_vac_varicela,
-			R.string.formulario2_motivo_nao_vacinacao,
-			R.string.formulario2_titulo_vacina_contra_varicela,
-			R.string.formulario2_n_doses_varic,
-			R.string.formulario2_vac_varic_dt_dose1,
-			R.string.formulario2_vac_varic_qual_dose1,
-			R.string.formulario2_vac_varic_dt_dose2,
-			R.string.formulario2_vac_varic_qual_dose2,
-			R.string.formulario2_titulo_data_vacina_mmr,
-			R.string.formulario2_vac_triplice_viral,//NOVO
-			R.string.formulario2_n_doses_triplice_viral,//NOVO
-			R.string.formulario2_mmr1, R.string.formulario2_mmr2,
-			R.string.formulario2_freq_creche1,
-			R.string.formulario2_freq_creche2,
-			R.string.formulario2_freq_serv_saude1,
-			R.string.formulario2_freq_serv_saude2,
-			R.string.formulario2_hospitalizacao,
-			R.string.formulario2_mae_trabalha, R.string.formulario2_esc_mae,
-			R.string.formulario2_nc_cas_casa5,
-			R.string.formulario2_nc_cas_casa10,
-			R.string.formulario2_qtd_pessoas_casa,
-			R.string.formulario2_qtd_pessoas_quarto,
-			R.string.formulario2_doenca_titulo_falciforme,
-			R.string.formulario2_doenca_falciforme,
-			R.string.formulario2_prematuridade, R.string.formulario2_infec_hiv,
-			R.string.formulario2_imuno_deficiencia, R.string.formulario2_asma,
-			R.string.formulario2_corticoide, R.string.formulario2_cancer,
-			R.string.formulario2_doenca_pulmonar_cronica,
-			R.string.formulario2_doenca_renal_cronica,
-			R.string.formulario2_doenca_cardiaca,
-			R.string.formulario2_doenca_hematologica,
-			R.string.formulario2_doenca_hepatica,
-			R.string.formulario2_asplenia, R.string.formulario2_diabetes,
-			R.string.formulario2_n_swabs, R.string.formulario2_id_swabs_macula,
-			R.string.formulario2_id_swabs_visicula,
-			R.string.formulario2_id_swabs_crosta, R.string.formulario2_obs_caso };
+	public static final int[] campos = new int[] { 
+		//Elegibilidade do caso
+		R.string.formulario2_titulo_elegibilidade_do_caso,
+		R.string.formulario2_lesao_sugestiva, R.string.formulario2_tcle,
+		//Identificação
+		R.string.formulario2_titulo_identificacao,
+		R.string.formulario2_nome, R.string.formulario2_sexo, R.string.formulario2_data,
+		R.string.formulario2_residencia,
+		R.string.formulario2_tipo_logradouro, R.string.formulario2_nome_logradouro,
+		R.string.formulario2_qudra, R.string.formulario2_lote, R.string.formulario2_numero,
+		R.string.formulario2_complemento, R.string.formulario2_bairro,R.string.formulario2_municipio,
+		R.string.formulario2_nome_mae, R.string.formulario2_idade_mae, R.string.formulario2_nome_pai,
+		R.string.formulario2_peso_nascer, R.string.formulario2_idade_gestacional, R.string.formulario2_raca,
+		R.string.formulario2_tel_fixo, R.string.formulario2_tel_celular1, R.string.formulario2_operadora1,
+		R.string.formulario2_tel_celular2, R.string.formulario2_operadora2, R.string.formulario2_cobertura_psf,
+		//Sinais 24 - 48 horas antes do RASH
+		R.string.formulario2_titulo_sinais_rash,
+		R.string.formulario2_febre, R.string.formulario2_anorexia, R.string.formulario2_malestar, R.string.formulario2_dor_abdominal,
+		//Descrição do RASH Cutâneo
+		R.string.formulario2_titulo_descricao_rash,
+		R.string.formulario2_dt_rash, R.string.formulario2_loc_rash, R.string.formulario2_loc_rash2, R.string.formulario2_n_lesoes,
+		R.string.formulario2_rash_mp, R.string.formulario2_rash_v, R.string.formulario2_rash_c, R.string.formulario2_lesoes,  R.string.formulario2_rash, R.string.formulario2_diag_quem,
+		//Vacina contra Varicela
+		R.string.formulario2_titulo_vacina_contra_varicela,
+		R.string.formulario2_vac_varicela, R.string.formulario2_motivo_nao_vacinacao, R.string.formulario2_n_doses_varic,
+		R.string.formulario2_vac_varic_dt_dose1, R.string.formulario2_vac_varic_qual_dose1, R.string.formulario2_vac_varic_dt_dose2, R.string.formulario2_vac_varic_qual_dose2,
+		//Vacina MMR
+		R.string.formulario2_titulo_vacina_mmr,
+		R.string.formulario2_vac_triplice_viral, R.string.formulario2_n_doses_triplice_viral,
+		R.string.formulario2_mmr1, R.string.formulario2_mmr2,
+		//História pregressa de saúde da criança
+		R.string.formulario2_titulo_historia_pregressa,
+		R.string.formulario2_ja_teve_catapora, R.string.formulario2_contato_com_ja_teve_catapora,R.string.formulario2_local_contato,
+		R.string.formulario2_doenca_falciforme, R.string.formulario2_prematuridade, R.string.formulario2_infec_hiv,
+		R.string.formulario2_imuno_deficiencia, R.string.formulario2_asma, R.string.formulario2_corticoide, R.string.formulario2_cancer,
+		R.string.formulario2_doenca_pulmonar_cronica, R.string.formulario2_doenca_renal_cronica,
+		R.string.formulario2_doenca_cardiaca, R.string.formulario2_doenca_hematologica,
+		R.string.formulario2_doenca_hepatica, R.string.formulario2_asplenia, R.string.formulario2_diabetes,
+		//Antecedentes Familiares
+		R.string.formulario2_titulo_antecedentes_familiares,
+		R.string.formulario2_freq_creche1, R.string.formulario2_freq_creche2, R.string.formulario2_freq_serv_saude1,
+		R.string.formulario2_freq_serv_saude2, R.string.formulario2_hospitalizacao, R.string.formulario2_nc_cas_casa5,
+		R.string.formulario2_nc_cas_casa10, R.string.formulario2_qtd_pessoas_casa, R.string.formulario2_qtd_pessoas_quarto,
+		//Swabs Coletados
+		R.string.formulario2_titulo_swabs_coletados,
+		R.string.formulario2_caso_casa_crianca, R.string.formulario2_n_swabs, R.string.formulario2_id_swabs_macula,
+		R.string.formulario2_id_swabs_visicula, R.string.formulario2_id_swabs_crosta, R.string.formulario2_obs_caso};
 
+	
 	/** keys Formlario 2 */
 	public static final int NOME = 0;
 	public static final int SEXO = 1;

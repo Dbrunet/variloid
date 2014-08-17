@@ -2,6 +2,16 @@
 <resources>
 
     <!-- Formulário 3 -->
+    
+    <!-- Titulos -->
+    <string name="formulario3_titulo_elegibilidade_do_caso">Elegibilidade do caso</string>
+    <string name="formulario3_titulo_identificacao">Identificação</string>
+    <string name="formulario3_titulo_vacina_contra_varicela">Vacina contra Varicela</string>
+    <string name="formulario3_titulo_vacina_mmr">Vacina MMR</string>
+    <string name="formulario3_titulo_historia_pregressa">História pregressa de saúde da criança</string>
+    <string name="formulario3_titulo_antecedentes_familiares">Antecedentes Familiares</string>
+    
+    <string name="formulario3_crianca_mora_na_vizinhanca">A criança mora na vizinhança ou no mesmo bairro do caso?</string>
     <string name="formulario3_nome">Nome da Criança</string>
     <string name="formulario3_sexo">Sexo da Criança</string>
     <string name="formulario3_data">Data de nascimento</string>
@@ -16,9 +26,7 @@
     <string name="formulario3_numero">Número</string>
     <string name="formulario3_complemento">Complemento</string>
     <string name="formulario3_bairro">Bairro</string>
-
-    <!-- Título -->
-    <string name="formulario3_titulo_criterio_inclusao">CRITÉRIO DE INCLUSÃO</string>
+    <string name="formulario3_municipio">Município</string>
 
     <!-- <string name="formulario3_rash">A erupção maculo-vesiculo-papular difusa (sem outra causa aparente) teve início agudo?</string> -->
     <string name="formulario3_tcle">O TCLE foi assinado?</string>
@@ -36,8 +44,8 @@
     <string name="formulario3_idade_gestacional">Idade Gestacional</string>
     <string name="formulario3_raca">Raça</string>
 
-    <!-- Título -->
-    <string name="formulario3_titulo_vacina_contra_varicela">VACINA CONTRA VARICELA</string>
+    <string name="formulario3_crianca_recebeu_vacina_catapora">A criança recebeu alguma vacina contra catapora?</string>
+    <string name="formulario3_razoes_nao_vacinacao">Se não vacinou, quais são a(s) razçes da não vacinação?</string>
     
     <string name="formulario3_n_doses_varic">Número de doses recebidas</string>
     <string name="formulario3_vac_varic_dt_dose1">Data da 1a dose da vacina</string>
@@ -45,9 +53,6 @@
     <string name="formulario3_vac_varic_dt_dose2">Data da 2a dose</string>
     <string name="formulario3_vac_varic_qual_dose2">Qual vacina foi utilizada na 2a dose?</string>
 
-    <!-- Título -->
-    <string name="formulario3_titulo_data_vacina_mmr">Data da vacina MMR (tríplice viral)</string>
-    
     <string name="formulario3_vac_triplice_viral">A criança recebeu a vacina MMR (triplice viral)?</string>
     <string name="formulario3_n_doses_triplice_viral">Número de doses recebidas</string>
     <string name="formulario3_mmr1">Data da dose 1</string>
@@ -64,9 +69,6 @@
     <string name="formulario3_qtd_pessoas_casa">Quantas pessoas existem na casa (incluindo a criança)?</string>
     <string name="formulario3_qtd_pessoas_quarto">Quantas pessoas dormem no mesmo cômodo que a criança?</string>
 
-    <!-- Título -->
-    <string name="formulario3_doenca_titulo_falciforme">HISTÓRIA PREGRESSA DE SAÚDE</string>
-    
     <string name="formulario3_doenca_falciforme">Doença falciforme</string>
     <string name="formulario3_prematuridade">Prematuridade</string>
     <string name="formulario3_infec_hiv">Infecção por HIV e/ou AIDS</string>
@@ -81,6 +83,7 @@
     <string name="formulario3_doenca_hepatica">Doença hepática crônica</string>
     <string name="formulario3_asplenia">Asplenia congênita ou funcional</string>
     <string name="formulario3_diabetes">Diabetes</string>
+    <string name="formulario3_caso_casa_crianca">Foi enviado o caso da residência/local que a criança estava?</string>
     <string name="formulario3_obs_caso">Observações relacionadas ao caso</string>
     <!-- Fim formulário 3 -->
 

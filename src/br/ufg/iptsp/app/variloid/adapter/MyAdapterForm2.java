@@ -53,37 +53,55 @@ public class MyAdapterForm2 extends ArrayAdapter<Integer> {
 		}
 
 		switch (position) {
-		case 14:
+		case 0:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
 			holder.titulo.setText(context.getString(objects.get(position)));
 			break;
-		case 27:
+		case 3:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
 			holder.titulo.setText(context.getString(objects.get(position)));
 			break;
-		case 32:
+		case 28:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
 			holder.titulo.setText(context.getString(objects.get(position)));
 			break;
-		case 47:
+		case 33:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
 			holder.titulo.setText(context.getString(objects.get(position)));
 			break;
-		case 53:
+		case 44:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
 			holder.titulo.setText(context.getString(objects.get(position)));
 			break;
-		case 69:
+		case 52:
+			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
+			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
+			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
+			holder.titulo.setText(context.getString(objects.get(position)));
+			break;
+		case 57:
+			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
+			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
+			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
+			holder.titulo.setText(context.getString(objects.get(position)));
+			break;
+		case 75:
+			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
+			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
+			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
+			holder.titulo.setText(context.getString(objects.get(position)));
+			break;
+		case 85:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));

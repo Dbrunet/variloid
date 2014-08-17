@@ -48,6 +48,8 @@ public class AdapterPendentes extends ArrayAdapter<Entrevista> {
 		
 		holder.imageView.setVisibility(View.GONE);
 		holder.titulo.setText("NID: "+objects.get(position).getId());
+		holder.relativeLayout
+		.setBackgroundResource(R.drawable.seletor_ui_card);
 		
 		if(objects.get(position).getId()!=0){
 			holder.relativeLayout.setVisibility(View.VISIBLE);

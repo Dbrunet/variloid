@@ -2,6 +2,20 @@
 <resources>
     
     <!-- Formulário 2 -->
+    
+    <!-- Título -->
+    <string name="formulario2_titulo_elegibilidade_do_caso">Elegibilidade do caso</string>
+    <string name="formulario2_titulo_identificacao">Identificação</string>
+    <string name="formulario2_titulo_sinais_rash">Sinais 24&#8211;48 horas antes do RASH</string>
+    <string name="formulario2_titulo_descricao_rash">Descrição do RASH Cutâneo</string>
+    <string name="formulario2_titulo_vacina_contra_varicela">Vacina contra Varicela</string>
+    <string name="formulario2_titulo_vacina_mmr">Vacina MMR</string>
+    <string name="formulario2_titulo_historia_pregressa">História pregressa de saúde da criança</string>
+    <string name="formulario2_titulo_antecedentes_familiares">Antecedentes Familiares</string>
+    <string name="formulario2_titulo_swabs_coletados">Swabs Coletados</string>
+    
+    <string name="formulario2_lesao_sugestiva">Lesão sugestiva de varicela</string>
+    <string name="formulario2_tcle">O TCLE foi assinado?</string>
     <string name="formulario2_nome">Nome da Criança</string>
     <string name="formulario2_sexo">Sexo da Criança</string>
     <string name="formulario2_data">Data de nascimento</string>
@@ -16,12 +30,8 @@
     <string name="formulario2_numero">Número</string>
     <string name="formulario2_complemento">Complemento</string>
     <string name="formulario2_bairro">Bairro</string>
-    
-    <!-- Título -->
-    <string name="formulario2_titulo_criterio_inclusao">CRITÉRIO DE INCLUSÃO</string>
-    
+    <string name="formulario2_municipio">Município</string>
     <string name="formulario2_rash">A erupção maculo-vesiculo-papular difusa (sem outra causa aparente) teve início agudo?</string>
-    <string name="formulario2_tcle">O TCLE foi assinado?</string>
     <string name="formulario2_nome_mae">Nome da Mãe</string>
  	<string name="formulario2_idade_mae">Idade da mãe (anos)</string>
 	<string name="formulario2_nome_pai">Nome do Pai</string>
@@ -37,16 +47,10 @@
 	<string name="formulario2_cobertura_psf">A criança é cadastrada no PSF?</string>
 	<string name="formulario2_data_inicio_varicela">Data do início da catapora</string>
 	
-	<!-- Título -->
-	<string name="formulario2_titulo_rash_sinais">SINAIS 24&#8211;48 HORAS ANTES DO RASH</string>
-	
 	<string name="formulario2_febre">Febre (aferida)</string>
 	<string name="formulario2_anorexia">Anorexia</string>
 	<string name="formulario2_malestar">Mal estar (enjoadinha)</string>
 	<string name="formulario2_dor_abdominal">Dor abdomina</string>
-	
-	<!-- Título -->
-	<string name="formulario2_titulo_rash">RASH</string>
 	
 	<string name="formulario2_dt_rash">Data do início do rash</string>
 	<string name="formulario2_loc_rash">Localização do rash</string>
@@ -63,17 +67,11 @@
 	<string name="formulario2_vac_varicela">A criança recebeu alguma vacina contra catapora?</string>
 	<string name="formulario2_motivo_nao_vacinacao">Quais são a(s) razões da não vacinação?</string>
 	
-	<!-- Título -->
-	<string name="formulario2_titulo_vacina_contra_varicela">VACINA CONTRA VARICELA</string>
-	
 	<string name="formulario2_n_doses_varic">Número de doses recebidas</string>
 	<string name="formulario2_vac_varic_dt_dose1">Data da 1a dose da vacina</string>
 	<string name="formulario2_vac_varic_qual_dose1">Qual vacina foi utilizada na 1a dose?</string>
 	<string name="formulario2_vac_varic_dt_dose2">Data da 2a dose</string>
 	<string name="formulario2_vac_varic_qual_dose2">Qual vacina foi utilizada na 2a dose?</string>
-	
-	<!-- Título -->
-	<string name="formulario2_titulo_data_vacina_mmr">Data da vacina MMR (tríplice viral)</string>
 	
 	<string name="formulario2_vac_triplice_viral">A criança recebeu a vacina MMR (triplice viral)?</string>
 	<string name="formulario2_n_doses_triplice_viral">Número de doses recebidas</string>
@@ -91,9 +89,6 @@
 	<string name="formulario2_qtd_pessoas_casa">Quantas pessoas existem na casa (incluindo a criança com catapora)?</string>
 	<string name="formulario2_qtd_pessoas_quarto">Quantas pessoas dormem no mesmo cômodo que a criança?</string>
 	
-	<!-- Título -->
-	<string name="formulario2_doenca_titulo_falciforme">HISTÓRIA PREGRESSA DE SAÚDE</string>
-	
 	<string name="formulario2_doenca_falciforme">Doença falciforme</string>
 	<string name="formulario2_prematuridade">Prematuridade</string>
 	<string name="formulario2_infec_hiv">Infecção por HIV e/ou AIDS</string>
@@ -108,6 +103,8 @@
 	<string name="formulario2_doenca_hepatica">Doença hepática crônica</string>
 	<string name="formulario2_asplenia">Asplenia congênita ou funcional</string>
 	<string name="formulario2_diabetes">Diabetes</string>
+	
+	<string name="formulario2_caso_casa_crianca">Foi enviado o caso da residência/local que a criança estava?</string>
 	<string name="formulario2_n_swabs">Número de swabs coletados</string>
 	<string name="formulario2_id_swabs_macula">ID do swab coletado da lesão máculo-papular</string>
 	<string name="formulario2_id_swabs_visicula">ID do swab coletado da vesícula</string>
@@ -183,7 +180,7 @@
     <string name="formulario2_opcao_vacina_tetraviral">tetraviral</string>
     <string name="formulario2_opcao_vacina_glaxo_varilrix">mono Glaxo/Varilrix</string>
     <string name="formulario2_opcao_vacina_merck_varivax">mono Merck/Varivax</string>
-    <string name="formulario2_opcao_crianca_com_catapora">a criança com catapora</string>
+    <string name="formulario2_opcao_crianca_com_catapora">a criança</string>
     <string name="formulario2_opcao_pais_outra_crianca_menos_que_dez_anos">outra criança ( &lt; 10a )</string>
     <string name="formulario2_opcao_familia_trabalha_creche">familiar que trabalha na creche</string>
     <string name="formulario2_opcao_criancas_ate_dez_anos">outra criança até 10 anos</string>

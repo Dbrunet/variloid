@@ -53,14 +53,12 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 	private double latitude;
 	private double longitude;
 	private List<Integer> list;
-	private boolean isPendente, listaPendentes;
+	private boolean isPendente;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_formulario);
-		
-		Bundle bundle = getIntent().getExtras();
 		
 		ServicoConexao.verificaTipoConexao(this);
 		getSupportActionBar().setTitle(getString(R.string.formulario_dois));
@@ -73,11 +71,11 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		
 		for (String strings : VariloidForm2.idCampos) {
 			
-			if (Data.mapFormularioDois.size() != VariloidForm2.idCampos.length) {
+			if (Data.mapFormularioDois.size() == 0) {
 				Data.mapFormularioDois.add(Data.FORM2_KEY.concat(strings), "");
 			}
 
-			if (Data.formularioDois.getListInativar().size() != VariloidForm2.idCampos.length && bundle==null)
+			if (Data.formularioDois.getListInativar().size() != VariloidForm2.idCampos.length)
 				Data.formularioDois.getListInativar().add(false);
 			if (Data.formularioDois.getListSucesso().size() != VariloidForm2.idCampos.length)
 				Data.formularioDois.getListSucesso().add(false);
@@ -1336,7 +1334,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			radioButton35.setVisibility(View.VISIBLE);
 			radioButton35.setText(getString(R.string.formulario2_operadoras_vivo));
 			
-			if(TextUtils.isEmpty(Data.formularioDois.getOperadoraCelular2())){
+			if(!TextUtils.isEmpty(Data.formularioDois.getOperadoraCelular2())){
 				
 				if(Data.formularioDois.getOperadoraCelular2().indexOf(getString(R.string.formulario2_operadoras_tim))!=-1){
 					radioButton32.setChecked(true);
@@ -1388,11 +1386,12 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			final RadioButton radioButton37 = (RadioButton) layout13.findViewById(R.id.radio2);
 			radioButton37.setText(getString(R.string.formulario2_opcao_nao));
 			
-			if(TextUtils.isEmpty(Data.formularioDois.getCriancaCadastradaPSF()))
-			if(Data.formularioDois.getCriancaCadastradaPSF().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
-				radioButton36.setChecked(true);
-			}else if(Data.formularioDois.getCriancaCadastradaPSF().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao))){
-				radioButton37.setChecked(true);
+			if(!TextUtils.isEmpty(Data.formularioDois.getCriancaCadastradaPSF())){
+				if(Data.formularioDois.getCriancaCadastradaPSF().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
+					radioButton36.setChecked(true);
+				}else if(Data.formularioDois.getCriancaCadastradaPSF().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao))){
+					radioButton37.setChecked(true);
+				}
 			}
 			
 			alert.setTitle(getString(R.string.formulario2_cobertura_psf));
@@ -1467,7 +1466,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			radioButton40.setVisibility(View.VISIBLE);
 			radioButton40.setText(getString(R.string.formulario2_opcao_ignorado));
 			
-			if(TextUtils.isEmpty(Data.formularioDois.getFebre())){
+			if(!TextUtils.isEmpty(Data.formularioDois.getFebre())){
 				
 				if(Data.formularioDois.getFebre().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
 					radioButton38.setChecked(true);
@@ -1517,7 +1516,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			radioButton43.setVisibility(View.VISIBLE);
 			radioButton43.setText(getString(R.string.formulario2_opcao_ignorado));
 			
-			if(TextUtils.isEmpty(Data.formularioDois.getAnorexia())){
+			if(!TextUtils.isEmpty(Data.formularioDois.getAnorexia())){
 				
 				if(Data.formularioDois.getAnorexia().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
 					radioButton41.setChecked(true);
@@ -1567,7 +1566,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			radioButton46.setVisibility(View.VISIBLE);
 			radioButton46.setText(getString(R.string.formulario2_opcao_ignorado));
 			
-			if(TextUtils.isEmpty(Data.formularioDois.getMalEstar())){
+			if(!TextUtils.isEmpty(Data.formularioDois.getMalEstar())){
 				
 				if(Data.formularioDois.getMalEstar().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
 					radioButton44.setChecked(true);
@@ -1617,7 +1616,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			radioButton49.setVisibility(View.VISIBLE);
 			radioButton49.setText(getString(R.string.formulario2_opcao_ignorado));
 			
-			if(TextUtils.isEmpty(Data.formularioDois.getDorAbdominal())){
+			if(!TextUtils.isEmpty(Data.formularioDois.getDorAbdominal())){
 				
 				if(Data.formularioDois.getDorAbdominal().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
 					radioButton47.setChecked(true);
@@ -1757,7 +1756,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			final CheckBox checkBox56 = (CheckBox) layout19.findViewById(R.id.checkBox5);
 			checkBox56.setText(getString(R.string.formulario2_opcao_cavidade_oral));
 			
-			if(TextUtils.isEmpty(Data.formularioDois.getPrimeiralocalizacaoRash()))
+			if(!TextUtils.isEmpty(Data.formularioDois.getPrimeiralocalizacaoRash()))
 			if(Data.formularioDois.getPrimeiralocalizacaoRash().indexOf(getString(R.string.formulario2_opcao_face_cabeca))!=-1){
 				checkBox52.setChecked(true);
 			}else if(Data.formularioDois.getPrimeiralocalizacaoRash().indexOf(getString(R.string.formulario2_opcao_torax))!=-1){
@@ -2594,7 +2593,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			radioButton86.setVisibility(View.VISIBLE);
 			radioButton86.setText(getString(R.string.formulario2_opcao_vacina_merck_varivax));
 			
-			if(TextUtils.isEmpty(Data.formularioDois.getQualVacinaUsadaPrimeiraDose())){
+			if(!TextUtils.isEmpty(Data.formularioDois.getQualVacinaUsadaPrimeiraDose())){
 				
 				if(Data.formularioDois.getQualVacinaUsadaPrimeiraDose().equalsIgnoreCase(getString(R.string.formulario2_opcao_vacina_tetraviral))){
 					radioButton84.setChecked(true);
@@ -2882,7 +2881,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			radioButton92.setVisibility(View.VISIBLE);
 			radioButton92.setText(getString(R.string.formulario2_opcao_nao_sabe));
 			
-			if(TextUtils.isEmpty(Data.formularioDois.getAlguemFrequentouCreche())){
+			if(!TextUtils.isEmpty(Data.formularioDois.getAlguemFrequentouCreche())){
 				
 				if(Data.formularioDois.getAlguemFrequentouCreche().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
 					radioButton90.setChecked(true);
@@ -3222,7 +3221,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			radioButton107.setVisibility(View.VISIBLE);
 			radioButton107.setText(getString(R.string.formulario2_opcao_nao_sabe));
 			
-			if(TextUtils.isEmpty(Data.formularioDois.getMaeTrabalhaFora())){
+			if(!TextUtils.isEmpty(Data.formularioDois.getMaeTrabalhaFora())){
 				
 				if(Data.formularioDois.getMaeTrabalhaFora().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
 					radioButton105.setChecked(true);
@@ -4198,7 +4197,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			final EditText numeroIdSwabs = new EditText(Formulario2Activity.this);
 			int maxLength24 = 3;    
 			numeroIdSwabs.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength24)});
-			numeroIdSwabs.setInputType(InputType.TYPE_CLASS_NUMBER);
+			numeroIdSwabs.setInputType(InputType.TYPE_CLASS_TEXT);
 			
 			if (!TextUtils.isEmpty(Data.formularioDois
 					.getIdSwabColetadoMaculoPapular()))
@@ -4232,7 +4231,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			final EditText numeroIdSwabsVesicula = new EditText(Formulario2Activity.this);
 			int maxLength25 = 3;    
 			numeroIdSwabsVesicula.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength25)});
-			numeroIdSwabsVesicula.setInputType(InputType.TYPE_CLASS_NUMBER);
+			numeroIdSwabsVesicula.setInputType(InputType.TYPE_CLASS_TEXT);
 			
 			if (!TextUtils.isEmpty(Data.formularioDois
 					.getIdSwabColetadoVesicula()))
@@ -4266,7 +4265,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			final EditText numeroIdSwabsCrosta = new EditText(Formulario2Activity.this);
 			int maxLength26 = 3;    
 			numeroIdSwabsCrosta.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength26)});
-			numeroIdSwabsCrosta.setInputType(InputType.TYPE_CLASS_NUMBER);
+			numeroIdSwabsCrosta.setInputType(InputType.TYPE_CLASS_TEXT);
 			
 			if (!TextUtils.isEmpty(Data.formularioDois
 					.getIdSwabColetadoCrosta()))
