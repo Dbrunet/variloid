@@ -101,7 +101,7 @@ public class MyAdapterForm2 extends ArrayAdapter<Integer> {
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));
 			holder.titulo.setText(context.getString(objects.get(position)));
 			break;
-		case 85:
+		case 86:
 			holder.relativeLayout.setBackgroundResource(Color.TRANSPARENT);
 			holder.titulo.setGravity(Gravity.CENTER_HORIZONTAL);
 			holder.titulo.setTextColor(Color.parseColor("#CC0000"));

@@ -21,6 +21,14 @@
         android:visibility="gone" />
 
     <Button
+        android:id="@+id/button_tirar_foto_panoramica"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
+        android:visibility="gone" />
+    
+    <Button
         android:id="@+id/button_avancar_finalizar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

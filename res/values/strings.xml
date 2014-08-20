@@ -40,8 +40,9 @@
     <string name="lista_de_pendentes">Entrevistas não finalizadas</string>
     <string name="finalizar_caso_controle">Finalizar</string>
     <string name="caso_controle_pendente">Enviar Como Pendente</string>
-    <string name="tirar_foto_cartao">Tirar foto do cartão</string>
-    <string name="tirar_foto_lesao">Tirar foto da Lesão Coletada</string>
+    <string name="tirar_foto_cartao">Foto do cartão de vacina</string>
+    <string name="tirar_foto_lesao">Foto da Lesão</string>
+    <string name="tirar_foto_panoramica">Foto panorâmica</string>
 
     <!-- Formulario 1 -->
     <string name="faixa_etaria_titulo">Escolhe a Faixa Etária</string>

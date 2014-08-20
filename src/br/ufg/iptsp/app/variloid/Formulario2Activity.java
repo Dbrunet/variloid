@@ -48,7 +48,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 	private LayoutInflater layoutInflater;
 	private MyAdapterForm2 myAdapter;
 	LocationManager locationManager;
-	private Button buttonTirarFotoLesao;
+	private Button buttonTirarFotoLesao, buttonTirarFotoPanoramica, buttonTirarFotoCartaoVacina;
 	private Uri imageUri;
 	private double latitude;
 	private double longitude;
@@ -87,6 +87,14 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		buttonTirarFotoLesao = (Button) layoutFooter.findViewById(R.id.button_tirar_foto_lesao);
 		buttonTirarFotoLesao.setVisibility(View.VISIBLE);
 		
+		buttonTirarFotoCartaoVacina = (Button) layoutFooter.findViewById(R.id.button_tirar_foto_cartao);
+		buttonTirarFotoCartaoVacina.setText(getString(R.string.tirar_foto_cartao));
+		buttonTirarFotoCartaoVacina.setVisibility(View.VISIBLE);
+		
+		buttonTirarFotoPanoramica = (Button) layoutFooter.findViewById(R.id.button_tirar_foto_panoramica);
+		buttonTirarFotoPanoramica.setText(getString(R.string.tirar_foto_panoramica));
+		buttonTirarFotoPanoramica.setVisibility(View.VISIBLE);
+		
 		if(Data.mapFormularioDois.get(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA))==null){
 			buttonTirarFotoLesao.setText(getString(R.string.tirar_foto_lesao));
 		}else{
@@ -117,6 +125,14 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					});
 					alert.show();
 				}	
+			}
+		});
+		
+		buttonTirarFotoPanoramica.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//TODO
 			}
 		});
 
@@ -942,7 +958,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			});
 			alert.show();
 			break;
-		case VariloidForm2.RASH:
+		case VariloidForm2.ERUPCAO_DIFUSA_AGUDA:
 			View layout9 = layoutInflater.inflate(R.layout.group_box_formulario, null);
 			final RadioButton radioButton24 = (RadioButton) layout9.findViewById(R.id.radio1);
 			radioButton24.setText(getString(R.string.formulario2_opcao_sim));
@@ -1422,40 +1438,40 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			});
 			alert.show();
 			break;
-		case VariloidForm2.DT_INICIO_VARICELA:
-			final EditText dataInicioVar = new EditText(Formulario2Activity.this);
-			dataInicioVar.setInputType(InputType.TYPE_CLASS_DATETIME);
-			dataInicioVar.addTextChangedListener(Mask.insert(
-					"##/##/####", dataInicioVar));
-			
-			if(!TextUtils.isEmpty(Data.formularioDois.getDataInicioCatapora())){
-				String replaceCampo = Data.formularioDois.getDataInicioCatapora().replaceAll("/", "");
-				dataInicioVar.setText(replaceCampo);
-			}
-			
-			alert.setTitle(getString(R.string.formulario2_data_inicio_varicela));
-			alert.setView(dataInicioVar);
-			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-
-					if(!TextUtils.isEmpty(dataInicioVar.getText().toString())){
-						setPreferences(arg2, dataInicioVar.getText().toString(), false,  true);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-					}else{
-						setPreferences(arg2, "", false, false);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
-					}
-					dialog.cancel();
-				}
-			});
-
-			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					dialog.cancel();
-				}
-			});
-			alert.show();
-			break;
+//		case VariloidForm2.DT_INICIO_VARICELA:
+//			final EditText dataInicioVar = new EditText(Formulario2Activity.this);
+//			dataInicioVar.setInputType(InputType.TYPE_CLASS_DATETIME);
+//			dataInicioVar.addTextChangedListener(Mask.insert(
+//					"##/##/####", dataInicioVar));
+//			
+//			if(!TextUtils.isEmpty(Data.formularioDois.getDataInicioCatapora())){
+//				String replaceCampo = Data.formularioDois.getDataInicioCatapora().replaceAll("/", "");
+//				dataInicioVar.setText(replaceCampo);
+//			}
+//			
+//			alert.setTitle(getString(R.string.formulario2_data_inicio_varicela));
+//			alert.setView(dataInicioVar);
+//			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int whichButton) {
+//
+//					if(!TextUtils.isEmpty(dataInicioVar.getText().toString())){
+//						setPreferences(arg2, dataInicioVar.getText().toString(), false,  true);
+//						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+//					}else{
+//						setPreferences(arg2, "", false, false);
+//						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+//					}
+//					dialog.cancel();
+//				}
+//			});
+//
+//			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int whichButton) {
+//					dialog.cancel();
+//				}
+//			});
+//			alert.show();
+//			break;
 		case VariloidForm2.FEBRE:
 			View layout14 = layoutInflater.inflate(R.layout.group_box_formulario, null);
 			final RadioButton radioButton38 = (RadioButton) layout14.findViewById(R.id.radio1);
@@ -2506,7 +2522,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 							setPreferences(arg2, inputNDosesVaric.getText().toString(), false,  true);
 							((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
 							
-							for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_TRIPLICE; i++) {
+							for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_MMR; i++) {
 								setPreferences(i, "", true,  false);
 							}
 							for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
@@ -2517,7 +2533,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 							setPreferences(arg2, inputNDosesVaric.getText().toString(), false,  true);
 							((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
 							
-							for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_TRIPLICE; i++) {
+							for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_MMR; i++) {
 								setPreferences(i, "", false,  false);
 							}
 							for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
@@ -2530,7 +2546,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 						setPreferences(arg2, "", false, false);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
 						
-						for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_TRIPLICE; i++) {
+						for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_MMR; i++) {
 							setPreferences(i, "", false,  false);
 						}
 						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
@@ -3211,56 +3227,56 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			});
 			alert.show();
 			break;
-		case VariloidForm2.MAE_TRABALHA:
-			View layout36 = layoutInflater.inflate(R.layout.group_box_formulario, null);
-			final RadioButton radioButton105 = (RadioButton) layout36.findViewById(R.id.radio1);
-			radioButton105.setText(getString(R.string.formulario2_opcao_sim));
-			final RadioButton radioButton106 = (RadioButton) layout36.findViewById(R.id.radio2);
-			radioButton106.setText(getString(R.string.formulario2_opcao_nao));
-			final RadioButton radioButton107 = (RadioButton) layout36.findViewById(R.id.radio3);
-			radioButton107.setVisibility(View.VISIBLE);
-			radioButton107.setText(getString(R.string.formulario2_opcao_nao_sabe));
-			
-			if(!TextUtils.isEmpty(Data.formularioDois.getMaeTrabalhaFora())){
-				
-				if(Data.formularioDois.getMaeTrabalhaFora().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
-					radioButton105.setChecked(true);
-				}else if(Data.formularioDois.getMaeTrabalhaFora().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao))){
-					radioButton106.setChecked(true);
-				}else if(Data.formularioDois.getMaeTrabalhaFora().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao_sabe))){
-					radioButton107.setChecked(true);
-				}
-			}
-			
-			alert.setTitle(getString(R.string.formulario2_mae_trabalha));
-			alert.setView(layout36);
-			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-
-					if(radioButton105.isChecked()){
-						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-					}else if(radioButton106.isChecked()){
-						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-					}else if(radioButton107.isChecked()){
-						setPreferences(arg2, getString(R.string.formulario2_opcao_nao_sabe), false, true);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-					}else{
-						setPreferences(arg2, "", false, false);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
-					}
-					dialog.cancel();
-				}
-			});
-
-			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					dialog.cancel();
-				}
-			});
-			alert.show();
-			break;
+//		case VariloidForm2.MAE_TRABALHA:
+//			View layout36 = layoutInflater.inflate(R.layout.group_box_formulario, null);
+//			final RadioButton radioButton105 = (RadioButton) layout36.findViewById(R.id.radio1);
+//			radioButton105.setText(getString(R.string.formulario2_opcao_sim));
+//			final RadioButton radioButton106 = (RadioButton) layout36.findViewById(R.id.radio2);
+//			radioButton106.setText(getString(R.string.formulario2_opcao_nao));
+//			final RadioButton radioButton107 = (RadioButton) layout36.findViewById(R.id.radio3);
+//			radioButton107.setVisibility(View.VISIBLE);
+//			radioButton107.setText(getString(R.string.formulario2_opcao_nao_sabe));
+//			
+//			if(!TextUtils.isEmpty(Data.formularioDois.getMaeTrabalhaFora())){
+//				
+//				if(Data.formularioDois.getMaeTrabalhaFora().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
+//					radioButton105.setChecked(true);
+//				}else if(Data.formularioDois.getMaeTrabalhaFora().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao))){
+//					radioButton106.setChecked(true);
+//				}else if(Data.formularioDois.getMaeTrabalhaFora().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao_sabe))){
+//					radioButton107.setChecked(true);
+//				}
+//			}
+//			
+//			alert.setTitle(getString(R.string.formulario2_mae_trabalha));
+//			alert.setView(layout36);
+//			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int whichButton) {
+//
+//					if(radioButton105.isChecked()){
+//						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
+//						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+//					}else if(radioButton106.isChecked()){
+//						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
+//						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+//					}else if(radioButton107.isChecked()){
+//						setPreferences(arg2, getString(R.string.formulario2_opcao_nao_sabe), false, true);
+//						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+//					}else{
+//						setPreferences(arg2, "", false, false);
+//						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+//					}
+//					dialog.cancel();
+//				}
+//			});
+//
+//			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int whichButton) {
+//					dialog.cancel();
+//				}
+//			});
+//			alert.show();
+//			break;
 		case VariloidForm2.ES_CMAE:
 			View layout37 = layoutInflater.inflate(R.layout.group_box_formulario, null);
 			final RadioButton radioButton108 = (RadioButton) layout37.findViewById(R.id.radio1);
@@ -4395,10 +4411,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			Data.formularioDois.setBairro(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
 			break;
-		case VariloidForm2.TITULO_CRITERIO_INCLUSAO:
-			//
-			break;
-		case VariloidForm2.RASH:
+		case VariloidForm2.ERUPCAO_DIFUSA_AGUDA:
 			Data.formularioDois.setErupcaoDifusaAgudo(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
 			break;
@@ -4442,10 +4455,10 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			Data.formularioDois.setCriancaCadastradaPSF(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
 			break;
-		case VariloidForm2.DT_INICIO_VARICELA:
-			Data.formularioDois.setDataInicioCatapora(string);
-			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
-			break;
+//		case VariloidForm2.DT_INICIO_VARICELA:
+//			Data.formularioDois.setDataInicioCatapora(string);
+//			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
+//			break;
 		case VariloidForm2.TITULO_SINAIS_ANTES_DO_RASH:
 			//
 			break;
@@ -4464,9 +4477,6 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		case VariloidForm2.DOR_ABDOMINAL:
 			Data.formularioDois.setDorAbdominal(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
-			break;
-		case VariloidForm2.TITULO_RASH:
-			//
 			break;
 		case VariloidForm2.DT_RASH:
 			Data.formularioDois.setDataInicioRash(string);
@@ -4524,9 +4534,6 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			Data.formularioDois.setRazoesNaoVacinacao(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
 			break;
-		case VariloidForm2.TITULO_VACINA_CONTRA_VARICELA:
-			//
-			break;
 		case VariloidForm2.N_DOSES_VARIC:
 			Data.formularioDois.setNumDosesRecebidasContraVaricela(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
@@ -4546,9 +4553,6 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		case VariloidForm2.VAC_VARIC_QUAL_DOSE2:
 			Data.formularioDois.setQualVacinaUsadaSegundaDose(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
-			break;
-		case VariloidForm2.TITULO_VACINA_TRIPLICE:
-			//
 			break;
 		case VariloidForm2.VACTRIPLICE:
 			Data.formularioDois.setCriancaRecebeuVacinaTripliceViral(string);
@@ -4586,10 +4590,10 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			Data.formularioDois.setCriancaInternou(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
 			break;
-		case VariloidForm2.MAE_TRABALHA:
-			Data.formularioDois.setMaeTrabalhaFora(string);
-			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
-			break;
+//		case VariloidForm2.MAE_TRABALHA:
+//			Data.formularioDois.setMaeTrabalhaFora(string);
+//			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
+//			break;
 		case VariloidForm2.ES_CMAE:
 			Data.formularioDois.setEscolaridadeMae(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
@@ -4609,9 +4613,6 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		case VariloidForm2.QTD_EPESSOAS_QTO:
 			Data.formularioDois.setQuantasPessoasDormemMesmoComodoCrianca(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
-			break;
-		case VariloidForm2.TITULO_DOENCAFALCIFORME:
-			//
 			break;
 		case VariloidForm2.DOENCAFALCIFORME:
 			Data.formularioDois.setDoencaFalciforme(string);
