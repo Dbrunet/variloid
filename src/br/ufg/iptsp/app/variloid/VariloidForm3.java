@@ -7,61 +7,6 @@ public class VariloidForm3 {
 	public static final String FORM3_IMAGEM = "form3_imagem_";
 	public static final String FORM3_INATIVAR = "form3_inativar_";
 
-	/** id campo Formlario 3 */
-//	public static final String[] idCampos = new String[] { "nomeCrianca",
-//			"sexo", "dataNascimento", "criancaCataporaAnt",
-//			"contatoPessoaCatapora", "localContato", "residencia",
-//			"tipoLogradouro", "nomeLogradouro", "quadra", "lote", "numero",
-//			"complemento", "bairro", "????1", "tcleAssinado",
-//			"nomeMae", "idadeMae", "nomePai", "telefoneFixo", "celular1",
-//			"operadoraCelular1", "celular2", "operadoraCelular2",
-//			"criancaCadastradaPSF", "pesoNascimentoGramas", "idadeGestacional",
-//			"raca","????2", "numDosesRecebidasContraVaricela", "dataPrimeiraDose",
-//			"qualVacinaUsadaPrimeiraDose", "dataSegundaDose",
-//			"qualVacinaUsadaSegundaDose", "????3",
-//			"criancaRecebeuVacinaTripliceViral", "numDosesRecebidasContraTripliceViral",//DOIS CASOS NOVOS
-//			"dataPrimeiraDoseMMR","dataSegundaDoseMMR", "alguemFrequentouCreche",
-//			"quemFamiliaFrequentouCreche", "alguemFrequentouServicoSaude",
-//			"quemFamiliaFrequentouServicoSaude", "criancaInternou",
-//			"maeTrabalhaFora", "escolaridadeMae",
-//			"numCriancasMenos5anosDomicilio",
-//			"numCriancasMenos10anosDomicilio", "quantasPessoasCasa",
-//			"quantasPessoasDormemMesmoComodoCrianca", "????4", "doencaFalciforme",
-//			"prematuridade", "infeccaoHIVeAIDS", "imunodeficiencia", "asma",
-//			"usoCorticoideSistemico", "cancer", "doencaPulmonarCronica",
-//			"doencaRenalCronica", "doencaCardiaca",
-//			"doencaHematologicaCronica", "doencaHepaticaCronica",
-//			"aspleniaCongenitaOuFuncional", "diabetes",
-//			"observacoesRelacionadasCaso" };
-
-	public static final String[] idCampos = new String[] { 
-		//Elegibilidade do caso
-		"????1",
-		"criancaCataporaAnt", "criancaMoraVizinhanca", "tcleAssinado", 
-		//Identificação
-		"????2",
-		"nomeCrianca", "sexo", "dataNascimento", "residencia", "tipoLogradouro", "nomeLogradouro", "quadra",
-		"lote", "numero", "complemento", "bairro", "municipio", "nomeMae", "idadeMae", "nomePai",
-		"pesoNascimentoGramas", "idadeGestacional", "raca","telefoneFixo", "celular1",
-		"operadoraCelular1", "celular2", "operadoraCelular2", "criancaCadastradaPSF", 
-		//Vacina contra Varicela
-		"????3",
-		"criancaRecebeuVacinaTripliceViral", "razoesNaoVacinacao", "numDosesRecebidasContraVaricela", "dataPrimeiraDose",
-		"qualVacinaUsadaPrimeiraDose", "dataSegundaDose", "qualVacinaUsadaSegundaDose",
-		//Vacina MMR
-		"????4",
-		"criancaRecebeuVacinaTripliceViral", "numDosesRecebidasContraTripliceViral", "dataPrimeiraDoseMMR","dataSegundaDoseMMR",
-		//História pregressa de saúde da criança
-		"????5",
-		"contatoPessoaCatapora", "localContato", "doencaFalciforme", "prematuridade", "infeccaoHIVeAIDS", "imunodeficiencia", "asma",
-		"usoCorticoideSistemico", "cancer", "doencaPulmonarCronica", "doencaRenalCronica", "doencaCardiaca",
-		"doencaHematologicaCronica", "doencaHepaticaCronica", "aspleniaCongenitaOuFuncional", "diabetes",
-		//Antecedentes Familiares
-		"????6",
-		 "alguemFrequentouCreche", "quemFamiliaFrequentouCreche", "alguemFrequentouServicoSaude", "quemFamiliaFrequentouServicoSaude", 
-		 "criancaInternou", "escolaridadeMae", "numCriancasMenos5anosDomicilio", "numCriancasMenos10anosDomicilio", "quantasPessoasCasa",
-		"quantasPessoasDormemMesmoComodoCrianca", "casoCasaCrianca","observacoesRelacionadasCaso" };
-	
 	/** campos Formlario 2 */
 	public static final int[] campos = new int[] { 
 		//Elegibilidade do caso
@@ -100,72 +45,108 @@ public class VariloidForm3 {
 		R.string.formulario3_hospitalizacao, R.string.formulario3_esc_mae, R.string.formulario3_nc_cas_casa5,
 		R.string.formulario3_nc_cas_casa10, R.string.formulario3_qtd_pessoas_casa, R.string.formulario3_qtd_pessoas_quarto,
 		R.string.formulario3_caso_casa_crianca,	R.string.formulario3_obs_caso };
+	
+	public static final String[] idCampos = new String[] { 
+		//Elegibilidade do caso
+		"????1",
+		"criancaCataporaAnt", "criancaMoraVizinhanca", "tcleAssinado", 
+		//Identificação
+		"????2",
+		"nomeCrianca", "sexo", "dataNascimento", "residencia", "tipoLogradouro", "nomeLogradouro", "quadra",
+		"lote", "numero", "complemento", "bairro", "municipio", "nomeMae", "idadeMae", "nomePai",
+		"pesoNascimentoGramas", "idadeGestacional", "raca","telefoneFixo", "celular1",
+		"operadoraCelular1", "celular2", "operadoraCelular2", "criancaCadastradaPSF", 
+		//Vacina contra Varicela
+		"????3",
+		"criancaRecebeuVacinaTripliceViral", "razoesNaoVacinacao", "numDosesRecebidasContraVaricela", "dataPrimeiraDose",
+		"qualVacinaUsadaPrimeiraDose", "dataSegundaDose", "qualVacinaUsadaSegundaDose",
+		//Vacina MMR
+		"????4",
+		"criancaRecebeuVacinaTripliceViral", "numDosesRecebidasContraTripliceViral", "dataPrimeiraDoseMMR","dataSegundaDoseMMR",
+		//História pregressa de saúde da criança
+		"????5",
+		"contatoPessoaCatapora", "localContato", "doencaFalciforme", "prematuridade", "infeccaoHIVeAIDS", "imunodeficiencia", "asma",
+		"usoCorticoideSistemico", "cancer", "doencaPulmonarCronica", "doencaRenalCronica", "doencaCardiaca",
+		"doencaHematologicaCronica", "doencaHepaticaCronica", "aspleniaCongenitaOuFuncional", "diabetes",
+		//Antecedentes Familiares
+		"????6",
+		 "alguemFrequentouCreche", "quemFamiliaFrequentouCreche", "alguemFrequentouServicoSaude", "quemFamiliaFrequentouServicoSaude", 
+		 "criancaInternou", "escolaridadeMae", "numCriancasMenos5anosDomicilio", "numCriancasMenos10anosDomicilio", "quantasPessoasCasa",
+		"quantasPessoasDormemMesmoComodoCrianca", "casoCasaCrianca","observacoesRelacionadasCaso" };
+	
 
 	/** keys Formlario 3 */
-	public static final int NOME = 0;
-	public static final int SEXO = 1;
-	public static final int DATA_NASCIMENTO = 2;
-	public static final int JA_TEVE_CATAPORA = 3;
-	public static final int CONTATO_COM_QUEM_JA_TEVE = 4;
-	public static final int LOCAL_CONTATO = 5;
-	public static final int RESIDENCIA = 6;
-	public static final int TIPO_LOGRADOURO = 7;
-	public static final int NOME_LOGRADOURO = 8;
-	public static final int QUADRA = 9;
-	public static final int LOTE = 10;
-	public static final int NUMERO = 11;
-	public static final int COMPLEMENTO = 12;
-	public static final int BAIRRO = 13;
-	public static final int TITULO_CRITERIO_INCLUSAO = 14;
-	public static final int TCLE = 15;
-	public static final int NOME_MAE = 16;
-	public static final int IDADE_MAE = 17;
-	public static final int NOME_PAI = 18;
-	public static final int TELEFONE = 19;
-	public static final int CELULAR1 = 20;
-	public static final int OPER_CELULAR1 = 21;
-	public static final int CELULAR2 = 22;
-	public static final int OPER_CELULAR2 = 23;
-	public static final int COBERTURA_PSF = 24;
-	public static final int PESONASCER = 25;
-	public static final int IDADEGESTACIONAL = 26;
-	public static final int RACA = 27;
-	public static final int TITULO_VACINA_CONTRA_VARICELA = 28;
-	public static final int N_DOSES_VARIC = 29;
-	public static final int VAC_VARIC_DT_DOSE1 = 30;
-	public static final int VAC_VARIC_QUAL_DOSE1 = 31;
-	public static final int VAC_VARIC_DT_DOSE2 = 32;
-	public static final int VAC_VARIC_QUAL_DOSE2 = 33;
-	public static final int TITULO_VACINA_TRIPLICE = 34;
-	public static final int VACTRIPLICE = 35;//NOVO
-	public static final int N_DOSES_TRIPLICE = 36;//NOVO
-	public static final int MMR1 = 37;
-	public static final int MMR2 = 38;
-	public static final int FREQCRECHE1 = 39;
-	public static final int FREQCRECHE2 = 40;
-	public static final int FREQSERVSAUDE1 = 41;
-	public static final int FREQSERVSAUDE2 = 42;
-	public static final int HOSPITALIZACAO = 43;
-	public static final int MAE_TRABALHA = 44;
-	public static final int ES_CMAE = 45;
-	public static final int NCCAS_CASA5 = 46;
-	public static final int NCCAS_CASA10 = 47;
-	public static final int QT_DE_PESSOAS_CASA = 48;
-	public static final int QTD_EPESSOAS_QTO = 49;
-	public static final int TITULO_DOENCAFALCIFORME = 50;
-	public static final int DOENCAFALCIFORME = 51;
-	public static final int PREMATURIDADE = 52;
-	public static final int INFECHIV = 53;
-	public static final int IMUNODEFICIENCIA = 54;
-	public static final int ASMA = 55;
-	public static final int CORTICOIDE = 56;
-	public static final int CANCER = 57;
-	public static final int DOENCAPULMONARCRONICA = 58;
-	public static final int DOENCARENALCRONICA = 59;
-	public static final int DOENCACARDIACA = 60;
-	public static final int DOENCAHEMATOLOGICA = 61;
-	public static final int DOENCAHEPATICA = 62;
-	public static final int ASPLENIA = 63;
-	public static final int DIABETES = 64;
-	public static final int OBS_CASO = 65;
+	public static final int TITULO_ELEGIBILIDADE_DO_CASO = 0;
+	public static final int CRIANCA_JA_TEVE_CATAPORA = 1;
+	public static final int CRIANCA_MORA_NA_VIZINHANCA = 2;
+	public static final int TCLE = 3;
+	public static final int TITULO_IDENTIFICACAO = 4;
+	public static final int NOME = 5;
+	public static final int SEXO = 6;
+	public static final int DATA_NASCIMENTO = 7;
+	public static final int RESIDENCIA = 8;
+	public static final int TIPO_LOGRADOURO = 9;
+	public static final int NOME_LOGRADOURO = 10;
+	public static final int QUADRA = 11;
+	public static final int LOTE = 12;
+	public static final int NUMERO = 13;
+	public static final int COMPLEMENTO = 14;
+	public static final int BAIRRO = 15;
+	public static final int MUNICIPIO = 16;
+	public static final int NOME_MAE = 17;
+	public static final int IDADE_MAE = 18;
+	public static final int NOME_PAI = 19;
+	public static final int PESONASCER = 20;
+	public static final int IDADEGESTACIONAL = 21;
+	public static final int RACA = 22;
+	public static final int TELEFONE = 23;
+	public static final int CELULAR1 = 24;
+	public static final int OPER_CELULAR1 = 25;
+	public static final int CELULAR2 = 26;
+	public static final int OPER_CELULAR2 = 27;
+	public static final int COBERTURA_PSF = 28;
+	public static final int TITULO_VACINA_CONTRA_VARICELA = 29;
+	public static final int VACVARICELA = 30;
+	public static final int MOTIVO_NAO_VACINACAO = 31;
+	public static final int N_DOSES_VARIC = 32;
+	public static final int VAC_VARIC_DT_DOSE1 = 33;
+	public static final int VAC_VARIC_QUAL_DOSE1 = 34;
+	public static final int VAC_VARIC_DT_DOSE2 = 35;
+	public static final int VAC_VARIC_QUAL_DOSE2 = 36;
+	public static final int TITULO_VACINA_MMR = 37;
+	public static final int VACTRIPLICE = 38;
+	public static final int N_DOSES_TRIPLICE = 39;
+	public static final int MMR1 = 40;
+	public static final int MMR2 = 41;
+	public static final int TITULO_HISTORIA_PREGRESSA_DE_SAUDE_DA_CRIANCA = 42;
+//	public static final int JA_TEVE_CATAPORA = 43;
+	public static final int CONTATO_COM_QUEM_JA_TEVE = 43;
+	public static final int LOCAL_CONTATO = 44;
+	public static final int DOENCAFALCIFORME = 45;
+	public static final int PREMATURIDADE = 46;
+	public static final int INFECHIV = 47;
+	public static final int IMUNODEFICIENCIA = 48;
+	public static final int ASMA = 49;
+	public static final int CORTICOIDE = 50;
+	public static final int CANCER = 51;
+	public static final int DOENCAPULMONARCRONICA = 52;
+	public static final int DOENCARENALCRONICA = 53;
+	public static final int DOENCACARDIACA = 54;
+	public static final int DOENCAHEMATOLOGICA = 55;
+	public static final int DOENCAHEPATICA = 56;
+	public static final int ASPLENIA = 57;
+	public static final int DIABETES = 58;
+	public static final int TITULO_ANTECEDENTES_FAMILIARES = 59;
+	public static final int FREQCRECHE1 = 60;
+	public static final int FREQCRECHE2 = 61;
+	public static final int FREQSERVSAUDE1 = 62;
+	public static final int FREQSERVSAUDE2 = 63;
+	public static final int HOSPITALIZACAO = 64;
+	public static final int ES_CMAE = 65;
+	public static final int NCCAS_CASA5 = 66;
+	public static final int NCCAS_CASA10 = 67;
+	public static final int QT_DE_PESSOAS_CASA = 68;
+	public static final int QTD_EPESSOAS_QTO = 69;
+	public static final int CASO_CASA_CRIANCA = 70;
+	public static final int OBS_CASO = 71;
 }

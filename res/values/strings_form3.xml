@@ -45,7 +45,7 @@
     <string name="formulario3_raca">Raça</string>
 
     <string name="formulario3_crianca_recebeu_vacina_catapora">A criança recebeu alguma vacina contra catapora?</string>
-    <string name="formulario3_razoes_nao_vacinacao">Se não vacinou, quais são a(s) razçes da não vacinação?</string>
+    <string name="formulario3_razoes_nao_vacinacao">Se não vacinou, quais são a(s) razões da não vacinação?</string>
     
     <string name="formulario3_n_doses_varic">Número de doses recebidas</string>
     <string name="formulario3_vac_varic_dt_dose1">Data da 1a dose da vacina</string>

@@ -693,76 +693,76 @@ public class Formulario3Fragment extends SherlockFragment implements
 		// });
 		// alert.show();
 		// break;
-		case VariloidForm3.JA_TEVE_CATAPORA:
-			View layout2 = layoutInflater.inflate(
-					R.layout.group_box_formulario, null);
-			final RadioButton radioButton3 = (RadioButton) layout2
-					.findViewById(R.id.radio1);
-			radioButton3.setText(getString(R.string.formulario3_opcao_sim));
-			final RadioButton radioButton4 = (RadioButton) layout2
-					.findViewById(R.id.radio2);
-			radioButton4.setText(getString(R.string.formulario3_opcao_nao));
-
-			if (!TextUtils.isEmpty(Data.listaFormularioTres.get(paginaFragment)
-					.getCriancaCataporaAnt())) {
-
-				if (Data.listaFormularioTres
-						.get(paginaFragment)
-						.getCriancaCataporaAnt()
-						.equalsIgnoreCase(
-								getString(R.string.formulario3_opcao_sim))) {
-					radioButton3.setChecked(true);
-				} else if (Data.listaFormularioTres
-						.get(paginaFragment)
-						.getCriancaCataporaAnt()
-						.equalsIgnoreCase(
-								getString(R.string.formulario3_opcao_nao))) {
-					radioButton4.setChecked(true);
-				}
-			}
-
-			alert.setTitle(getString(R.string.formulario3_ja_teve_catapora));
-			alert.setView(layout2);
-			alert.setPositiveButton("Ok",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-
-							if (radioButton3.isChecked()) {
-								setPreferences(
-										arg2,
-										getString(R.string.formulario3_opcao_sim),
-										false, true);
-								((ImageView) view
-										.findViewById(R.id.nome_img_check))
-										.setImageResource(R.drawable.ic_certo);
-							} else if (radioButton4.isChecked()) {
-								setPreferences(
-										arg2,
-										getString(R.string.formulario3_opcao_nao),
-										false, true);
-								((ImageView) view
-										.findViewById(R.id.nome_img_check))
-										.setImageResource(R.drawable.ic_certo);
-							} else {
-								setPreferences(arg2, "", false, false);
-								((ImageView) view
-										.findViewById(R.id.nome_img_check))
-										.setImageDrawable(null);
-							}
-							dialog.cancel();
-						}
-					});
-
-			alert.setNegativeButton("Cancelar",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							dialog.cancel();
-						}
-					});
-			alert.show();
-			break;
+//		case VariloidForm3.JA_TEVE_CATAPORA:
+//			View layout2 = layoutInflater.inflate(
+//					R.layout.group_box_formulario, null);
+//			final RadioButton radioButton3 = (RadioButton) layout2
+//					.findViewById(R.id.radio1);
+//			radioButton3.setText(getString(R.string.formulario3_opcao_sim));
+//			final RadioButton radioButton4 = (RadioButton) layout2
+//					.findViewById(R.id.radio2);
+//			radioButton4.setText(getString(R.string.formulario3_opcao_nao));
+//
+//			if (!TextUtils.isEmpty(Data.listaFormularioTres.get(paginaFragment)
+//					.getCriancaCataporaAnt())) {
+//
+//				if (Data.listaFormularioTres
+//						.get(paginaFragment)
+//						.getCriancaCataporaAnt()
+//						.equalsIgnoreCase(
+//								getString(R.string.formulario3_opcao_sim))) {
+//					radioButton3.setChecked(true);
+//				} else if (Data.listaFormularioTres
+//						.get(paginaFragment)
+//						.getCriancaCataporaAnt()
+//						.equalsIgnoreCase(
+//								getString(R.string.formulario3_opcao_nao))) {
+//					radioButton4.setChecked(true);
+//				}
+//			}
+//
+//			alert.setTitle(getString(R.string.formulario3_ja_teve_catapora));
+//			alert.setView(layout2);
+//			alert.setPositiveButton("Ok",
+//					new DialogInterface.OnClickListener() {
+//						public void onClick(DialogInterface dialog,
+//								int whichButton) {
+//
+//							if (radioButton3.isChecked()) {
+//								setPreferences(
+//										arg2,
+//										getString(R.string.formulario3_opcao_sim),
+//										false, true);
+//								((ImageView) view
+//										.findViewById(R.id.nome_img_check))
+//										.setImageResource(R.drawable.ic_certo);
+//							} else if (radioButton4.isChecked()) {
+//								setPreferences(
+//										arg2,
+//										getString(R.string.formulario3_opcao_nao),
+//										false, true);
+//								((ImageView) view
+//										.findViewById(R.id.nome_img_check))
+//										.setImageResource(R.drawable.ic_certo);
+//							} else {
+//								setPreferences(arg2, "", false, false);
+//								((ImageView) view
+//										.findViewById(R.id.nome_img_check))
+//										.setImageDrawable(null);
+//							}
+//							dialog.cancel();
+//						}
+//					});
+//
+//			alert.setNegativeButton("Cancelar",
+//					new DialogInterface.OnClickListener() {
+//						public void onClick(DialogInterface dialog,
+//								int whichButton) {
+//							dialog.cancel();
+//						}
+//					});
+//			alert.show();
+//			break;
 
 		case VariloidForm3.CONTATO_COM_QUEM_JA_TEVE:
 
@@ -2623,7 +2623,7 @@ public class Formulario3Fragment extends SherlockFragment implements
 											.findViewById(R.id.nome_img_check))
 											.setImageResource(R.drawable.ic_certo);
 
-									for (int i = VariloidForm3.VAC_VARIC_DT_DOSE1; i < VariloidForm3.TITULO_VACINA_TRIPLICE; i++) {
+									for (int i = VariloidForm3.VAC_VARIC_DT_DOSE1; i < VariloidForm3.TITULO_VACINA_CONTRA_VARICELA; i++) {
 										setPreferences(i, "", true, false);
 									}
 									for (int i = VariloidForm3.TCLE; i < VariloidForm3.campos.length; i++) {
@@ -2638,7 +2638,7 @@ public class Formulario3Fragment extends SherlockFragment implements
 											.findViewById(R.id.nome_img_check))
 											.setImageResource(R.drawable.ic_certo);
 
-									for (int i = VariloidForm3.VAC_VARIC_DT_DOSE1; i < VariloidForm3.TITULO_VACINA_TRIPLICE; i++) {
+									for (int i = VariloidForm3.VAC_VARIC_DT_DOSE1; i < VariloidForm3.TITULO_VACINA_CONTRA_VARICELA; i++) {
 										setPreferences(i, "", false, false);
 									}
 									for (int i = VariloidForm3.TCLE; i < VariloidForm3.campos.length; i++) {
@@ -2658,7 +2658,7 @@ public class Formulario3Fragment extends SherlockFragment implements
 										.findViewById(R.id.nome_img_check))
 										.setImageDrawable(null);
 
-								for (int i = VariloidForm3.VAC_VARIC_DT_DOSE1; i < VariloidForm3.TITULO_VACINA_TRIPLICE; i++) {
+								for (int i = VariloidForm3.VAC_VARIC_DT_DOSE1; i < VariloidForm3.TITULO_VACINA_CONTRA_VARICELA; i++) {
 									setPreferences(i, "", false, false);
 								}
 								for (int i = VariloidForm3.TCLE; i < VariloidForm3.campos.length; i++) {
@@ -3640,95 +3640,95 @@ public class Formulario3Fragment extends SherlockFragment implements
 					});
 			alert.show();
 			break;
-		case VariloidForm3.MAE_TRABALHA:
-			View layout36 = layoutInflater.inflate(
-					R.layout.group_box_formulario, null);
-			final RadioButton radioButton105 = (RadioButton) layout36
-					.findViewById(R.id.radio1);
-			radioButton105.setText(getString(R.string.formulario3_opcao_sim));
-			final RadioButton radioButton106 = (RadioButton) layout36
-					.findViewById(R.id.radio2);
-			radioButton106.setText(getString(R.string.formulario3_opcao_nao));
-			final RadioButton radioButton107 = (RadioButton) layout36
-					.findViewById(R.id.radio3);
-			radioButton107.setVisibility(View.VISIBLE);
-			radioButton107
-					.setText(getString(R.string.formulario3_opcao_nao_sabe));
-
-			if (!TextUtils.isEmpty(Data.listaFormularioTres.get(paginaFragment)
-					.getMaeTrabalhaFora())) {
-
-				if (Data.listaFormularioTres
-						.get(paginaFragment)
-						.getMaeTrabalhaFora()
-						.equalsIgnoreCase(
-								getString(R.string.formulario3_opcao_sim))) {
-					radioButton105.setChecked(true);
-				} else if (Data.listaFormularioTres
-						.get(paginaFragment)
-						.getMaeTrabalhaFora()
-						.equalsIgnoreCase(
-								getString(R.string.formulario3_opcao_nao))) {
-					radioButton106.setChecked(true);
-				} else if (Data.listaFormularioTres
-						.get(paginaFragment)
-						.getMaeTrabalhaFora()
-						.equalsIgnoreCase(
-								getString(R.string.formulario3_opcao_nao_sabe))) {
-					radioButton107.setChecked(true);
-				}
-			}
-
-			alert.setTitle(getString(R.string.formulario3_mae_trabalha));
-			alert.setView(layout36);
-			alert.setPositiveButton("Ok",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-
-							if (radioButton105.isChecked()) {
-								setPreferences(
-										arg2,
-										getString(R.string.formulario3_opcao_sim),
-										false, true);
-								((ImageView) view
-										.findViewById(R.id.nome_img_check))
-										.setImageResource(R.drawable.ic_certo);
-							} else if (radioButton106.isChecked()) {
-								setPreferences(
-										arg2,
-										getString(R.string.formulario3_opcao_nao),
-										false, true);
-								((ImageView) view
-										.findViewById(R.id.nome_img_check))
-										.setImageResource(R.drawable.ic_certo);
-							} else if (radioButton107.isChecked()) {
-								setPreferences(
-										arg2,
-										getString(R.string.formulario3_opcao_nao_sabe),
-										false, true);
-								((ImageView) view
-										.findViewById(R.id.nome_img_check))
-										.setImageResource(R.drawable.ic_certo);
-							} else {
-								setPreferences(arg2, "", false, false);
-								((ImageView) view
-										.findViewById(R.id.nome_img_check))
-										.setImageDrawable(null);
-							}
-							dialog.cancel();
-						}
-					});
-
-			alert.setNegativeButton("Cancelar",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							dialog.cancel();
-						}
-					});
-			alert.show();
-			break;
+//		case VariloidForm3.MAE_TRABALHA:
+//			View layout36 = layoutInflater.inflate(
+//					R.layout.group_box_formulario, null);
+//			final RadioButton radioButton105 = (RadioButton) layout36
+//					.findViewById(R.id.radio1);
+//			radioButton105.setText(getString(R.string.formulario3_opcao_sim));
+//			final RadioButton radioButton106 = (RadioButton) layout36
+//					.findViewById(R.id.radio2);
+//			radioButton106.setText(getString(R.string.formulario3_opcao_nao));
+//			final RadioButton radioButton107 = (RadioButton) layout36
+//					.findViewById(R.id.radio3);
+//			radioButton107.setVisibility(View.VISIBLE);
+//			radioButton107
+//					.setText(getString(R.string.formulario3_opcao_nao_sabe));
+//
+//			if (!TextUtils.isEmpty(Data.listaFormularioTres.get(paginaFragment)
+//					.getMaeTrabalhaFora())) {
+//
+//				if (Data.listaFormularioTres
+//						.get(paginaFragment)
+//						.getMaeTrabalhaFora()
+//						.equalsIgnoreCase(
+//								getString(R.string.formulario3_opcao_sim))) {
+//					radioButton105.setChecked(true);
+//				} else if (Data.listaFormularioTres
+//						.get(paginaFragment)
+//						.getMaeTrabalhaFora()
+//						.equalsIgnoreCase(
+//								getString(R.string.formulario3_opcao_nao))) {
+//					radioButton106.setChecked(true);
+//				} else if (Data.listaFormularioTres
+//						.get(paginaFragment)
+//						.getMaeTrabalhaFora()
+//						.equalsIgnoreCase(
+//								getString(R.string.formulario3_opcao_nao_sabe))) {
+//					radioButton107.setChecked(true);
+//				}
+//			}
+//
+//			alert.setTitle(getString(R.string.formulario3_mae_trabalha));
+//			alert.setView(layout36);
+//			alert.setPositiveButton("Ok",
+//					new DialogInterface.OnClickListener() {
+//						public void onClick(DialogInterface dialog,
+//								int whichButton) {
+//
+//							if (radioButton105.isChecked()) {
+//								setPreferences(
+//										arg2,
+//										getString(R.string.formulario3_opcao_sim),
+//										false, true);
+//								((ImageView) view
+//										.findViewById(R.id.nome_img_check))
+//										.setImageResource(R.drawable.ic_certo);
+//							} else if (radioButton106.isChecked()) {
+//								setPreferences(
+//										arg2,
+//										getString(R.string.formulario3_opcao_nao),
+//										false, true);
+//								((ImageView) view
+//										.findViewById(R.id.nome_img_check))
+//										.setImageResource(R.drawable.ic_certo);
+//							} else if (radioButton107.isChecked()) {
+//								setPreferences(
+//										arg2,
+//										getString(R.string.formulario3_opcao_nao_sabe),
+//										false, true);
+//								((ImageView) view
+//										.findViewById(R.id.nome_img_check))
+//										.setImageResource(R.drawable.ic_certo);
+//							} else {
+//								setPreferences(arg2, "", false, false);
+//								((ImageView) view
+//										.findViewById(R.id.nome_img_check))
+//										.setImageDrawable(null);
+//							}
+//							dialog.cancel();
+//						}
+//					});
+//
+//			alert.setNegativeButton("Cancelar",
+//					new DialogInterface.OnClickListener() {
+//						public void onClick(DialogInterface dialog,
+//								int whichButton) {
+//							dialog.cancel();
+//						}
+//					});
+//			alert.show();
+//			break;
 		case VariloidForm3.ES_CMAE:
 			View layout37 = layoutInflater.inflate(
 					R.layout.group_box_formulario, null);
@@ -5344,10 +5344,10 @@ public class Formulario3Fragment extends SherlockFragment implements
 			Data.listaFormularioTres.get(paginaFragment).setDataNascimento(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
-		case VariloidForm3.JA_TEVE_CATAPORA:
-			formularioTres.setCriancaCataporaAnt(string);
-			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
-			break;
+//		case VariloidForm3.JA_TEVE_CATAPORA:
+//			formularioTres.setCriancaCataporaAnt(string);
+//			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
+//			break;
 		case VariloidForm3.CONTATO_COM_QUEM_JA_TEVE:
 			Data.listaFormularioTres.get(paginaFragment).setContatoPessoaCatapora(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
@@ -5388,9 +5388,9 @@ public class Formulario3Fragment extends SherlockFragment implements
 			Data.listaFormularioTres.get(paginaFragment).setBairro(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
-		case VariloidForm3.TITULO_CRITERIO_INCLUSAO:
-			//
-			break;
+//		case VariloidForm3.TITULO_CRITERIO_INCLUSAO:
+//			//
+//			break;
 		case VariloidForm3.TCLE:
 			Data.listaFormularioTres.get(paginaFragment).setTcleAssinado(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
@@ -5466,9 +5466,9 @@ public class Formulario3Fragment extends SherlockFragment implements
 			Data.listaFormularioTres.get(paginaFragment).setQualVacinaUsadaSegundaDose(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
-		case VariloidForm3.TITULO_VACINA_TRIPLICE:
-			//
-			break;
+//		case VariloidForm3.TITULO_VACINA_TRIPLICE:
+//			//
+//			break;
 		case VariloidForm3.VACTRIPLICE:
 			Data.listaFormularioTres.get(paginaFragment).setCriancaRecebeuVacinaTripliceViral(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
@@ -5505,10 +5505,10 @@ public class Formulario3Fragment extends SherlockFragment implements
 			Data.listaFormularioTres.get(paginaFragment).setCriancaInternou(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
-		case VariloidForm3.MAE_TRABALHA:
-			Data.listaFormularioTres.get(paginaFragment).setMaeTrabalhaFora(string);
-			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
-			break;
+//		case VariloidForm3.MAE_TRABALHA:
+//			Data.listaFormularioTres.get(paginaFragment).setMaeTrabalhaFora(string);
+//			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
+//			break;
 		case VariloidForm3.ES_CMAE:
 			Data.listaFormularioTres.get(paginaFragment).setEscolaridadeMae(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
@@ -5529,9 +5529,9 @@ public class Formulario3Fragment extends SherlockFragment implements
 			Data.listaFormularioTres.get(paginaFragment).setQuantasPessoasDormemMesmoComodoCrianca(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
 			break;
-		case VariloidForm3.TITULO_DOENCAFALCIFORME:
-			//
-			break;
+//		case VariloidForm3.TITULO_DOENCAFALCIFORME:
+//			//
+//			break;
 		case VariloidForm3.DOENCAFALCIFORME:
 			Data.listaFormularioTres.get(paginaFragment).setDoencaFalciforme(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
