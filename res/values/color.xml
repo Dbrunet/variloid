@@ -12,8 +12,8 @@
     <color name="header_button_default">#494949</color>
     <color name="card_gray">#e5e5e5</color>
     
-    <color name="btn">#357EBD</color>
-    <color name="btn_down">#3276B1</color>
+    <color name="btn">#CC0000</color>
+    <color name="btn_down">#b30000</color>
     
     
 </resources>

@@ -67,8 +67,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/radioGroup1"
             android:layout_margin="15dp"
+            android:background="@drawable/seletor_btn"
             android:text="@string/faixa_etaria_btn"
-            android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title" />
+            android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
+            android:textColor="@android:color/white" />
     </RelativeLayout>
 
     <TextView

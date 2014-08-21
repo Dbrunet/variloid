@@ -16,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -117,20 +118,19 @@ public class Formulario3Fragment extends SherlockFragment implements
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View layoutFooter = layoutInflater
-				.inflate(R.layout.button_layout, null);
-		buttonTirarFotoCartao = (Button) layoutFooter
-				.findViewById(R.id.button_tirar_foto_cartao);
+		View layoutFooter = layoutInflater.inflate(R.layout.button_layout, null);
+		
+		buttonTirarFotoCartao = (Button) layoutFooter.findViewById(R.id.button_tirar_foto_cartao);
+		buttonTirarFotoCartao.setBackgroundResource(R.drawable.seletor_btn);
+		buttonTirarFotoCartao.setTextColor(Color.WHITE);
 		buttonTirarFotoCartao.setVisibility(View.VISIBLE);
 
 		if (Data.listaMapFormularioTres.get(paginaFragment).get(Data.FORM3_KEY.concat("[")
 						.concat(String.valueOf(paginaFragment)).concat("].")
 						.concat(Variloid.FORM_FOTO_CARTAO_VACINA))==null) {
-			buttonTirarFotoCartao
-					.setText(getString(R.string.tirar_foto_cartao));
+			buttonTirarFotoCartao.setText(getString(R.string.tirar_foto_cartao));
 		} else {
-			buttonTirarFotoCartao.setText(getString(R.string.tirar_foto_cartao)
-					+ "(Imagem Carregada)");
+			buttonTirarFotoCartao.setText(getString(R.string.tirar_foto_cartao)+ "(Imagem Carregada)");
 		}
 
 		buttonTirarFotoCartao.setOnClickListener(new OnClickListener() {
@@ -173,6 +173,8 @@ public class Formulario3Fragment extends SherlockFragment implements
 				.findViewById(R.id.button_tirar_foto_lesao);
 		buttonPendente.setVisibility(View.VISIBLE);
 		buttonPendente.setText(getString(R.string.caso_controle_pendente));
+		buttonPendente.setBackgroundResource(R.drawable.seletor_btn);
+		buttonPendente.setTextColor(Color.WHITE);
 		buttonPendente.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -240,6 +242,8 @@ public class Formulario3Fragment extends SherlockFragment implements
 				.findViewById(R.id.button_avancar_finalizar);
 		buttonFinalizar.setVisibility(View.VISIBLE);
 		buttonFinalizar.setText(getString(R.string.finalizar_caso_controle));
+		buttonFinalizar.setBackgroundResource(R.drawable.seletor_btn);
+		buttonFinalizar.setTextColor(Color.WHITE);
 		buttonFinalizar.setOnClickListener(new OnClickListener() {
 
 			@Override

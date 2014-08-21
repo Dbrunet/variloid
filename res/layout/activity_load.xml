@@ -61,8 +61,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/nome_aulixiar"
             android:layout_margin="10dp"
+            android:background="@drawable/seletor_btn"
             android:text="@string/btn_logar"
-            android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title" />
+            android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
+            android:textColor="@android:color/white" />
     </RelativeLayout>
 
     <Button
@@ -71,8 +73,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="50dp"
+        android:background="@drawable/seletor_btn"
         android:text="@string/btn_reloader"
         android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
+        android:textColor="@android:color/white"
         android:visibility="gone" />
 
     <TextView

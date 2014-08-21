@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -85,14 +86,20 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		View layoutFooter = layoutInflater.inflate(R.layout.button_layout, null);
 		
 		buttonTirarFotoLesao = (Button) layoutFooter.findViewById(R.id.button_tirar_foto_lesao);
+		buttonTirarFotoLesao.setBackgroundResource(R.drawable.seletor_btn);
+		buttonTirarFotoLesao.setTextColor(Color.WHITE);
 		buttonTirarFotoLesao.setVisibility(View.VISIBLE);
 		
 		buttonTirarFotoCartaoVacina = (Button) layoutFooter.findViewById(R.id.button_tirar_foto_cartao);
 		buttonTirarFotoCartaoVacina.setText(getString(R.string.tirar_foto_cartao));
+		buttonTirarFotoCartaoVacina.setBackgroundResource(R.drawable.seletor_btn);
+		buttonTirarFotoCartaoVacina.setTextColor(Color.WHITE);
 		buttonTirarFotoCartaoVacina.setVisibility(View.VISIBLE);
 		
 		buttonTirarFotoPanoramica = (Button) layoutFooter.findViewById(R.id.button_tirar_foto_panoramica);
 		buttonTirarFotoPanoramica.setText(getString(R.string.tirar_foto_panoramica));
+		buttonTirarFotoPanoramica.setBackgroundResource(R.drawable.seletor_btn);
+		buttonTirarFotoPanoramica.setTextColor(Color.WHITE);
 		buttonTirarFotoPanoramica.setVisibility(View.VISIBLE);
 		
 		if(Data.mapFormularioDois.get(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA))==null){
@@ -139,6 +146,8 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		Button button = (Button) layoutFooter.findViewById(R.id.button_avancar_finalizar);
 		button.setVisibility(View.VISIBLE);
 		button.setText(getString(R.string.formulario_tres));
+		button.setBackgroundResource(R.drawable.seletor_btn);
+		button.setTextColor(Color.WHITE);
 		button.setOnClickListener(new OnClickListener() {
 			
 			@Override
