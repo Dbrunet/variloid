@@ -7,22 +7,25 @@ public class FormularioTres {
 
 	private long id;
 	private String nomeCrianca;
-	private String sexo; // feminino ou masculino
-	private String dataNascimento; // formato dd/mm/aaaa
+	private String sexo; //feminino ou masculino
+	private String dataNascimento; //formato dd/mm/aaaa
 	private String criancaCataporaAnt;
+    private String criancaMoraVizinhanca;
 	private String contatoPessoaCatapora;
 	private String localContato;
 	private String residencia;
-	private String tipoLogradouro; // avenida, rua, alameda, rodovia, travessa,
-									// outro
+	private String tipoLogradouro; //avenida, rua, alameda, rodovia, travessa, outro
 	private String nomeLogradouro;
 	private String quadra;
 	private String lote;
 	private String numero;
 	private String complemento;
 	private String bairro;
+    private String municipio;
 	private String latitude;
 	private String longitude;
+	
+	//Parte dois
 	private String tcleAssinado;
 	private String nomeMae;
 	private String idadeMae;
@@ -36,15 +39,17 @@ public class FormularioTres {
 	private String pesoNascimentoGramas;
 	private String idadeGestacional;
 	private String raca;
-
-	// Parte 3
+    private String criancaRecebeuVacinaCatapora;
+    private String razoesNaoVacinacao;
+	
+	//Parte 3
 	private String numDosesRecebidasContraVaricela;
 	private String dataPrimeiraDose;
 	private String qualVacinaUsadaPrimeiraDose;
 	private String dataSegundaDose;
 	private String qualVacinaUsadaSegundaDose;
 	private String criancaRecebeuVacinaTripliceViral;
-	private String numDosesRecebidasContraTripliceViral;
+	private String numDosesRecebidasContraTripliceViral;	
 	private String dataPrimeiraDoseMMR;
 	private String dataSegundaDoseMMR;
 	private String alguemFrequentouCreche;
@@ -52,14 +57,13 @@ public class FormularioTres {
 	private String alguemFrequentouServicoSaude;
 	private String quemFamiliaFrequentouServicoSaude;
 	private String criancaInternou;
-	private String maeTrabalhaFora;
 	private String escolaridadeMae;
 	private String numCriancasMenos5anosDomicilio;
 	private String numCriancasMenos10anosDomicilio;
 	private String quantasPessoasCasa;
 	private String quantasPessoasDormemMesmoComodoCrianca;
-
-	// Parte 4
+	
+	//Parte 4
 	private String doencaFalciforme;
 	private String prematuridade;
 	private String infeccaoHIVeAIDS;
@@ -74,10 +78,12 @@ public class FormularioTres {
 	private String doencaHepaticaCronica;
 	private String aspleniaCongenitaOuFuncional;
 	private String diabetes;
+    private String casoCasaCrianca;
 
-	// Parte 5
+	//Parte 5
 	private String observacoesRelacionadasCaso;
 	private Arquivo cartaoVacina;
+	
 	private List<Boolean> listInativar = new ArrayList<Boolean>();
 
 	public List<Boolean> getListInativar() {
@@ -442,14 +448,6 @@ public class FormularioTres {
 		this.criancaInternou = criancaInternou;
 	}
 
-	public String getMaeTrabalhaFora() {
-		return maeTrabalhaFora;
-	}
-
-	public void setMaeTrabalhaFora(String maeTrabalhaFora) {
-		this.maeTrabalhaFora = maeTrabalhaFora;
-	}
-
 	public String getEscolaridadeMae() {
 		return escolaridadeMae;
 	}
@@ -647,6 +645,47 @@ public class FormularioTres {
 	public void setNumDosesRecebidasContraTripliceViral(
 			String numDosesRecebidasContraTripliceViral) {
 		this.numDosesRecebidasContraTripliceViral = numDosesRecebidasContraTripliceViral;
+	}
+
+	public String getCriancaMoraVizinhanca() {
+		return criancaMoraVizinhanca;
+	}
+
+	public void setCriancaMoraVizinhanca(String criancaMoraVizinhanca) {
+		this.criancaMoraVizinhanca = criancaMoraVizinhanca;
+	}
+
+	public String getMunicipio() {
+		return municipio;
+	}
+
+	public void setMunicipio(String municipio) {
+		this.municipio = municipio;
+	}
+
+	public String getCriancaRecebeuVacinaCatapora() {
+		return criancaRecebeuVacinaCatapora;
+	}
+
+	public void setCriancaRecebeuVacinaCatapora(
+			String criancaRecebeuVacinaCatapora) {
+		this.criancaRecebeuVacinaCatapora = criancaRecebeuVacinaCatapora;
+	}
+
+	public String getRazoesNaoVacinacao() {
+		return razoesNaoVacinacao;
+	}
+
+	public void setRazoesNaoVacinacao(String razoesNaoVacinacao) {
+		this.razoesNaoVacinacao = razoesNaoVacinacao;
+	}
+
+	public String getCasoCasaCrianca() {
+		return casoCasaCrianca;
+	}
+
+	public void setCasoCasaCrianca(String casoCasaCrianca) {
+		this.casoCasaCrianca = casoCasaCrianca;
 	}
 
 }

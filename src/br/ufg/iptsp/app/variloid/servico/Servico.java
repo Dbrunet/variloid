@@ -11,8 +11,10 @@ import org.springframework.web.client.RestTemplate;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import br.ufg.iptsp.app.variloid.R;
 import br.ufg.iptsp.app.variloid.Variloid;
 import br.ufg.iptsp.app.variloid.VariloidForm2;
@@ -115,23 +117,33 @@ public class Servico {
 		// remove os campos titulos "????"
 
 		for (int i = 0; i < VariloidForm2.idCampos.length; i++) {
+			
 			switch (i) {
-			case 14:
+			case 0:
 				Data.mapFormularioDois.remove(VariloidForm2.idCampos[i]);
 				break;
-			case 27:
+			case 3:
 				Data.mapFormularioDois.remove(VariloidForm2.idCampos[i]);
 				break;
-			case 32:
+			case 28:
 				Data.mapFormularioDois.remove(VariloidForm2.idCampos[i]);
 				break;
-			case 47:
+			case 33:
 				Data.mapFormularioDois.remove(VariloidForm2.idCampos[i]);
 				break;
-			case 53:
+			case 44:
 				Data.mapFormularioDois.remove(VariloidForm2.idCampos[i]);
 				break;
-			case 69:
+			case 52:
+				Data.mapFormularioDois.remove(VariloidForm2.idCampos[i]);
+				break;
+			case 57:
+				Data.mapFormularioDois.remove(VariloidForm2.idCampos[i]);
+				break;
+			case 75:
+				Data.mapFormularioDois.remove(VariloidForm2.idCampos[i]);
+				break;
+			case 86:
 				Data.mapFormularioDois.remove(VariloidForm2.idCampos[i]);
 				break;
 			default:
@@ -152,21 +164,23 @@ public class Servico {
 
 			for (int j = 0; j < VariloidForm3.idCampos.length; j++) {
 				switch (j) {
-				case 14:
-					Data.listaMapFormularioTres.get(i).remove(
-							VariloidForm3.idCampos[j]);
+				case 0:
+					Data.listaMapFormularioTres.get(i).remove(VariloidForm3.idCampos[j]);
 					break;
-				case 28:
-					Data.listaMapFormularioTres.get(i).remove(
-							VariloidForm3.idCampos[j]);
+				case 4:
+					Data.listaMapFormularioTres.get(i).remove(VariloidForm3.idCampos[j]);
 					break;
-				case 34:
-					Data.listaMapFormularioTres.get(i).remove(
-							VariloidForm3.idCampos[j]);
+				case 29:
+					Data.listaMapFormularioTres.get(i).remove(VariloidForm3.idCampos[j]);
 					break;
-				case 50:
-					Data.listaMapFormularioTres.get(i).remove(
-							VariloidForm3.idCampos[j]);
+				case 37:
+					Data.listaMapFormularioTres.get(i).remove(VariloidForm3.idCampos[j]);
+					break;
+				case 42:
+					Data.listaMapFormularioTres.get(i).remove(VariloidForm3.idCampos[j]);
+					break;
+				case 59:
+					Data.listaMapFormularioTres.get(i).remove(VariloidForm3.idCampos[j]);
 					break;
 				default:
 					if (!TextUtils.isEmpty(Data.listaMapFormularioTres.get(i)
@@ -179,9 +193,7 @@ public class Servico {
 								.concat(String.valueOf(i)).concat("].")
 								.concat(VariloidForm3.idCampos[j]),
 								Data.listaMapFormularioTres
-										.get(i)
-										.get(Data.FORM3_KEY
-												.concat("[")
+										.get(i).get(Data.FORM3_KEY.concat("[")
 												.concat(String.valueOf(i))
 												.concat("].")
 												.concat(VariloidForm3.idCampos[j])).get(0)
@@ -195,21 +207,21 @@ public class Servico {
 		
 		nid = "ok";
 
-		try {
-			nid = restTemplate.postForObject(urlEnviarEntrevista, Data.mapService,
-					String.class);
-
-			Data.formularioDois = new FormularioDois();
-			Data.mapFormularioDois = new LinkedMultiValueMap<String, Object>();
-			Data.mapService = new LinkedMultiValueMap<String, Object>();
-			Data.listaFormularioTres.clear();
-			Data.listaMapFormularioTres.clear();
-			
-
-		} catch (Exception e) {
-			Log.w("e.printStackTrace()", e.toString());
-			nid = null;
-		}
+//		try {
+//			nid = restTemplate.postForObject(urlEnviarEntrevista, Data.mapService,
+//					String.class);
+//
+//			Data.formularioDois = new FormularioDois();
+//			Data.mapFormularioDois = new LinkedMultiValueMap<String, Object>();
+//			Data.mapService = new LinkedMultiValueMap<String, Object>();
+//			Data.listaFormularioTres.clear();
+//			Data.listaMapFormularioTres.clear();
+//			
+//
+//		} catch (Exception e) {
+//			Log.w("e.printStackTrace()", e.toString());
+//			nid = null;
+//		}
 
 		return nid;
 	}

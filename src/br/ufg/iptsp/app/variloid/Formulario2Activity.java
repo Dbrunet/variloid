@@ -72,7 +72,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		
 		for (String strings : VariloidForm2.idCampos) {
 			
-			if (Data.mapFormularioDois.size() == 0) {
+			if (Data.mapFormularioDois.size() != VariloidForm2.idCampos.length) {
 				Data.mapFormularioDois.add(Data.FORM2_KEY.concat(strings), "");
 			}
 
