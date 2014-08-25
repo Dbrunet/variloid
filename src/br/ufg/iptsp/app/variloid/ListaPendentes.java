@@ -1,6 +1,7 @@
 package br.ufg.iptsp.app.variloid;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.util.LinkedMultiValueMap;
@@ -78,7 +79,7 @@ public class ListaPendentes extends BaseActivity implements
 
 	}
 
-	private void infoObjetoForm2(Object object)
+	private void infoObjetoForm2(FormularioDois object)
 			throws IllegalArgumentException, IllegalAccessException {
 		// percorrendo as variáveis de instancia
 		Class<?> classe = object.getClass();
@@ -86,51 +87,104 @@ public class ListaPendentes extends BaseActivity implements
 		for (int i = 0; i < VariloidForm2.idCampos.length; i++) {
 
 			switch (i) {
-			case 14:
+			
+			case 0:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
 				Data.formularioDois.getListSucesso().add(false);
 				break;
-			case 27:
+			case 3:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
 				Data.formularioDois.getListSucesso().add(false);
 				break;
-			case 32:
+			case 28:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
 				Data.formularioDois.getListSucesso().add(false);
 				break;
-			case 47:
+			case 33:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
 				Data.formularioDois.getListSucesso().add(false);
 				break;
-			case 53:
+			case 44:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
 				Data.formularioDois.getListSucesso().add(false);
 				break;
-			case 69:
+			case 52:
 				Data.mapFormularioDois.add(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
 						VariloidForm2.idCampos[i]);
 				Data.formularioDois.getListSucesso().add(false);
 				break;
+			case 57:
+				Data.mapFormularioDois.add(
+						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
+						VariloidForm2.idCampos[i]);
+				Data.formularioDois.getListSucesso().add(false);
+				break;
+			case 75:
+				Data.mapFormularioDois.add(
+						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
+						VariloidForm2.idCampos[i]);
+				Data.formularioDois.getListSucesso().add(false);
+				break;
+			case 86:
+				Data.mapFormularioDois.add(
+						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]),
+						VariloidForm2.idCampos[i]);
+				Data.formularioDois.getListSucesso().add(false);
+				break;
+				
 			default:
 
 				for (Field f : classe.getDeclaredFields()) {
 					f.setAccessible(true);
 
 					if("id".equals(f.getName())){
-						Data.mapFormularioDois.add(Data.FORM2_KEY
-								.concat("id"), f
-								.get(object));
+						Data.mapService.add("formularioDois.id", String.valueOf(f.get(object)));
+					}
+					
+					if("lesaoColetada".equals(f.getName())){
+						f.setAccessible(true);
+						Class<?> classeLesao = object.getLesaoColetada().getClass();
+						for (Field field : classeLesao.getDeclaredFields()) {
+							field.setAccessible(true);
+							if("id".equals(field.getName())){
+								Data.mapService.add(Data.FORM2_KEY.concat("lesaoColetada.id"), String.valueOf(field.get( object.getLesaoColetada())));
+							}
+						}
+						
+					}
+					
+					if("cartaoVacina".equals(f.getName())){
+						f.setAccessible(true);
+						Class<?> classeCartao = object.getCartaoVacina().getClass();
+						for (Field field : classeCartao.getDeclaredFields()) {
+							field.setAccessible(true);
+							if("id".equals(field.getName())){
+								Data.mapService.add(Data.FORM2_KEY.concat("cartaoVacina.id"), String.valueOf(field.get(object.getCartaoVacina())));
+							}
+						}
+						
+					}
+					
+					if("panoramica".equals(f.getName())){
+						f.setAccessible(true);
+						Class<?> classePanoramica = object.getPanoramica().getClass();
+						for (Field field : classePanoramica.getDeclaredFields()) {
+							field.setAccessible(true);
+							if("id".equals(field.getName())){
+								Data.mapService.add(Data.FORM2_KEY.concat("panoramica.id"), String.valueOf(field.get(object.getPanoramica())));
+							}
+						}
 					}
 					
 					if (VariloidForm2.idCampos[i].equals(f.getName())) {
@@ -154,7 +208,7 @@ public class ListaPendentes extends BaseActivity implements
 		}
 	}
 
-	private void infoObjetoForm3(Object object, int posicao)
+	private void infoObjetoForm3(FormularioTres object, int posicao)
 			throws IllegalArgumentException, IllegalAccessException {
 		Class<?> classe = object.getClass();
 
@@ -163,7 +217,8 @@ public class ListaPendentes extends BaseActivity implements
 		for (int i = 0; i < VariloidForm3.idCampos.length; i++) {
 
 			switch (i) {
-			case 14:
+			
+			case 0:
 				mapFormularioTres.add(
 						Data.FORM3_KEY.concat("[")
 								.concat(String.valueOf(posicao)).concat("].")
@@ -171,7 +226,7 @@ public class ListaPendentes extends BaseActivity implements
 						VariloidForm3.idCampos[i]);
 				Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
 				break;
-			case 28:
+			case 4:
 				mapFormularioTres.add(
 						Data.FORM3_KEY.concat("[")
 								.concat(String.valueOf(posicao)).concat("].")
@@ -179,7 +234,7 @@ public class ListaPendentes extends BaseActivity implements
 						VariloidForm3.idCampos[i]);
 				Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
 				break;
-			case 34:
+			case 29:
 				mapFormularioTres.add(
 						Data.FORM3_KEY.concat("[")
 								.concat(String.valueOf(posicao)).concat("].")
@@ -187,7 +242,23 @@ public class ListaPendentes extends BaseActivity implements
 						VariloidForm3.idCampos[i]);
 				Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
 				break;
-			case 50:
+			case 37:
+				mapFormularioTres.add(
+						Data.FORM3_KEY.concat("[")
+								.concat(String.valueOf(posicao)).concat("].")
+								.concat(VariloidForm3.idCampos[i]),
+						VariloidForm3.idCampos[i]);
+				Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
+				break;
+			case 42:
+				mapFormularioTres.add(
+						Data.FORM3_KEY.concat("[")
+								.concat(String.valueOf(posicao)).concat("].")
+								.concat(VariloidForm3.idCampos[i]),
+						VariloidForm3.idCampos[i]);
+				Data.listaFormularioTres.get(posicao).getListSucesso().add(false);
+				break;
+			case 59:
 				mapFormularioTres.add(
 						Data.FORM3_KEY.concat("[")
 								.concat(String.valueOf(posicao)).concat("].")
@@ -201,12 +272,19 @@ public class ListaPendentes extends BaseActivity implements
 					f.setAccessible(true);
 
 					if("id".equals(f.getName())){
-						mapFormularioTres.add(
-								Data.FORM3_KEY.concat("[")
-										.concat(String.valueOf(posicao))
-										.concat("].")
-										.concat("id"),
-								f.get(object));
+						f.setAccessible(true);
+						Data.mapService.add(
+								Data.FORM3_KEY.concat("[").concat(String.valueOf(posicao)).concat("].").concat("id"), String.valueOf(f.get(object)));
+					}
+					if("cartaoVacina".equals(f.getName())){
+						f.setAccessible(true);
+						Class<?> classeCartao = object.getCartaoVacina().getClass();
+						for (Field field : classeCartao.getDeclaredFields()) {
+							field.setAccessible(true);
+							if("id".equals(field.getName())){
+								Data.mapService.add(Data.FORM3_KEY.concat("[").concat(String.valueOf(posicao)).concat("].").concat("cartaoVacina.id"), String.valueOf(field.get(object.getCartaoVacina())));
+							}
+						}
 					}
 					
 					if (VariloidForm3.idCampos[i].equals(f.getName())) {
@@ -258,6 +336,13 @@ public class ListaPendentes extends BaseActivity implements
 
 		@Override
 		protected Boolean doInBackground(Integer... params) {
+			Data.mapService = new LinkedMultiValueMap<String, Object>();
+			
+			Data.mapService.add("id", String.valueOf(adapter.getEntrevista(params[0]).getId()));
+			Data.mapService.add(Variloid.ID_ENTREVISTADOR, String.valueOf(adapter.getEntrevista(params[0]).getEntrevistador().getId()));
+			Data.mapService.add("faixaEtaria", adapter.getEntrevista(params[0]).getFaixaEtaria());
+			
+			Data.formularioDois = new FormularioDois();
 			Data.formularioDois = adapter.getEntrevista(params[0])
 					.getFormularioDois();
 
@@ -274,6 +359,7 @@ public class ListaPendentes extends BaseActivity implements
 				e.printStackTrace();
 			}
 
+			Data.listaFormularioTres = new ArrayList<FormularioTres>();
 			Data.listaFormularioTres = adapter.getEntrevista(params[0])
 					.getFormulariosTres();
 			

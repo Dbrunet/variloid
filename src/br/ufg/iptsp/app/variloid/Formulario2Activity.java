@@ -1,14 +1,21 @@
 package br.ufg.iptsp.app.variloid;
 
 import java.io.File;
-import java.lang.reflect.Field;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.core.io.FileSystemResource;
+
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
@@ -22,7 +29,6 @@ import android.provider.Settings;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,14 +43,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
+import br.ufg.iptsp.app.variloid.adapter.CropOptionAdapter;
 import br.ufg.iptsp.app.variloid.adapter.MyAdapterForm2;
+import br.ufg.iptsp.app.variloid.negocio.Arquivo;
+import br.ufg.iptsp.app.variloid.negocio.CropOption;
 import br.ufg.iptsp.app.variloid.provider.Data;
 import br.ufg.iptsp.app.variloid.servico.ServicoConexao;
 import br.ufg.iptsp.app.variloid.util.Mask;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
 public class Formulario2Activity extends BaseActivity implements OnItemClickListener, LocationListener{
+	
+	private static final int PICK_FROM_CAMERA = 0;
+	private static final int CROP_FROM_CAMERA = 1;
 	
 	private LayoutInflater layoutInflater;
 	private MyAdapterForm2 myAdapter;
@@ -55,6 +65,9 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 	private double longitude;
 	private List<Integer> list;
 	private boolean isPendente;
+	private Uri mImageCaptureUri;
+	private Bitmap bitmap;
+	private String fileAbsolutePath;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +187,6 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 							
 							Data.mapService.add(Data.FORM2_KEY.concat("latitude"), String.valueOf(latitude));
 							Data.mapService.add(Data.FORM2_KEY.concat("longitude"), String.valueOf(longitude));
-							Data.mapService.add("faixaEtaria", getString(R.string.faixa_etaria1));
 							Intent intent = new Intent(Formulario2Activity.this, Formulario3Activity.class);
 							intent.putExtra("isPendente", isPendente);
 							startActivity(intent);
@@ -193,7 +205,6 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					
 					Data.mapService.add(Data.FORM2_KEY.concat("latitude"), String.valueOf(latitude));
 					Data.mapService.add(Data.FORM2_KEY.concat("longitude"), String.valueOf(longitude));
-					Data.mapService.add("faixaEtaria", getString(R.string.faixa_etaria1));
 					Intent intent = new Intent(Formulario2Activity.this, Formulario3Activity.class);
 					intent.putExtra("isPendente", isPendente);
 					startActivity(intent);
@@ -209,20 +220,27 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 	}
 	
 	protected void createDialog(int dialogId) {
+		Intent intent = null;
 		switch (dialogId) {
 		case 1:
-			try {
-				Intent i = new Intent("android.media.action.IMAGE_CAPTURE");
-				File photoLesao = new File(
-						Environment.getExternalStorageDirectory(), "PicLesaoColetada.jpg");	
-				i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoLesao));
-				i.putExtra("data", photoLesao);
-				imageUri = Uri.fromFile(photoLesao);
-				startActivityForResult(i,1);
+			intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-			} catch (Exception e) {
-				Log.w("IMAGE_CAPTURE", "Falha ao acessar o arquivo onde a imagem seria salva.", e);
+			mImageCaptureUri = Uri.fromFile(new File(Environment
+					.getExternalStorageDirectory(), "tmp_avatar_"
+					+ String.valueOf(System.currentTimeMillis())
+					+ ".jpg"));
+
+			intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+					mImageCaptureUri);
+
+			try {
+				intent.putExtra("return-data", true);
+
+				startActivityForResult(intent, PICK_FROM_CAMERA);
+			} catch (ActivityNotFoundException e) {
+				e.printStackTrace();
 			}
+
 			break;
 		default:
 			break;
@@ -231,36 +249,198 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode != Activity.RESULT_OK)
+			return;
+		
 		switch (requestCode) {
-		case 1:
-			if (resultCode == RESULT_OK) {
-				try {
-					if(TextUtils.isEmpty(Data.mapService.get(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA)).toString())){
-						Data.mapService.add(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA), getPathFromURI(imageUri));
-					}else{
-						Data.mapService.set(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA), getPathFromURI(imageUri));						
-					}
-					buttonTirarFotoLesao.setText(getString(R.string.tirar_foto_lesao) + "(Imagem Carregada)");
-				} catch (Exception e) {
-					Toast.makeText(this, "Erro ao carregar Imagem. Tente Novamente!", Toast.LENGTH_LONG).show();
-				}
-			}
+//		case 1:
+//			if (resultCode == RESULT_OK) {
+//				try {
+//					if(TextUtils.isEmpty(Data.mapService.get(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA)).toString())){
+//						Data.mapService.add(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA), getPathFromURI(imageUri));
+//					}else{
+//						Data.mapService.set(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA), getPathFromURI(imageUri));						
+//					}
+//					buttonTirarFotoLesao.setText(getString(R.string.tirar_foto_lesao) + "(Imagem Carregada)");
+//				} catch (Exception e) {
+//					Toast.makeText(this, "Erro ao carregar Imagem. Tente Novamente!", Toast.LENGTH_LONG).show();
+//				}
+//			}
+//			break;
+//		}
+		case PICK_FROM_CAMERA:
+			/**
+			 * After taking a picture, do the crop
+			 */
+			doCrop();
+
 			break;
+
+		case CROP_FROM_CAMERA:
+			Bundle extras = data.getExtras();
+			/**
+			 * After cropping the image, get the bitmap of the cropped image and
+			 * display it on imageview.
+			 */
+			if (extras != null) {
+				
+				bitmap = extras.getParcelable("data");
+				
+				File mediaDir = new File(Environment
+						.getExternalStorageDirectory().getAbsolutePath()
+						.concat("/").concat("variloid").concat("/"));
+				if (!mediaDir.exists()) {
+					mediaDir.mkdirs();
+				}
+
+				File foto = new File(Environment.getExternalStorageDirectory()
+						.getAbsolutePath().concat("/").concat("variloid")
+						.concat("/"), String.valueOf(System.currentTimeMillis()).concat(".jpg"));
+				
+				FileOutputStream fOut = null;
+				try {
+					fOut = new FileOutputStream(foto);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 60, fOut);
+				
+				fileAbsolutePath = foto.getAbsolutePath();
+				
+				Arquivo arquivo = new Arquivo();
+				arquivo.setCaminho(fileAbsolutePath);
+				Data.formularioDois.setLesaoColetada(arquivo);
+//				imgGrupo.setImageBitmap(bitmap);
+				Data.mapFormularioDois.set(Data.FORM2_KEY.concat("lesaoColetada.commonsMultipartFile"), new FileSystemResource(fileAbsolutePath));
+				
+				File fileTemp = new File(mImageCaptureUri.getPath());
+				if (fileTemp.exists())
+					fileTemp.delete();
+			}
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
-	@SuppressWarnings("deprecation")
-	public String getPathFromURI(Uri contentUri) {
-		try {
-			String[] proj = { MediaStore.Images.Media.DATA };
-			Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-			int column_index = cursor
-					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-			cursor.moveToFirst();
-			return cursor.getString(column_index);
-		} catch (Exception e) {
-			return contentUri.getPath();
+//	@SuppressWarnings("deprecation")
+//	public String getPathFromURI(Uri contentUri) {
+//		try {
+//			String[] proj = { MediaStore.Images.Media.DATA };
+//			Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+//			int column_index = cursor
+//					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//			cursor.moveToFirst();
+//			return cursor.getString(column_index);
+//		} catch (Exception e) {
+//			return contentUri.getPath();
+//		}
+//	}
+	
+	private void doCrop() {
+		final ArrayList<CropOption> cropOptions = new ArrayList<CropOption>();
+		/**
+		 * Open image crop app by starting an intent
+		 * ‘com.android.camera.action.CROP‘.
+		 */
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		intent.setType("image/*");
+
+		/**
+		 * Check if there is image cropper app installed.
+		 */
+		List<ResolveInfo> list = getPackageManager().queryIntentActivities(
+				intent, 0);
+
+		int size = list.size();
+
+		/**
+		 * If there is no image cropper app, display warning message
+		 */
+		if (size == 0) {
+
+			Toast.makeText(this, "Can not find image crop app",
+					Toast.LENGTH_SHORT).show();
+
+			return;
+		} else {
+			/**
+			 * Specify the image path, crop dimension and scale
+			 */
+			intent.setData(mImageCaptureUri);
+
+			intent.putExtra("outputX", 256);
+			intent.putExtra("outputY", 256);
+			intent.putExtra("aspectX", 1);
+			intent.putExtra("aspectY", 1);
+			intent.putExtra("scale", true);
+			intent.putExtra("return-data", true);
+			/**
+			 * There is posibility when more than one image cropper app exist,
+			 * so we have to check for it first. If there is only one app, open
+			 * then app.
+			 */
+
+			if (size == 1) {
+				Intent i = new Intent(intent);
+				ResolveInfo res = list.get(0);
+
+				i.setComponent(new ComponentName(res.activityInfo.packageName,
+						res.activityInfo.name));
+
+				startActivityForResult(i, CROP_FROM_CAMERA);
+			} else {
+				/**
+				 * If there are several app exist, create a custom chooser to
+				 * let user selects the app.
+				 */
+				for (ResolveInfo res : list) {
+					final CropOption co = new CropOption();
+
+					co.title = getPackageManager().getApplicationLabel(
+							res.activityInfo.applicationInfo);
+					co.icon = getPackageManager().getApplicationIcon(
+							res.activityInfo.applicationInfo);
+					co.appIntent = new Intent(intent);
+
+					co.appIntent
+							.setComponent(new ComponentName(
+									res.activityInfo.packageName,
+									res.activityInfo.name));
+
+					cropOptions.add(co);
+				}
+
+				CropOptionAdapter adapter = new CropOptionAdapter(
+						this, cropOptions);
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle("Choose Crop App");
+				builder.setAdapter(adapter,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int item) {
+								startActivityForResult(
+										cropOptions.get(item).appIntent,
+										CROP_FROM_CAMERA);
+							}
+						});
+
+				builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+
+						if (mImageCaptureUri != null) {
+							getContentResolver().delete(mImageCaptureUri, null,
+									null);
+							mImageCaptureUri = null;
+						}
+					}
+				});
+
+				AlertDialog alert = builder.create();
+
+				alert.show();
+			}
 		}
 	}
 	

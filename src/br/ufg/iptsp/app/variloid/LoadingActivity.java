@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
@@ -24,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import br.ufg.iptsp.app.variloid.negocio.Usuario;
+import br.ufg.iptsp.app.variloid.provider.Data;
 import br.ufg.iptsp.app.variloid.servico.Servico;
 import br.ufg.iptsp.app.variloid.servico.ServicoConexao;
 
@@ -190,10 +190,11 @@ public class LoadingActivity extends BaseActivity {
 					((TextView)v).setTextColor(Color.BLACK);
 					idAuxiliar = String.valueOf(listaDeUsuario.get(posicao-1).getId());
 					
-					SharedPreferences pref = getSharedPreferences(Variloid.PREFERENCIAS, MODE_PRIVATE);
-					SharedPreferences.Editor editor = pref.edit();
-					editor.putString(Variloid.ID_ENTREVISTADOR, idAuxiliar);
-					editor.commit();
+					Data.mapService.add(Variloid.ID_ENTREVISTADOR, idAuxiliar);
+//					SharedPreferences pref = getSharedPreferences(Variloid.PREFERENCIAS, MODE_PRIVATE);
+//					SharedPreferences.Editor editor = pref.edit();
+//					editor.putString(Variloid.ID_ENTREVISTADOR, idAuxiliar);
+//					editor.commit();
 
 				} else {
 					((TextView)v).setTextColor(Color.BLACK);

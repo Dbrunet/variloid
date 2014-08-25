@@ -11,10 +11,8 @@ import org.springframework.web.client.RestTemplate;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import br.ufg.iptsp.app.variloid.R;
 import br.ufg.iptsp.app.variloid.Variloid;
 import br.ufg.iptsp.app.variloid.VariloidForm2;
@@ -22,7 +20,6 @@ import br.ufg.iptsp.app.variloid.VariloidForm3;
 import br.ufg.iptsp.app.variloid.VariloidForm4;
 import br.ufg.iptsp.app.variloid.negocio.Entrevista;
 import br.ufg.iptsp.app.variloid.negocio.FormularioDois;
-import br.ufg.iptsp.app.variloid.negocio.FormularioTres;
 import br.ufg.iptsp.app.variloid.negocio.Usuario;
 import br.ufg.iptsp.app.variloid.provider.Data;
 
@@ -34,9 +31,9 @@ public class Servico {
 
 	private static final String FORM4_KEY = "formularioQuatro.";
 
-	private static final String IP = "dowave.com.br";
+//	private static final String IP = "dowave.com.br";
 //	private static final String IP = "galfano.com.br";
-//	 private static final String IP = "192.168.1.5";
+	 private static final String IP = "192.168.25.7";
 
 	private String urlEnviarEntrevista = "http://" + IP
 			+ "/variloid/rest/entrevistas/enviar";
@@ -147,7 +144,8 @@ public class Servico {
 				Data.mapFormularioDois.remove(VariloidForm2.idCampos[i]);
 				break;
 			default:
-				if (!TextUtils.isEmpty(Data.mapFormularioDois.get(
+				if ((Data.mapFormularioDois.get(
+						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i]))!=null) && !TextUtils.isEmpty(Data.mapFormularioDois.get(
 						Data.FORM2_KEY.concat(VariloidForm2.idCampos[i])).get(0).toString())) {
 					
 					Data.mapService.add((Data.FORM2_KEY.concat(VariloidForm2.idCampos[i])),
@@ -157,6 +155,14 @@ public class Servico {
 				break;
 				
 			}
+		}
+		
+		if(Data.mapFormularioDois.get(Data.FORM2_KEY
+				.concat("lesaoColetada.commonsMultipartFile")) != null){
+			
+			Data.mapService.add((Data.FORM2_KEY.concat("lesaoColetada.commonsMultipartFile")),
+					Data.mapFormularioDois.get(Data.FORM2_KEY
+							.concat("lesaoColetada.commonsMultipartFile")).get(0));
 		}
 
 		// formulario 3
@@ -183,7 +189,11 @@ public class Servico {
 					Data.listaMapFormularioTres.get(i).remove(VariloidForm3.idCampos[j]);
 					break;
 				default:
-					if (!TextUtils.isEmpty(Data.listaMapFormularioTres.get(i)
+					if ((Data.listaMapFormularioTres.get(i)
+							.get(Data.FORM3_KEY.concat("[")
+									.concat(String.valueOf(i)).concat("].")
+									.concat(VariloidForm3.idCampos[j]))!=null)
+							&& !TextUtils.isEmpty(Data.listaMapFormularioTres.get(i)
 							.get(Data.FORM3_KEY.concat("[")
 									.concat(String.valueOf(i)).concat("].")
 									.concat(VariloidForm3.idCampos[j])).get(0)
@@ -207,21 +217,21 @@ public class Servico {
 		
 		nid = "ok";
 
-//		try {
-//			nid = restTemplate.postForObject(urlEnviarEntrevista, Data.mapService,
-//					String.class);
-//
-//			Data.formularioDois = new FormularioDois();
-//			Data.mapFormularioDois = new LinkedMultiValueMap<String, Object>();
-//			Data.mapService = new LinkedMultiValueMap<String, Object>();
-//			Data.listaFormularioTres.clear();
-//			Data.listaMapFormularioTres.clear();
-//			
-//
-//		} catch (Exception e) {
-//			Log.w("e.printStackTrace()", e.toString());
-//			nid = null;
-//		}
+		try {
+			nid = restTemplate.postForObject(urlEnviarEntrevista, Data.mapService,
+					String.class);
+
+			Data.formularioDois = new FormularioDois();
+			Data.mapFormularioDois = new LinkedMultiValueMap<String, Object>();
+			Data.mapService = new LinkedMultiValueMap<String, Object>();
+			Data.listaFormularioTres.clear();
+			Data.listaMapFormularioTres.clear();
+			
+
+		} catch (Exception e) {
+			Log.w("e.printStackTrace()", e.toString());
+			nid = null;
+		}
 
 		return nid;
 	}

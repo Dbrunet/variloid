@@ -1,10 +1,8 @@
 package br.ufg.iptsp.app.variloid;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -12,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
 import android.widget.Toast;
+import br.ufg.iptsp.app.variloid.provider.Data;
 import br.ufg.iptsp.app.variloid.servico.ServicoConexao;
 import br.ufg.iptsp.app.variloid.util.HelpUtils;
 
@@ -42,27 +41,6 @@ public class VariloidActivity extends BaseActivity {
 		getSupportActionBar().setTitle(getString(R.string.app_name));
 		
 		final Button button = (Button) findViewById(R.id.button);
-
-//		for (int i = 0; i < VariloidForm2.campos.length; i++) {
-//			if (!TextUtils.isEmpty(pref
-//					.getString(VariloidForm2.FORM2_CAMPO + i, ""))){
-//				isPreenchido2e3=true;
-//			}
-//		}
-//		
-//		for (int i = 0; i < VariloidForm3.campos.length; i++) {
-//			if (!TextUtils.isEmpty(pref
-//					.getString(VariloidForm3.FORM3_CAMPO + i, ""))){
-//				isPreenchido2e3=true;
-//			}
-//		}
-//		
-//		if(isPreenchido2e3){
-//			radioButton1.setText(getString(R.string.faixa_etaria1) + " ("
-//					+ getString(R.string.faixa_etaria1_incompleta) + ")");
-//		}else{
-//			radioButton1.setText(getString(R.string.faixa_etaria1));
-//		}
 
 		final RadioButton radioButton1 = (RadioButton) findViewById(R.id.radioButton1);
 		radioButton1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -101,20 +79,6 @@ public class VariloidActivity extends BaseActivity {
 		});
 
 		final RadioButton radioButton4 = (RadioButton) findViewById(R.id.radioButton4);
-
-//		for (int i = 0; i < VariloidForm4.campos.length; i++) {
-//			if (!TextUtils.isEmpty(pref
-//					.getString(VariloidForm4.FORM4_CAMPO + i, ""))){
-//				isPreenchido4=true;
-//			}
-//		}
-		
-//		if (isPreenchido4) {
-//			radioButton2.setText(getString(R.string.faixa_etaria2) + " ("
-//					+ getString(R.string.faixa_etaria2_incompleta) + ")");
-//		} else {
-//			radioButton2.setText(getString(R.string.faixa_etaria2));
-//		}
 
 		radioButton4.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -166,21 +130,25 @@ public class VariloidActivity extends BaseActivity {
 				if (check1) {
 					startActivity(new Intent(VariloidActivity.this,
 							Formulario2Activity.class));
+					Data.mapService.add("faixaEtaria", getString(R.string.faixa_etaria1));
 				}
 
 				if (check2) {
 					startActivity(new Intent(VariloidActivity.this,
 							Formulario2Activity.class));
+					Data.mapService.add("faixaEtaria", getString(R.string.faixa_etaria2));
 				}
 				
 				if (check3) {
 					startActivity(new Intent(VariloidActivity.this,
 							Formulario2Activity.class));
+					Data.mapService.add("faixaEtaria", getString(R.string.faixa_etaria3));
 				}
 				
 				if (check4) {
 					startActivity(new Intent(VariloidActivity.this,
 							Formulario4Activity.class));
+					Data.mapService.add("faixaEtaria", getString(R.string.faixa_etaria4));
 				}
 			}
 		});
@@ -213,88 +181,88 @@ public class VariloidActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	private void limpandoFormularios() {
-		SharedPreferences pref = getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = pref.edit();
-		
-		for (int i = 0; i < VariloidForm2.campos.length; i++) {
-			switch (i) {
-			case 14:
-				break;
-			case 27:
-				break;
-			case 32:
-				break;
-			case 47:
-				break;
-			case 53:
-				break;
-			case 69:
-				break;
-			default:
-				editor.putString(VariloidForm2.FORM2_CAMPO + i, "");
-				editor.putBoolean(VariloidForm2.FORM2_IMAGEM + i, false);
-				editor.putBoolean(VariloidForm2.FORM2_INATIVAR + i, false);
-				break;
-			}
-		}
-		
-		for (int i = 0; i < VariloidForm3.campos.length; i++) {
-			switch (i) {
-			case 14:
-				break;
-			case 30:
-				break;
-			case 36:
-				break;
-			case 52:
-				break;
-			default:
-				editor.putString(VariloidForm3.FORM3_CAMPO + i, "");
-				editor.putBoolean(VariloidForm3.FORM3_IMAGEM + i, false);
-				editor.putBoolean(VariloidForm3.FORM3_INATIVAR + i, false);
-				break;
-			}
-
-		}
-
-		for (int i = 0; i < VariloidForm4.campos.length; i++) {
-			switch (i) {
-			case 29:
-				break;
-			case 37:
-				break;
-			case 58:
-				break;
-			default:
-				editor.putString(VariloidForm4.FORM4_CAMPO + i, "");
-				editor.putBoolean(VariloidForm4.FORM4_IMAGEM + i, false);
-				editor.putBoolean(VariloidForm4.FORM4_INATIVAR + i, false);
-				break;
-			}
-		}
-		
-		editor.putString(VariloidForm2.FORM2_CAMPO + "latitude", "");
-		editor.putString(VariloidForm2.FORM2_CAMPO + "longitude", "");
-		editor.putString(VariloidForm3.FORM3_CAMPO + "latitude", "");
-		editor.putString(VariloidForm3.FORM3_CAMPO + "longitude", "");
-		editor.putString(VariloidForm4.FORM4_CAMPO + "latitude", "");
-		editor.putString(VariloidForm4.FORM4_CAMPO + "longitude", "");
-		editor.putString(Variloid.ID_ENTREVISTA_PENDENTE, "");
-		editor.putString(Variloid.NOME_ENTREVISTADOR, "");
-		editor.putString(Variloid.ID_ENTREVISTADOR_PENDENTE, "");
-		editor.putString(Variloid.ID_FOTO_LESAO, "");
-		editor.putString(Variloid.ID_FOTO_CARTAO, "");
-		editor.putString(Variloid.ID_FORM3, "");
-		editor.putString(Variloid.ID_FORM2, "");
-		editor.putString(Variloid.FORM_FOTO_CARTAO_VACINA, "");
-		editor.putString(Variloid.FORM_FOTO_LESAO_COLETADA, "");
-		
-		editor.commit();
-		
-		Toast.makeText(this,
-				"Campos limpos",
-				Toast.LENGTH_SHORT).show();
-	}
+//	private void limpandoFormularios() {
+//		SharedPreferences pref = getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
+//		SharedPreferences.Editor editor = pref.edit();
+//		
+//		for (int i = 0; i < VariloidForm2.campos.length; i++) {
+//			switch (i) {
+//			case 14:
+//				break;
+//			case 27:
+//				break;
+//			case 32:
+//				break;
+//			case 47:
+//				break;
+//			case 53:
+//				break;
+//			case 69:
+//				break;
+//			default:
+//				editor.putString(VariloidForm2.FORM2_CAMPO + i, "");
+//				editor.putBoolean(VariloidForm2.FORM2_IMAGEM + i, false);
+//				editor.putBoolean(VariloidForm2.FORM2_INATIVAR + i, false);
+//				break;
+//			}
+//		}
+//		
+//		for (int i = 0; i < VariloidForm3.campos.length; i++) {
+//			switch (i) {
+//			case 14:
+//				break;
+//			case 30:
+//				break;
+//			case 36:
+//				break;
+//			case 52:
+//				break;
+//			default:
+//				editor.putString(VariloidForm3.FORM3_CAMPO + i, "");
+//				editor.putBoolean(VariloidForm3.FORM3_IMAGEM + i, false);
+//				editor.putBoolean(VariloidForm3.FORM3_INATIVAR + i, false);
+//				break;
+//			}
+//
+//		}
+//
+//		for (int i = 0; i < VariloidForm4.campos.length; i++) {
+//			switch (i) {
+//			case 29:
+//				break;
+//			case 37:
+//				break;
+//			case 58:
+//				break;
+//			default:
+//				editor.putString(VariloidForm4.FORM4_CAMPO + i, "");
+//				editor.putBoolean(VariloidForm4.FORM4_IMAGEM + i, false);
+//				editor.putBoolean(VariloidForm4.FORM4_INATIVAR + i, false);
+//				break;
+//			}
+//		}
+//		
+//		editor.putString(VariloidForm2.FORM2_CAMPO + "latitude", "");
+//		editor.putString(VariloidForm2.FORM2_CAMPO + "longitude", "");
+//		editor.putString(VariloidForm3.FORM3_CAMPO + "latitude", "");
+//		editor.putString(VariloidForm3.FORM3_CAMPO + "longitude", "");
+//		editor.putString(VariloidForm4.FORM4_CAMPO + "latitude", "");
+//		editor.putString(VariloidForm4.FORM4_CAMPO + "longitude", "");
+//		editor.putString(Variloid.ID_ENTREVISTA_PENDENTE, "");
+//		editor.putString(Variloid.NOME_ENTREVISTADOR, "");
+//		editor.putString(Variloid.ID_ENTREVISTADOR_PENDENTE, "");
+//		editor.putString(Variloid.ID_FOTO_LESAO, "");
+//		editor.putString(Variloid.ID_FOTO_CARTAO, "");
+//		editor.putString(Variloid.ID_FORM3, "");
+//		editor.putString(Variloid.ID_FORM2, "");
+//		editor.putString(Variloid.FORM_FOTO_CARTAO_VACINA, "");
+//		editor.putString(Variloid.FORM_FOTO_LESAO_COLETADA, "");
+//		
+//		editor.commit();
+//		
+//		Toast.makeText(this,
+//				"Campos limpos",
+//				Toast.LENGTH_SHORT).show();
+//	}
 
 }

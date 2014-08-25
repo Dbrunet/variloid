@@ -203,11 +203,11 @@ public class Formulario3Fragment extends SherlockFragment implements
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
 								
-								SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
+//								SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
 								
 								Data.mapService.add(Variloid.STATUS, "1");
-								Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
-								Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
+//								Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
+//								Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
 								
 								new FormAsyntask(getSherlockActivity()).execute();
 								dialog.cancel();
@@ -223,11 +223,11 @@ public class Formulario3Fragment extends SherlockFragment implements
 						});
 						alert.show();
 					}else{
-						SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
+//						SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
 						
 						Data.mapService.add(Variloid.STATUS, "1");
-						Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
-						Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
+//						Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
+//						Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
 					}
 
 				} else {
@@ -272,11 +272,11 @@ public class Formulario3Fragment extends SherlockFragment implements
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
 								
-								SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
+//								SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
 								
 								Data.mapService.add(Variloid.STATUS, "0");
-								Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
-								Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
+//								Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
+//								Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
 								
 								new FormAsyntask(getSherlockActivity()).execute();
 								dialog.cancel();
@@ -292,11 +292,11 @@ public class Formulario3Fragment extends SherlockFragment implements
 						});
 						alert.show();
 					}else{
-						SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
+//						SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
 						
 						Data.mapService.add(Variloid.STATUS, "0");
-						Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
-						Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
+//						Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
+//						Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
 						
 						new FormAsyntask(getSherlockActivity()).execute();
 					}

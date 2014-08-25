@@ -9,6 +9,7 @@ public class Arquivo {
 	private byte[] bytes;
 	private Date dataCriacao;
 	private Integer tamanho;
+	private String caminho;
 
 	
 	public Arquivo() {
@@ -64,5 +65,13 @@ public class Arquivo {
 
 	public Date getDataCriacao() {
 		return this.dataCriacao;
+	}
+
+	public String getCaminho() {
+		return caminho;
+	}
+
+	public void setCaminho(String caminho) {
+		this.caminho = caminho;
 	}
 }
