@@ -4,36 +4,79 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/button_tirar_foto_cartao"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
-        android:visibility="gone" />
+        android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/button_tirar_foto_lesao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
-        android:visibility="gone" />
+        <Button
+            android:id="@+id/button_tirar_foto_cartao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
+            android:visibility="gone" />
 
-    <Button
-        android:id="@+id/button_tirar_foto_panoramica"
+        <ImageView
+            android:id="@+id/imgFotoCartaoCarregada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_certo"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
-        android:visibility="gone" />
-    
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/button_tirar_foto_lesao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/imgFotoLesaoCarregada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_certo"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/button_tirar_foto_panoramica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/imgFotoPanoramicaCarregada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_certo"
+            android:visibility="gone" />
+    </FrameLayout>
+
     <Button
         android:id="@+id/button_avancar_finalizar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_margin="10dp"
-        android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title" />
+        android:textAppearance="@style/TextAppearance.Sherlock.Widget.ActionBar.Title"
+        android:visibility="gone" />
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 package br.ufg.iptsp.app.variloid;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,13 @@ import org.springframework.util.MultiValueMap;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -25,7 +29,6 @@ import android.provider.MediaStore;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +36,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
@@ -40,7 +44,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
+import br.ufg.iptsp.app.variloid.adapter.CropOptionAdapter;
 import br.ufg.iptsp.app.variloid.adapter.MyAdapterForm3;
+import br.ufg.iptsp.app.variloid.negocio.CropOption;
 import br.ufg.iptsp.app.variloid.negocio.FormularioTres;
 import br.ufg.iptsp.app.variloid.provider.Data;
 import br.ufg.iptsp.app.variloid.servico.Servico;
@@ -55,15 +61,21 @@ import com.actionbarsherlock.view.MenuItem;
 public class Formulario3Fragment extends SherlockFragment implements
 		OnItemClickListener {
 
+	private static final int PICK_FROM_CAMERA = 0;
+	private static final int CROP_FROM_CAMERA = 1;
+	
 	private LayoutInflater layoutInflater;
 	private MyAdapterForm3 myAdapter;
-	private Uri imageUri;
 	private Button buttonTirarFotoCartao;
 
 	private List<Integer> list;
 	private int paginaFragment;
 	private MultiValueMap<String, Object> mapFormularioTres;
 	private FormularioTres formularioTres;
+	private Uri mImageCaptureUri;
+	private Bitmap bitmap;
+	private String fileAbsolutePath;
+	private ImageView fotoCartaoCarregada;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -78,9 +90,6 @@ public class Formulario3Fragment extends SherlockFragment implements
 		for (Integer integer : VariloidForm3.campos) {
 			list.add(integer);
 		}
-		
-//		Log.v("Comparar size", "campos: "+VariloidForm3.campos.length);
-//		Log.v("Comparar size", "idCampos: "+VariloidForm3.idCampos.length);
 		
 		if (Data.listaMapFormularioTres.isEmpty()) {
 			
@@ -120,17 +129,20 @@ public class Formulario3Fragment extends SherlockFragment implements
 		// TODO Auto-generated method stub
 		View layoutFooter = layoutInflater.inflate(R.layout.button_layout, null);
 		
+		fotoCartaoCarregada = (ImageView) layoutFooter.findViewById(R.id.imgFotoCartaoCarregada);
+		
 		buttonTirarFotoCartao = (Button) layoutFooter.findViewById(R.id.button_tirar_foto_cartao);
+		buttonTirarFotoCartao.setText(getString(R.string.tirar_foto_cartao));
 		buttonTirarFotoCartao.setBackgroundResource(R.drawable.seletor_btn);
 		buttonTirarFotoCartao.setTextColor(Color.WHITE);
 		buttonTirarFotoCartao.setVisibility(View.VISIBLE);
 
 		if (Data.listaMapFormularioTres.get(paginaFragment).get(Data.FORM3_KEY.concat("[")
 						.concat(String.valueOf(paginaFragment)).concat("].")
-						.concat(Variloid.FORM_FOTO_CARTAO_VACINA))==null) {
-			buttonTirarFotoCartao.setText(getString(R.string.tirar_foto_cartao));
+						.concat(Variloid.FORM_FOTO_CARTAO_VACINA))!=null) {
+			fotoCartaoCarregada.setVisibility(View.VISIBLE);
 		} else {
-			buttonTirarFotoCartao.setText(getString(R.string.tirar_foto_cartao)+ "(Imagem Carregada)");
+			fotoCartaoCarregada.setVisibility(View.GONE);
 		}
 
 		buttonTirarFotoCartao.setOnClickListener(new OnClickListener() {
@@ -138,34 +150,7 @@ public class Formulario3Fragment extends SherlockFragment implements
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				if (Data.listaMapFormularioTres.get(paginaFragment).get(
-						Data.FORM3_KEY.concat("[")
-						.concat(String.valueOf(paginaFragment))
-						.concat("].")
-						.concat(Variloid.FORM_FOTO_CARTAO_VACINA))==null){
-					createDialog(0);
-				} else {
-					final AlertDialog.Builder alert = new AlertDialog.Builder(
-							getSherlockActivity());
-					alert.setTitle(getString(R.string.formulario_alerta));
-					alert.setMessage(getString(R.string.formulario_imagem_carregada));
-					alert.setPositiveButton("Sim",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
-									createDialog(0);
-								}
-							});
-
-					alert.setNegativeButton("Não",
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
-									dialog.cancel();
-								}
-							});
-					alert.show();
-				}
+					createDialog(1);
 			}
 		});
 
@@ -203,11 +188,7 @@ public class Formulario3Fragment extends SherlockFragment implements
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
 								
-//								SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
-								
 								Data.mapService.add(Variloid.STATUS, "1");
-//								Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
-//								Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
 								
 								new FormAsyntask(getSherlockActivity()).execute();
 								dialog.cancel();
@@ -223,11 +204,8 @@ public class Formulario3Fragment extends SherlockFragment implements
 						});
 						alert.show();
 					}else{
-//						SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
 						
 						Data.mapService.add(Variloid.STATUS, "1");
-//						Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
-//						Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
 					}
 
 				} else {
@@ -271,13 +249,7 @@ public class Formulario3Fragment extends SherlockFragment implements
 								new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,
 									int whichButton) {
-								
-//								SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
-								
 								Data.mapService.add(Variloid.STATUS, "0");
-//								Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
-//								Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
-								
 								new FormAsyntask(getSherlockActivity()).execute();
 								dialog.cancel();
 							}
@@ -292,12 +264,7 @@ public class Formulario3Fragment extends SherlockFragment implements
 						});
 						alert.show();
 					}else{
-//						SharedPreferences pref = getActivity().getSharedPreferences(Variloid.PREFERENCIAS, Context.MODE_PRIVATE);
-						
 						Data.mapService.add(Variloid.STATUS, "0");
-//						Data.mapService.add(Variloid.ID_ENTREVISTADOR, pref.getString(Variloid.ID_ENTREVISTADOR, ""));
-//						Data.mapService.add(Variloid.NOME_ENTREVISTADOR, pref.getString(Variloid.NOME_ENTREVISTADOR, ""));
-						
 						new FormAsyntask(getSherlockActivity()).execute();
 					}
 					
@@ -362,75 +329,216 @@ public class Formulario3Fragment extends SherlockFragment implements
 	}
 
 	protected void createDialog(int dialogId) {
+		Intent intent = null;
 		switch (dialogId) {
-		case 0:
-			try {
-				Intent i = new Intent("android.media.action.IMAGE_CAPTURE");
-				File photoCartao = new File(
-						Environment.getExternalStorageDirectory(),
-						"PicCartaoVacina.jpg");
-				i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoCartao));
-				i.putExtra("data", photoCartao);
-				imageUri = Uri.fromFile(photoCartao);
-				startActivityForResult(i, 1);
+		case 1:
+			intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-			} catch (Exception e) {
-				Log.w("IMAGE_CAPTURE",
-						"Falha ao acessar o arquivo onde a imagem seria salva.",
-						e);
+			mImageCaptureUri = Uri.fromFile(new File(Environment
+					.getExternalStorageDirectory(), "tmp_foto_"
+					+ String.valueOf(System.currentTimeMillis())
+					+ ".jpg"));
+
+			intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+					mImageCaptureUri);
+
+			try {
+				intent.putExtra("return-data", true);
+
+				startActivityForResult(intent, PICK_FROM_CAMERA);
+			} catch (ActivityNotFoundException e) {
+				e.printStackTrace();
 			}
+
+			break;
+		default:
 			break;
 		}
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		if (resultCode != Activity.RESULT_OK)
+			return;
+		
 		switch (requestCode) {
-		case 1:
-			if (resultCode == Activity.RESULT_OK) {
-				try {
-					if(TextUtils.isEmpty(Data.listaMapFormularioTres.get(paginaFragment).get(Data.FORM3_KEY.concat("[")
-							.concat(String.valueOf(paginaFragment)).concat("].")
-							.concat(Variloid.FORM_FOTO_CARTAO_VACINA)).toString())){
-						
-						Data.mapService.add(Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(paginaFragment)).concat("].")
-								.concat(Variloid.FORM_FOTO_CARTAO_VACINA), new FileSystemResource(getPathFromURI(imageUri)));
-					}else{
-						Data.mapService.set(Data.FORM3_KEY.concat("[")
-								.concat(String.valueOf(paginaFragment)).concat("].")
-								.concat(Variloid.FORM_FOTO_CARTAO_VACINA), new FileSystemResource(getPathFromURI(imageUri)));
-					}
-					
-					buttonTirarFotoCartao.setText(getString(R.string.tirar_foto_cartao)
-									+ "(Imagem Carregada)");
-				} catch (Exception e) {
-					// TODO: handle exception
-					Toast.makeText(getSherlockActivity(),
-							"Erro ao carregar Imagem. Tente Novamente!",
-							Toast.LENGTH_LONG).show();
+		case PICK_FROM_CAMERA:
+			/**
+			 * After taking a picture, do the crop
+			 */
+			doCrop();
+
+			break;
+
+		case CROP_FROM_CAMERA:
+			Bundle extras = data.getExtras();
+			/**
+			 * After cropping the image, get the bitmap of the cropped image and
+			 * display it on imageview.
+			 */
+			if (extras != null) {
+				
+				bitmap = extras.getParcelable("data");
+				
+				File mediaDir = new File(Environment
+						.getExternalStorageDirectory().getAbsolutePath()
+						.concat("/").concat("variloid").concat("/"));
+				if (!mediaDir.exists()) {
+					mediaDir.mkdirs();
 				}
 
+				File foto = new File(Environment.getExternalStorageDirectory()
+						.getAbsolutePath().concat("/").concat("variloid")
+						.concat("/"), String.valueOf(System.currentTimeMillis()).concat(".jpg"));
+				
+				FileOutputStream fOut = null;
+				
+				try {
+					fOut = new FileOutputStream(foto);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 60, fOut);
+				
+				fileAbsolutePath = foto.getAbsolutePath();
+			
+				Data.listaMapFormularioTres.get(paginaFragment).
+				set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(Variloid.FORM_FOTO_CARTAO_VACINA), new FileSystemResource(fileAbsolutePath));
+				fotoCartaoCarregada.setVisibility(View.VISIBLE);
+				
+				File fileTemp = new File(mImageCaptureUri.getPath());
+				if (fileTemp.exists())
+					fileTemp.delete();
 			}
-			break;
 		}
+		
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+	
+	private void doCrop() {
+		final ArrayList<CropOption> cropOptions = new ArrayList<CropOption>();
+		/**
+		 * Open image crop app by starting an intent
+		 * ‘com.android.camera.action.CROP‘.
+		 */
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		intent.setType("image/*");
 
-	@SuppressWarnings("deprecation")
-	public String getPathFromURI(Uri contentUri) {
-		try {
-			String[] proj = { MediaStore.Images.Media.DATA };
-			Cursor cursor = getSherlockActivity().managedQuery(contentUri,
-					proj, null, null, null);
-			int column_index = cursor
-					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-			cursor.moveToFirst();
-			return cursor.getString(column_index);
-		} catch (Exception e) {
-			return contentUri.getPath();
+		/**
+		 * Check if there is image cropper app installed.
+		 */
+		List<ResolveInfo> list = getActivity().getPackageManager().queryIntentActivities(
+				intent, 0);
+
+		int size = list.size();
+
+		/**
+		 * If there is no image cropper app, display warning message
+		 */
+		if (size == 0) {
+
+			Toast.makeText(getActivity(), "Can not find image crop app",
+					Toast.LENGTH_SHORT).show();
+
+			return;
+		} else {
+			/**
+			 * Specify the image path, crop dimension and scale
+			 */
+			intent.setData(mImageCaptureUri);
+
+			intent.putExtra("outputX", 256);
+			intent.putExtra("outputY", 256);
+			intent.putExtra("aspectX", 1);
+			intent.putExtra("aspectY", 1);
+			intent.putExtra("scale", true);
+			intent.putExtra("return-data", true);
+			/**
+			 * There is posibility when more than one image cropper app exist,
+			 * so we have to check for it first. If there is only one app, open
+			 * then app.
+			 */
+
+			if (size == 1) {
+				Intent i = new Intent(intent);
+				ResolveInfo res = list.get(0);
+
+				i.setComponent(new ComponentName(res.activityInfo.packageName,
+						res.activityInfo.name));
+
+				startActivityForResult(i, CROP_FROM_CAMERA);
+			} else {
+				/**
+				 * If there are several app exist, create a custom chooser to
+				 * let user selects the app.
+				 */
+				for (ResolveInfo res : list) {
+					final CropOption co = new CropOption();
+
+					co.title = getActivity().getPackageManager().getApplicationLabel(
+							res.activityInfo.applicationInfo);
+					co.icon = getActivity().getPackageManager().getApplicationIcon(
+							res.activityInfo.applicationInfo);
+					co.appIntent = new Intent(intent);
+
+					co.appIntent
+							.setComponent(new ComponentName(
+									res.activityInfo.packageName,
+									res.activityInfo.name));
+
+					cropOptions.add(co);
+				}
+
+				CropOptionAdapter adapter = new CropOptionAdapter(
+						getActivity(), cropOptions);
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Choose Crop App");
+				builder.setAdapter(adapter,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int item) {
+								startActivityForResult(
+										cropOptions.get(item).appIntent,
+										CROP_FROM_CAMERA);
+							}
+						});
+
+				builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+					@Override
+					public void onCancel(DialogInterface dialog) {
+
+						if (mImageCaptureUri != null) {
+							getActivity().getContentResolver().delete(mImageCaptureUri, null,
+									null);
+							mImageCaptureUri = null;
+						}
+					}
+				});
+
+				AlertDialog alert = builder.create();
+
+				alert.show();
+			}
 		}
 	}
+
+//	@SuppressWarnings("deprecation")
+//	public String getPathFromURI(Uri contentUri) {
+//		try {
+//			String[] proj = { MediaStore.Images.Media.DATA };
+//			Cursor cursor = getSherlockActivity().managedQuery(contentUri,
+//					proj, null, null, null);
+//			int column_index = cursor
+//					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//			cursor.moveToFirst();
+//			return cursor.getString(column_index);
+//		} catch (Exception e) {
+//			return contentUri.getPath();
+//		}
+//	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -504,6 +612,95 @@ public class Formulario3Fragment extends SherlockFragment implements
 				getSherlockActivity());
 
 		switch (arg2) {
+		
+		case VariloidForm3.CRIANCA_JA_TEVE_CATAPORA:
+			View layoutJaTeveCatapora = layoutInflater.inflate(R.layout.group_box_formulario, null);
+			final RadioButton radioButton3 = (RadioButton) layoutJaTeveCatapora.findViewById(R.id.radio1);
+			radioButton3.setText(getString(R.string.formulario3_opcao_sim));
+			final RadioButton radioButton4 = (RadioButton) layoutJaTeveCatapora.findViewById(R.id.radio2);
+			radioButton4.setText(getString(R.string.formulario3_opcao_nao));
+			
+			if(!TextUtils.isEmpty(Data.listaFormularioTres.get(paginaFragment)
+					.getCriancaCataporaAnt())){
+				
+				if(Data.formularioDois.getCriancaCataporaAnt().equalsIgnoreCase(getString(R.string.formulario3_opcao_sim))){
+					radioButton3.setChecked(true);
+				}else if(Data.formularioDois.getCriancaCataporaAnt().equalsIgnoreCase(getString(R.string.formulario3_opcao_nao))){
+					radioButton4.setChecked(true);
+				}
+			}
+			
+			alert.setTitle(getString(R.string.formulario3_ja_teve_catapora));
+			alert.setView(layoutJaTeveCatapora);
+			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+
+					if(radioButton3.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario3_opcao_sim), false,  true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else if(radioButton4.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario3_opcao_nao), false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else{
+						setPreferences(arg2, "", false, false);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					}
+					dialog.cancel();
+				}
+			});
+
+			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			alert.show();
+			break;
+			
+		case VariloidForm3.CRIANCA_MORA_NA_VIZINHANCA:
+			View layoutMoraNaVizinhanca = layoutInflater.inflate(R.layout.group_box_formulario, null);
+			final RadioButton radioButtonSim = (RadioButton) layoutMoraNaVizinhanca.findViewById(R.id.radio1);
+			radioButtonSim.setText(getString(R.string.formulario3_opcao_sim));
+			final RadioButton radioButtonNao = (RadioButton) layoutMoraNaVizinhanca.findViewById(R.id.radio2);
+			radioButtonNao.setText(getString(R.string.formulario3_opcao_nao));
+			
+			if(!TextUtils.isEmpty(Data.listaFormularioTres.get(paginaFragment)
+					.getCriancaMoraVizinhanca())){
+				
+				if(Data.formularioDois.getCriancaCataporaAnt().equalsIgnoreCase(getString(R.string.formulario3_opcao_sim))){
+					radioButtonSim.setChecked(true);
+				}else if(Data.formularioDois.getCriancaCataporaAnt().equalsIgnoreCase(getString(R.string.formulario3_opcao_nao))){
+					radioButtonNao.setChecked(true);
+				}
+			}
+			
+			alert.setTitle(getString(R.string.formulario3_crianca_mora_na_vizinhanca));
+			alert.setView(layoutMoraNaVizinhanca);
+			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+
+					if(radioButtonSim.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario3_opcao_sim), false,  true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else if(radioButtonNao.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario3_opcao_nao), false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else{
+						setPreferences(arg2, "", false, false);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					}
+					dialog.cancel();
+				}
+			});
+
+			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			alert.show();
+			break;
+			
 		case VariloidForm3.NOME:
 			final EditText inputNome = new EditText(getSherlockActivity());
 
@@ -1608,86 +1805,69 @@ public class Formulario3Fragment extends SherlockFragment implements
 					});
 			alert.show();
 			break;
-		// case VariloidForm3.RASH:
-		// View layout9 = layoutInflater.inflate(R.layout.group_box_formulario,
-		// null);
-		// final RadioButton radioButton24 = (RadioButton)
-		// layout9.findViewById(R.id.radio1);
-		// radioButton24.setText(getString(R.string.formulario3_opcao_sim));
-		// final RadioButton radioButton25 = (RadioButton)
-		// layout9.findViewById(R.id.radio2);
-		// radioButton25.setText(getString(R.string.formulario3_opcao_nao));
-		//
-		// if(campo.equalsIgnoreCase(getString(R.string.formulario3_opcao_sim))){
-		// radioButton24.setChecked(true);
-		// }else
-		// if(campo.equalsIgnoreCase(getString(R.string.formulario3_opcao_nao))){
-		// radioButton25.setChecked(true);
-		// }
-		//
-		// alert.setTitle(getString(R.string.formulario3_rash));
-		// alert.setView(layout9);
-		// alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog, int whichButton) {
-		//
-		// if(radioButton24.isChecked()){
-		// setPreferences(arg2, getString(R.string.formulario3_opcao_sim),
-		// false, true);
-		// ((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-		//
-		// for (int i = VariloidForm3.TCLE; i < VariloidForm3.campos.length;
-		// i++) {
-		// setPreferences(i, "", false, false);
-		// }
-		// for (int i = VariloidForm3.TCLE; i < VariloidForm3.campos.length;
-		// i++) {
-		// myAdapter.updateItens(i, VariloidForm3.campos[i]);
-		// }
-		// myAdapter.notifyDataSetChanged();
-		//
-		// }else if(radioButton25.isChecked()){
-		// setPreferences(arg2, getString(R.string.formulario3_opcao_nao),
-		// false, true);
-		// ((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-		//
-		// for (int i = VariloidForm3.TCLE; i < VariloidForm3.campos.length;
-		// i++) {
-		// setPreferences(i, "", true, false);
-		// }
-		// for (int i = VariloidForm3.TCLE; i < VariloidForm3.campos.length;
-		// i++) {
-		// myAdapter.updateItens(i, VariloidForm3.campos[i]);
-		// }
-		// myAdapter.notifyDataSetChanged();
-		//
-		// }else{
-		// setPreferences(arg2, "", false, false);
-		// ((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
-		//
-		// for (int i = VariloidForm3.TCLE; i < VariloidForm3.campos.length;
-		// i++) {
-		// setPreferences(i, "", false, false);
-		// }
-		// for (int i = VariloidForm3.TCLE; i < VariloidForm3.campos.length;
-		// i++) {
-		// myAdapter.updateItens(i, VariloidForm3.campos[i]);
-		// }
-		// myAdapter.notifyDataSetChanged();
-		//
-		// }
-		// dialog.cancel();
-		// }
-		// });
-		//
-		// alert.setNegativeButton("Cancelar",new
-		// DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog, int whichButton) {
-		//
-		// dialog.cancel();
-		// }
-		// });
-		// alert.show();
-		// break;
+		
+		case VariloidForm3.MUNICIPIO:
+			View layoutMunicipio = layoutInflater.inflate(R.layout.group_box_formulario, null);
+			
+			final RadioButton radioButtonSp = (RadioButton) layoutMunicipio.findViewById(R.id.radio1);
+			radioButtonSp.setText(getString(R.string.formulario3_opcao_sao_paulo));
+			final RadioButton radioButtonGo = (RadioButton) layoutMunicipio.findViewById(R.id.radio2);
+			radioButtonGo.setText(getString(R.string.formulario3_opcao_goiania));
+			final RadioButton radioButtonTab = (RadioButton) layoutMunicipio.findViewById(R.id.radio3);
+			radioButtonTab.setVisibility(View.VISIBLE);
+			radioButtonTab.setText(getString(R.string.formulario3_opcao_taboao));
+			final RadioButton radioButtonRe = (RadioButton) layoutMunicipio.findViewById(R.id.radio4);
+			radioButtonRe.setVisibility(View.VISIBLE);
+			radioButtonRe.setText(getString(R.string.formulario3_opcao_recife));
+			
+			if(!TextUtils.isEmpty(Data.listaFormularioTres.get(paginaFragment)
+					.getMunicipio())){
+				
+				if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario3_opcao_sao_paulo))!=-1){
+					radioButtonSp.setChecked(true);
+				}else if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario3_opcao_goiania))!=-1){
+					radioButtonGo.setChecked(true);
+				}else if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario3_opcao_taboao))!=-1){
+					radioButtonTab.setChecked(true);
+				}else if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario3_opcao_recife))!=-1){
+					radioButtonRe.setChecked(true);
+				}
+			}
+					
+			alert.setTitle(getString(R.string.formulario2_municipio));
+			alert.setView(layoutMunicipio);
+			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+				
+				public void onClick(DialogInterface dialog, int whichButton) {
+					
+					if(radioButtonSp.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario3_opcao_sao_paulo) , false,  true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else if(radioButtonGo.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario3_opcao_goiania) , false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else if(radioButtonTab.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario3_opcao_taboao) , false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else if(radioButtonRe.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario3_opcao_recife) , false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else{
+						setPreferences(arg2, "", false, false);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					}
+					dialog.cancel();
+				}
+			});
+
+			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			alert.show();
+			break;
+			
 		case VariloidForm3.TCLE:
 			View layout10 = layoutInflater.inflate(
 					R.layout.group_box_formulario, null);
@@ -2341,42 +2521,232 @@ public class Formulario3Fragment extends SherlockFragment implements
 					});
 			alert.show();
 			break;
-		// case VariloidForm3.DT_INICIO_VARICELA:
-		// final EditText dataInicioVar = new EditText(getSherlockActivity());
-		// dataInicioVar.setInputType(InputType.TYPE_CLASS_DATETIME);
-		// dataInicioVar.addTextChangedListener(Mask.insert(
-		// "##/##/####", dataInicioVar));
-		//
-		// if(!TextUtils.isEmpty(campo)){
-		// String replaceCampo = campo.replaceAll("/", "");
-		// dataInicioVar.setText(replaceCampo);
-		// }
-		//
-		// alert.setTitle(getString(R.string.formulario3_data_inicio_varicela));
-		// alert.setView(dataInicioVar);
-		// alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog, int whichButton) {
-		//
-		// if(!TextUtils.isEmpty(dataInicioVar.getText().toString())){
-		// setPreferences(arg2, dataInicioVar.getText().toString(), false,
-		// true);
-		// ((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-		// }else{
-		// setPreferences(arg2, "", false, false);
-		// ((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
-		// }
-		// dialog.cancel();
-		// }
-		// });
-		//
-		// alert.setNegativeButton("Cancelar",new
-		// DialogInterface.OnClickListener() {
-		// public void onClick(DialogInterface dialog, int whichButton) {
-		// dialog.cancel();
-		// }
-		// });
-		// alert.show();
-		// break;
+		
+		case VariloidForm3.VACVARICELA:
+			View layoutVacVaricela = layoutInflater.inflate(R.layout.group_box_formulario, null);
+			final RadioButton radioButtonVacSim = (RadioButton) layoutVacVaricela.findViewById(R.id.radio1);
+			radioButtonVacSim.setText(getString(R.string.formulario3_opcao_sim));
+			final RadioButton radioButtonVacNao = (RadioButton) layoutVacVaricela.findViewById(R.id.radio2);
+			radioButtonVacNao.setText(getString(R.string.formulario3_opcao_nao));
+			final RadioButton radioButtonVacNaoSabe = (RadioButton) layoutVacVaricela.findViewById(R.id.radio3);
+			radioButtonVacNaoSabe.setVisibility(View.VISIBLE);
+			radioButtonVacNaoSabe.setText(getString(R.string.formulario3_opcao_nao_sabe_e_nao_tem_cartao));
+			
+			if (!TextUtils.isEmpty(Data.listaFormularioTres.get(paginaFragment)
+					.getCriancaRecebeuVacinaCatapora())) {
+				
+				if(Data.formularioDois.getCriancaRecebeuVacinaCatapora().equalsIgnoreCase(getString(R.string.formulario3_opcao_sim))){
+					radioButtonVacSim.setChecked(true);
+				}else if(Data.formularioDois.getCriancaRecebeuVacinaCatapora().equalsIgnoreCase(getString(R.string.formulario3_opcao_nao))){
+					radioButtonVacNao.setChecked(true);
+				}else if(Data.formularioDois.getCriancaRecebeuVacinaCatapora().equalsIgnoreCase(getString(R.string.formulario3_opcao_nao_sabe_e_nao_tem_cartao))){
+					radioButtonVacNaoSabe.setChecked(true);
+				}
+			}
+			
+			alert.setTitle(getString(R.string.formulario3_crianca_recebeu_vacina_catapora));
+			alert.setView(layoutVacVaricela);
+			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+
+					if(radioButtonVacSim.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else if(radioButtonVacNao.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else if(radioButtonVacNaoSabe.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_nao_sabe_e_nao_tem_cartao), false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else{
+						setPreferences(arg2, "", false, false);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					}
+					dialog.cancel();
+				}
+			});
+
+			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			alert.show();
+			break;
+		case VariloidForm3.MOTIVO_NAO_VACINACAO:
+			View layout28 = layoutInflater.inflate(R.layout.checkbox_formulario, null);
+			final EditText editText = (EditText) layout28.findViewById(R.id.edit_text);
+			int maxLengthEd = 90;    
+			editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLengthEd)});
+			
+			final CheckBox checkbox1 = (CheckBox) layout28.findViewById(R.id.checkBox1);
+			checkbox1.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao1));
+			final CheckBox checkbox2 = (CheckBox) layout28.findViewById(R.id.checkBox2);
+			checkbox2.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao2));
+			final CheckBox checkbox3 = (CheckBox) layout28.findViewById(R.id.checkBox3);
+			checkbox3.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao3));
+			final CheckBox checkbox4 = (CheckBox) layout28.findViewById(R.id.checkBox4);
+			checkbox4.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao4));
+			final CheckBox checkbox5 = (CheckBox) layout28.findViewById(R.id.checkBox5);
+			checkbox5.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao5));
+			final CheckBox checkbox6 = (CheckBox) layout28.findViewById(R.id.checkBox6);
+			checkbox6.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao6));
+			final CheckBox checkbox7 = (CheckBox) layout28.findViewById(R.id.checkBox7);
+			checkbox7.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao7));
+			final CheckBox checkbox8 = (CheckBox) layout28.findViewById(R.id.checkBox8);
+			checkbox8.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao8));
+			final CheckBox checkbox9 = (CheckBox) layout28.findViewById(R.id.checkBox9);
+			checkbox9.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao9));
+			final CheckBox checkbox10 = (CheckBox) layout28.findViewById(R.id.checkBox10);
+			checkbox10.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao10));
+			final CheckBox checkbox11 = (CheckBox) layout28.findViewById(R.id.checkBox11);
+			checkbox11.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao11));
+			final CheckBox checkbox12 = (CheckBox) layout28.findViewById(R.id.checkBox12);
+			checkbox12.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao12));
+			final CheckBox checkbox13 = (CheckBox) layout28.findViewById(R.id.checkBox13);
+			checkbox13.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao13));
+			final CheckBox checkbox14 = (CheckBox) layout28.findViewById(R.id.checkBox14);
+			checkbox14.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao14));
+			final CheckBox checkbox15 = (CheckBox) layout28.findViewById(R.id.checkBox15);
+			checkbox15.setText(getString(R.string.formulario2_opcao_motivo_nao_vacinacao15));
+			final CheckBox checkbox16 = (CheckBox) layout28.findViewById(R.id.checkBox16);
+			checkbox16.setText(getString(R.string.formulario2_opcao_outros));
+			checkbox16.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if(isChecked){
+						editText.setVisibility(View.VISIBLE);
+					}else{
+						editText.setVisibility(View.GONE);
+						editText.setText("");
+						editText.setHint(getString(R.string.formulario2_opcao_outros));
+					}
+				}
+			});
+							
+			if (!TextUtils.isEmpty(Data.listaFormularioTres.get(paginaFragment)
+					.getRazoesNaoVacinacao())) {		
+				
+				if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao1))!=-1){
+					checkbox1.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao2))!=-1){
+					checkbox2.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao3))!=-1){
+					checkbox3.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao4))!=-1){
+					checkbox4.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao5))!=-1){
+					checkbox5.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao6))!=-1){
+					checkbox6.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao7))!=-1){
+					checkbox7.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao8))!=-1){
+					checkbox8.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao9))!=-1){
+					checkbox9.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao10))!=-1){
+					checkbox10.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao11))!=-1){
+					checkbox11.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao12))!=-1){
+					checkbox12.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao13))!=-1){
+					checkbox13.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao14))!=-1){
+					checkbox14.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_motivo_nao_vacinacao15))!=-1){
+					checkbox15.setChecked(true);
+				}if(Data.formularioDois.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_outro_check))!=-1){
+					checkbox16.setChecked(true);
+					int posicao = Data.listaFormularioTres.get(paginaFragment)
+							.getRazoesNaoVacinacao().indexOf(getString(R.string.formulario2_opcao_outro_check));
+					editText.setText(Data.listaFormularioTres.get(paginaFragment)
+							.getRazoesNaoVacinacao().substring(posicao + getString(R.string.formulario2_opcao_outro_check).length(), Data.formularioDois.getRazoesNaoVacinacao().length()));					
+				}
+			}
+			
+			alert.setTitle(getString(R.string.formulario3_razoes_nao_vacinacao));
+			alert.setView(layout28);
+			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+				List<String> lisStrings = new ArrayList<String>();
+				String valor;
+				public void onClick(DialogInterface dialog, int whichButton) {
+					if(checkbox1.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao1));
+					}
+					if(checkbox2.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao2));
+					}
+					if(checkbox3.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao3));
+					}
+					if(checkbox4.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao4));
+					}
+					if(checkbox5.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao5));
+					}
+					if(checkbox6.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao6));
+					}
+					if(checkbox7.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao7));
+					}
+					if(checkbox8.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao8));
+					}
+					if(checkbox9.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao9));
+					}
+					if(checkbox10.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao10));
+					}
+					if(checkbox11.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao11));
+					}
+					if(checkbox12.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao12));
+					}
+					if(checkbox13.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao13));
+					}
+					if(checkbox14.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao14));
+					}
+					if(checkbox15.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_motivo_nao_vacinacao15));
+					}
+					if(checkbox16.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_outro_check) + editText.getText().toString());
+					}
+					
+					if(!lisStrings.isEmpty()){
+						for (String string : lisStrings) {
+							if(valor==null){
+								valor = string;
+							}
+							valor = valor +","+ string;
+						}
+						setPreferences(arg2, valor, false,  true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else{
+						setPreferences(arg2, "", false, false);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					}
+					dialog.cancel();
+				}
+			});
+	
+			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			alert.show();
+			break;
+			
 		case VariloidForm3.PESONASCER:
 			final EditText pesoNascer = new EditText(getSherlockActivity());
 			int maxLength16 = 4;
@@ -5275,6 +5645,52 @@ public class Formulario3Fragment extends SherlockFragment implements
 					});
 			alert.show();
 			break;
+			
+		case VariloidForm3.CASO_CASA_CRIANCA:
+			View layoutCasoCasaCrianca = layoutInflater.inflate(R.layout.group_box_formulario, null);
+			final RadioButton radioButtonCasoSim = (RadioButton) layoutCasoCasaCrianca.findViewById(R.id.radio1);
+			radioButtonCasoSim.setText(getString(R.string.formulario3_opcao_sim));
+			final RadioButton radioButtonCasoNao = (RadioButton) layoutCasoCasaCrianca.findViewById(R.id.radio2);
+			radioButtonCasoNao.setText(getString(R.string.formulario3_opcao_nao));
+			
+			if (!TextUtils.isEmpty(Data.listaFormularioTres.get(paginaFragment)
+					.getCasoCasaCrianca())){
+				if(Data.formularioDois.getTcleAssinado().equalsIgnoreCase(getString(R.string.formulario3_opcao_sim))){
+					radioButtonCasoSim.setChecked(true);
+				}else if(Data.formularioDois.getTcleAssinado().equalsIgnoreCase(getString(R.string.formulario3_opcao_nao))){
+					radioButtonCasoNao.setChecked(true);
+				}
+			}
+			
+			alert.setTitle(getString(R.string.formulario3_caso_casa_crianca));
+			alert.setView(layoutCasoCasaCrianca);
+			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+
+					if(radioButtonCasoSim.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario3_opcao_sim), false,  true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+						
+					}else if(radioButtonCasoNao.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario3_opcao_nao), false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+						
+					}else{
+						setPreferences(arg2, "", false, false);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					}
+					dialog.cancel();
+				}
+			});
+
+			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			alert.show();
+			break;
+			
 		case VariloidForm3.OBS_CASO:
 			final EditText obsCasp = new EditText(getSherlockActivity());
 			int maxLength27 = 250;
@@ -5336,6 +5752,30 @@ public class Formulario3Fragment extends SherlockFragment implements
 	public void setAtributos(int posicao, String string) {
 
 		switch (posicao) {
+		case VariloidForm3.CRIANCA_JA_TEVE_CATAPORA:
+			Data.listaFormularioTres.get(paginaFragment).setCriancaCataporaAnt(string);
+			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
+			break;
+		case VariloidForm3.CRIANCA_MORA_NA_VIZINHANCA:
+			Data.listaFormularioTres.get(paginaFragment).setCriancaMoraVizinhanca(string);
+			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
+			break;
+		case VariloidForm3.MUNICIPIO:
+			Data.listaFormularioTres.get(paginaFragment).setMunicipio(string);
+			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
+			break;
+		case VariloidForm3.VACVARICELA:
+			Data.listaFormularioTres.get(paginaFragment).setCriancaRecebeuVacinaCatapora(string);
+			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
+			break;
+		case VariloidForm3.MOTIVO_NAO_VACINACAO:
+			Data.listaFormularioTres.get(paginaFragment).setRazoesNaoVacinacao(string);
+			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
+			break;
+		case VariloidForm3.CASO_CASA_CRIANCA:
+			Data.listaFormularioTres.get(paginaFragment).setNomeCrianca(string);
+			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);
+			break;
 		case VariloidForm3.NOME:
 			Data.listaFormularioTres.get(paginaFragment).setNomeCrianca(string);
 			Data.listaMapFormularioTres.get(paginaFragment).set(Data.FORM3_KEY.concat("[").concat(String.valueOf(paginaFragment)).concat("].").concat(VariloidForm3.idCampos[posicao]), string);

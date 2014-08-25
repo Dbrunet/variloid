@@ -45,7 +45,6 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 import br.ufg.iptsp.app.variloid.adapter.CropOptionAdapter;
 import br.ufg.iptsp.app.variloid.adapter.MyAdapterForm2;
-import br.ufg.iptsp.app.variloid.negocio.Arquivo;
 import br.ufg.iptsp.app.variloid.negocio.CropOption;
 import br.ufg.iptsp.app.variloid.provider.Data;
 import br.ufg.iptsp.app.variloid.servico.ServicoConexao;
@@ -56,11 +55,15 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 	private static final int PICK_FROM_CAMERA = 0;
 	private static final int CROP_FROM_CAMERA = 1;
 	
+	private static final int FOTO_CARTAO = 0;
+	private static final int FOTO_LESAO = 1;
+	private static final int FOTO_PANORAMICA = 2;
+	
 	private LayoutInflater layoutInflater;
 	private MyAdapterForm2 myAdapter;
 	LocationManager locationManager;
 	private Button buttonTirarFotoLesao, buttonTirarFotoPanoramica, buttonTirarFotoCartaoVacina;
-	private Uri imageUri;
+	private ImageView fotoCartaoCarregada, fotoLesaoCarregada, fotoPanoramicaCarregada;
 	private double latitude;
 	private double longitude;
 	private List<Integer> list;
@@ -68,6 +71,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 	private Uri mImageCaptureUri;
 	private Bitmap bitmap;
 	private String fileAbsolutePath;
+	private int tipoFoto;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +102,12 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		
 		View layoutFooter = layoutInflater.inflate(R.layout.button_layout, null);
 		
+		fotoCartaoCarregada = (ImageView) layoutFooter.findViewById(R.id.imgFotoCartaoCarregada);
+		fotoLesaoCarregada = (ImageView) layoutFooter.findViewById(R.id.imgFotoLesaoCarregada);
+		fotoPanoramicaCarregada = (ImageView) layoutFooter.findViewById(R.id.imgFotoPanoramicaCarregada);
+		
 		buttonTirarFotoLesao = (Button) layoutFooter.findViewById(R.id.button_tirar_foto_lesao);
+		buttonTirarFotoLesao.setText(getString(R.string.tirar_foto_lesao));
 		buttonTirarFotoLesao.setBackgroundResource(R.drawable.seletor_btn);
 		buttonTirarFotoLesao.setTextColor(Color.WHITE);
 		buttonTirarFotoLesao.setVisibility(View.VISIBLE);
@@ -115,36 +124,37 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		buttonTirarFotoPanoramica.setTextColor(Color.WHITE);
 		buttonTirarFotoPanoramica.setVisibility(View.VISIBLE);
 		
-		if(Data.mapFormularioDois.get(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA))==null){
-			buttonTirarFotoLesao.setText(getString(R.string.tirar_foto_lesao));
+		if(Data.mapFormularioDois.get(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA))!=null){
+			fotoLesaoCarregada.setVisibility(View.VISIBLE);
 		}else{
-			buttonTirarFotoLesao.setText(getString(R.string.tirar_foto_lesao) + "(Imagem Carregada)");
+			fotoLesaoCarregada.setVisibility(View.GONE);
+		}
+		if(Data.mapFormularioDois.get(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_CARTAO_VACINA))!=null){
+			fotoCartaoCarregada.setVisibility(View.VISIBLE);
+		}else{
+			fotoCartaoCarregada.setVisibility(View.GONE);
+		}
+		if(Data.mapFormularioDois.get(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_PANORAMICA))!=null){
+			fotoPanoramicaCarregada.setVisibility(View.VISIBLE);
+		}else{
+			fotoPanoramicaCarregada.setVisibility(View.GONE);
 		}
 		
 		buttonTirarFotoLesao.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				if(Data.mapFormularioDois.get(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA))==null){
-					createDialog(1);
-				}else{
-				
-					final AlertDialog.Builder alert = new AlertDialog.Builder(Formulario2Activity.this);
-					alert.setTitle(getString(R.string.formulario_alerta));
-					alert.setMessage(getString(R.string.formulario_imagem_carregada));
-					alert.setPositiveButton("Sim",new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton) {
-							createDialog(1);
-						}
-					});
+				tipoFoto=FOTO_LESAO;
+				createDialog(1);
+			}
+		});
+		
+		buttonTirarFotoCartaoVacina.setOnClickListener(new OnClickListener() {
 
-					alert.setNegativeButton("Não",new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int whichButton) {
-							dialog.cancel();
-						}
-					});
-					alert.show();
-				}	
+			@Override
+			public void onClick(View v) {
+				tipoFoto=FOTO_CARTAO;
+				createDialog(1);
 			}
 		});
 		
@@ -152,7 +162,8 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			
 			@Override
 			public void onClick(View v) {
-				//TODO
+				tipoFoto=FOTO_PANORAMICA;
+				createDialog(1);
 			}
 		});
 
@@ -226,7 +237,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
 			mImageCaptureUri = Uri.fromFile(new File(Environment
-					.getExternalStorageDirectory(), "tmp_avatar_"
+					.getExternalStorageDirectory(), "tmp_foto_"
 					+ String.valueOf(System.currentTimeMillis())
 					+ ".jpg"));
 
@@ -253,21 +264,6 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			return;
 		
 		switch (requestCode) {
-//		case 1:
-//			if (resultCode == RESULT_OK) {
-//				try {
-//					if(TextUtils.isEmpty(Data.mapService.get(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA)).toString())){
-//						Data.mapService.add(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA), getPathFromURI(imageUri));
-//					}else{
-//						Data.mapService.set(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA), getPathFromURI(imageUri));						
-//					}
-//					buttonTirarFotoLesao.setText(getString(R.string.tirar_foto_lesao) + "(Imagem Carregada)");
-//				} catch (Exception e) {
-//					Toast.makeText(this, "Erro ao carregar Imagem. Tente Novamente!", Toast.LENGTH_LONG).show();
-//				}
-//			}
-//			break;
-//		}
 		case PICK_FROM_CAMERA:
 			/**
 			 * After taking a picture, do the crop
@@ -309,11 +305,20 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 				
 				fileAbsolutePath = foto.getAbsolutePath();
 				
-				Arquivo arquivo = new Arquivo();
-				arquivo.setCaminho(fileAbsolutePath);
-				Data.formularioDois.setLesaoColetada(arquivo);
-//				imgGrupo.setImageBitmap(bitmap);
-				Data.mapFormularioDois.set(Data.FORM2_KEY.concat("lesaoColetada.commonsMultipartFile"), new FileSystemResource(fileAbsolutePath));
+				switch (tipoFoto) {
+				case FOTO_CARTAO:
+					Data.mapFormularioDois.set(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_CARTAO_VACINA), new FileSystemResource(fileAbsolutePath));
+					fotoCartaoCarregada.setVisibility(View.VISIBLE);
+					break;
+				case FOTO_LESAO:
+					Data.mapFormularioDois.set(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_LESAO_COLETADA), new FileSystemResource(fileAbsolutePath));
+					fotoLesaoCarregada.setVisibility(View.VISIBLE);
+					break;
+				case FOTO_PANORAMICA:
+					Data.mapFormularioDois.set(Data.FORM2_KEY.concat(Variloid.FORM_FOTO_PANORAMICA), new FileSystemResource(fileAbsolutePath));
+					fotoPanoramicaCarregada.setVisibility(View.VISIBLE);
+					break;
+				}
 				
 				File fileTemp = new File(mImageCaptureUri.getPath());
 				if (fileTemp.exists())
@@ -503,6 +508,50 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 		final AlertDialog.Builder alert = new AlertDialog.Builder(Formulario2Activity.this);
 		
 		switch (arg2) {
+		case VariloidForm2.LESAO_SUGESTIVA_VARICELA:
+			View layoutLesaoSugestiva = layoutInflater.inflate(R.layout.group_box_formulario, null);
+			final RadioButton radioButtonSim = (RadioButton) layoutLesaoSugestiva.findViewById(R.id.radio1);
+			radioButtonSim.setText(getString(R.string.formulario2_opcao_sim));
+			final RadioButton radioButtonNao = (RadioButton) layoutLesaoSugestiva.findViewById(R.id.radio2);
+			radioButtonNao.setText(getString(R.string.formulario2_opcao_nao));
+			
+			if(!TextUtils.isEmpty(Data.formularioDois.getLesaoSugestivaVaricela())){
+				if(Data.formularioDois.getTcleAssinado().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
+					radioButtonSim.setChecked(true);
+				}else if(Data.formularioDois.getTcleAssinado().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao))){
+					radioButtonNao.setChecked(true);
+				}
+			}
+			
+			alert.setTitle(getString(R.string.formulario2_lesao_sugestiva));
+			alert.setView(layoutLesaoSugestiva);
+			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+
+					if(radioButtonSim.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+						
+					}else if(radioButtonNao.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+						
+					}else{
+						setPreferences(arg2, "", false, false);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					}
+					dialog.cancel();
+				}
+			});
+
+			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			alert.show();
+			break;
+			
 		case VariloidForm2.NOME:
 			final EditText inputNome = new EditText(Formulario2Activity.this);
 			
@@ -1147,6 +1196,68 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			});
 			alert.show();
 			break;
+			
+		case VariloidForm2.MUNICIPIO:
+			View layoutMunicipio = layoutInflater.inflate(R.layout.group_box_formulario, null);
+			
+			final RadioButton radioButtonSp = (RadioButton) layoutMunicipio.findViewById(R.id.radio1);
+			radioButtonSp.setText(getString(R.string.formulario2_opcao_sao_paulo));
+			final RadioButton radioButtonGo = (RadioButton) layoutMunicipio.findViewById(R.id.radio2);
+			radioButtonGo.setText(getString(R.string.formulario2_opcao_goiania));
+			final RadioButton radioButtonTab = (RadioButton) layoutMunicipio.findViewById(R.id.radio3);
+			radioButtonTab.setVisibility(View.VISIBLE);
+			radioButtonTab.setText(getString(R.string.formulario2_opcao_taboao));
+			final RadioButton radioButtonRe = (RadioButton) layoutMunicipio.findViewById(R.id.radio4);
+			radioButtonRe.setVisibility(View.VISIBLE);
+			radioButtonRe.setText(getString(R.string.formulario2_opcao_recife));
+			
+			if(!TextUtils.isEmpty(Data.formularioDois.getMunicipio())){
+				
+				if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario2_opcao_sao_paulo))!=-1){
+					radioButtonSp.setChecked(true);
+				}else if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario2_opcao_goiania))!=-1){
+					radioButtonGo.setChecked(true);
+				}else if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario2_opcao_taboao))!=-1){
+					radioButtonTab.setChecked(true);
+				}else if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario2_opcao_recife))!=-1){
+					radioButtonRe.setChecked(true);
+				}
+			}
+					
+			alert.setTitle(getString(R.string.formulario2_municipio));
+			alert.setView(layoutMunicipio);
+			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+				
+				public void onClick(DialogInterface dialog, int whichButton) {
+					
+					if(radioButtonSp.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_sao_paulo) , false,  true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else if(radioButtonGo.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_goiania) , false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else if(radioButtonTab.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_taboao) , false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else if(radioButtonRe.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_recife) , false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+					}else{
+						setPreferences(arg2, "", false, false);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					}
+					dialog.cancel();
+				}
+			});
+
+			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			alert.show();
+			break;
+			
 		case VariloidForm2.ERUPCAO_DIFUSA_AGUDA:
 			View layout9 = layoutInflater.inflate(R.layout.group_box_formulario, null);
 			final RadioButton radioButton24 = (RadioButton) layout9.findViewById(R.id.radio1);
@@ -4500,6 +4611,51 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			});
 			alert.show();
 			break;
+			
+		case VariloidForm2.CASO_CASA_CRIANCA:
+			View layoutCasoCasaCrianca = layoutInflater.inflate(R.layout.group_box_formulario, null);
+			final RadioButton radioButtonCasoSim = (RadioButton) layoutCasoCasaCrianca.findViewById(R.id.radio1);
+			radioButtonCasoSim.setText(getString(R.string.formulario2_opcao_sim));
+			final RadioButton radioButtonCasoNao = (RadioButton) layoutCasoCasaCrianca.findViewById(R.id.radio2);
+			radioButtonCasoNao.setText(getString(R.string.formulario2_opcao_nao));
+			
+			if(!TextUtils.isEmpty(Data.formularioDois.getCasoCasaCrianca())){
+				if(Data.formularioDois.getTcleAssinado().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
+					radioButtonCasoSim.setChecked(true);
+				}else if(Data.formularioDois.getTcleAssinado().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao))){
+					radioButtonCasoNao.setChecked(true);
+				}
+			}
+			
+			alert.setTitle(getString(R.string.formulario2_caso_casa_crianca));
+			alert.setView(layoutCasoCasaCrianca);
+			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+
+					if(radioButtonCasoSim.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+						
+					}else if(radioButtonCasoNao.isChecked()){
+						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+						
+					}else{
+						setPreferences(arg2, "", false, false);
+						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					}
+					dialog.cancel();
+				}
+			});
+
+			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			alert.show();
+			break;
+			
 		case VariloidForm2.OBS_CASO:
 			final EditText obsCasp = new EditText(Formulario2Activity.this);
 			int maxLength27 = 250;    
@@ -4548,6 +4704,18 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 	
 	public void setAtribute(int posicao, String string){
 		switch (posicao) {
+		case VariloidForm2.LESAO_SUGESTIVA_VARICELA:
+			Data.formularioDois.setLesaoSugestivaVaricela(string);
+			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
+			break;
+		case VariloidForm2.MUNICIPIO:
+			Data.formularioDois.setMunicipio(string);
+			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
+			break;
+		case VariloidForm2.CASO_CASA_CRIANCA:
+			Data.formularioDois.setCasoCasaCrianca(string);
+			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);
+			break;
 		case VariloidForm2.NOME:
 			Data.formularioDois.setNomeCrianca(string);
 			Data.mapFormularioDois.set(Data.FORM2_KEY.concat(VariloidForm2.idCampos[posicao]), string);

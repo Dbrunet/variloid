@@ -189,5 +189,10 @@
     <string name="formulario2_opcao_ensino_fundamental">fundamental</string>
     <string name="formulario2_opcao_ensino_medio">médio</string>
     <string name="formulario2_opcao_ensino_superior">superior</string>
+    <string name="formulario2_opcao_sao_paulo">São Paulo</string>
+    <string name="formulario2_opcao_goiania">Goiânia</string>
+    <string name="formulario2_opcao_taboao">Taboão</string>
+    <string name="formulario2_opcao_recife">Recife</string>
+    
     
 </resources>
