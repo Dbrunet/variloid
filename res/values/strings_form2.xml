@@ -183,6 +183,7 @@
     <string name="formulario2_opcao_crianca_com_catapora">a criança</string>
     <string name="formulario2_opcao_pais_outra_crianca_menos_que_dez_anos">outra criança ( &lt; 10a )</string>
     <string name="formulario2_opcao_familia_trabalha_creche">familiar que trabalha na creche</string>
+    <string name="formulario2_opcao_outro_adulto">outro adulto</string>
     <string name="formulario2_opcao_criancas_ate_dez_anos">outra criança até 10 anos</string>
     <string name="formulario2_opcao_familia_trabalha_em_instituicao_de_saude">familiar que trabalha em instituição de saúde</string>
     <string name="formulario2_opcao_nao_alfabetizada">não alfabetizada</string>

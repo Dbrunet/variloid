@@ -165,6 +165,7 @@
     <string name="formulario3_opcao_familia_trabalha_creche">familiar que trabalha na creche</string>
     <string name="formulario3_opcao_criancas_ate_dez_anos">outra criança até 10 anos</string>
     <string name="formulario3_opcao_familia_trabalha_em_instituicao_de_saude">familiar que trabalha em instituição de saúde</string>
+    <string name="formulario3_opcao_outro_adulto">outro adulto</string>
     <string name="formulario3_opcao_nao_alfabetizada">não alfabetizada</string>
     <string name="formulario3_opcao_ensino_fundamental">fundamental</string>
     <string name="formulario3_opcao_ensino_medio">médio</string>

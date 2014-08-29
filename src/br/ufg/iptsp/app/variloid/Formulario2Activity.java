@@ -190,7 +190,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					alert.setMessage(getString(
 							R.string.formulario_campos_nao_preenchidos)
 							.concat(" ")
-							.concat(String.valueOf(Data.formularioDois.getListSucesso().size() - count))
+							.concat(String.valueOf((Data.formularioDois.getListSucesso().size() - 9) - count))
 							.concat(" ")
 							.concat(getString(R.string.formulario_deseja_continuar)));
 					alert.setPositiveButton("Sim",new DialogInterface.OnClickListener() {
@@ -516,9 +516,9 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			radioButtonNao.setText(getString(R.string.formulario2_opcao_nao));
 			
 			if(!TextUtils.isEmpty(Data.formularioDois.getLesaoSugestivaVaricela())){
-				if(Data.formularioDois.getTcleAssinado().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
+				if(Data.formularioDois.getLesaoSugestivaVaricela().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
 					radioButtonSim.setChecked(true);
-				}else if(Data.formularioDois.getTcleAssinado().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao))){
+				}else if(Data.formularioDois.getLesaoSugestivaVaricela().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao))){
 					radioButtonNao.setChecked(true);
 				}
 			}
@@ -1213,13 +1213,13 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			
 			if(!TextUtils.isEmpty(Data.formularioDois.getMunicipio())){
 				
-				if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario2_opcao_sao_paulo))!=-1){
+				if(Data.formularioDois.getMunicipio().indexOf(getString(R.string.formulario2_opcao_sao_paulo))!=-1){
 					radioButtonSp.setChecked(true);
-				}else if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario2_opcao_goiania))!=-1){
+				}else if(Data.formularioDois.getMunicipio().indexOf(getString(R.string.formulario2_opcao_goiania))!=-1){
 					radioButtonGo.setChecked(true);
-				}else if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario2_opcao_taboao))!=-1){
+				}else if(Data.formularioDois.getMunicipio().indexOf(getString(R.string.formulario2_opcao_taboao))!=-1){
 					radioButtonTab.setChecked(true);
-				}else if(Data.formularioDois.getOperadoraCelular1().indexOf(getString(R.string.formulario2_opcao_recife))!=-1){
+				}else if(Data.formularioDois.getMunicipio().indexOf(getString(R.string.formulario2_opcao_recife))!=-1){
 					radioButtonRe.setChecked(true);
 				}
 			}
@@ -3400,7 +3400,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			final CheckBox checkbox313 = (CheckBox) layout34.findViewById(R.id.checkBox3);
 			checkbox313.setText(getString(R.string.formulario2_opcao_familia_trabalha_em_instituicao_de_saude));
 			final CheckBox checkbox314 = (CheckBox) layout34.findViewById(R.id.checkBox4);
-			checkbox314.setVisibility(View.GONE);
+			checkbox314.setText(getString(R.string.formulario2_opcao_outro_adulto));
 			final CheckBox checkbox315 = (CheckBox) layout34.findViewById(R.id.checkBox5);
 			checkbox315.setVisibility(View.GONE);
 			final CheckBox checkbox316 = (CheckBox) layout34.findViewById(R.id.checkBox6);
@@ -3433,6 +3433,8 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					checkbox312.setChecked(true);
 				}if(Data.formularioDois.getQuemFamiliaFrequentouServicoSaude().indexOf(getString(R.string.formulario2_opcao_familia_trabalha_em_instituicao_de_saude))!=-1){
 					checkbox313.setChecked(true);
+				}if(Data.formularioDois.getQuemFamiliaFrequentouServicoSaude().indexOf(getString(R.string.formulario2_opcao_outro_adulto))!=-1){
+					checkbox314.setChecked(true);
 				}
 			}
 			
@@ -3450,6 +3452,9 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					}
 					if(checkbox313.isChecked()){
 						lisStrings.add(getString(R.string.formulario2_opcao_familia_trabalha_em_instituicao_de_saude));
+					}
+					if(checkbox314.isChecked()){
+						lisStrings.add(getString(R.string.formulario2_opcao_outro_adulto));
 					}
 					
 					if(!lisStrings.isEmpty()){
@@ -4620,9 +4625,9 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			radioButtonCasoNao.setText(getString(R.string.formulario2_opcao_nao));
 			
 			if(!TextUtils.isEmpty(Data.formularioDois.getCasoCasaCrianca())){
-				if(Data.formularioDois.getTcleAssinado().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
+				if(Data.formularioDois.getCasoCasaCrianca().equalsIgnoreCase(getString(R.string.formulario2_opcao_sim))){
 					radioButtonCasoSim.setChecked(true);
-				}else if(Data.formularioDois.getTcleAssinado().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao))){
+				}else if(Data.formularioDois.getCasoCasaCrianca().equalsIgnoreCase(getString(R.string.formulario2_opcao_nao))){
 					radioButtonCasoNao.setChecked(true);
 				}
 			}

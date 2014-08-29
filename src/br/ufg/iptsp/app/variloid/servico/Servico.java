@@ -34,6 +34,7 @@ public class Servico {
 	private static final String path = Environment
 			.getExternalStorageDirectory().getAbsolutePath().concat("/")
 			.concat("variloid");
+	
 	private static final String IP = "dowave.com.br";
 	// private static final String IP = "galfano.com.br";
 	// private static final String IP = "192.168.25.7";
@@ -276,7 +277,7 @@ public class Servico {
 			Data.listaFormularioTres.clear();
 			Data.listaMapFormularioTres.clear();
 
-			deleteDirectory(new File(path));
+//			deleteDirectory(new File(path));
 
 		} catch (Exception e) {
 			Log.w("e.printStackTrace()", e.toString());
