@@ -1283,37 +1283,37 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
 						
-						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
-							setPreferences(i, "", false,  false);
-						}
-						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
-							myAdapter.updateItens(i, VariloidForm2.campos[i]);
-						}
-						myAdapter.notifyDataSetChanged();
+//						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
+//							setPreferences(i, "", false,  false);
+//						}
+//						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
+//							myAdapter.updateItens(i, VariloidForm2.campos[i]);
+//						}
+//						myAdapter.notifyDataSetChanged();
 						
 					}else if(radioButton25.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
 						
-						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
-							setPreferences(i, "", true,  false);
-						}
-						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
-							myAdapter.updateItens(i, VariloidForm2.campos[i]);
-						}
-						myAdapter.notifyDataSetChanged();
+//						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
+//							setPreferences(i, "", true,  false);
+//						}
+//						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
+//							myAdapter.updateItens(i, VariloidForm2.campos[i]);
+//						}
+//						myAdapter.notifyDataSetChanged();
 						
 					}else{
 						setPreferences(arg2, "", false, false);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
 						
-						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
-							setPreferences(i, "", false,  false);
-						}
-						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
-							myAdapter.updateItens(i, VariloidForm2.campos[i]);
-						}
-						myAdapter.notifyDataSetChanged();
+//						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
+//							setPreferences(i, "", false,  false);
+//						}
+//						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
+//							myAdapter.updateItens(i, VariloidForm2.campos[i]);
+//						}
+//						myAdapter.notifyDataSetChanged();
 						
 					}
 					dialog.cancel();
@@ -1352,25 +1352,25 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
 						
-						for (int i = VariloidForm2.NOME_MAE; i < VariloidForm2.campos.length; i++) {
-							setPreferences(i, "", false,  false);
-						}
-						for (int i = VariloidForm2.NOME_MAE; i < VariloidForm2.campos.length; i++) {
-							myAdapter.updateItens(i, VariloidForm2.campos[i]);
-						}
-						myAdapter.notifyDataSetChanged();
+//						for (int i = VariloidForm2.NOME_MAE; i < VariloidForm2.campos.length; i++) {
+//							setPreferences(i, "", false,  false);
+//						}
+//						for (int i = VariloidForm2.NOME_MAE; i < VariloidForm2.campos.length; i++) {
+//							myAdapter.updateItens(i, VariloidForm2.campos[i]);
+//						}
+//						myAdapter.notifyDataSetChanged();
 						
 					}else if(radioButton27.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
 						
-						for (int i = VariloidForm2.NOME_MAE; i < VariloidForm2.campos.length; i++) {
-							setPreferences(i, "", true,  false);
-						}
-						for (int i = VariloidForm2.NOME_MAE; i < VariloidForm2.campos.length; i++) {
-							myAdapter.updateItens(i, VariloidForm2.campos[i]);
-						}
-						myAdapter.notifyDataSetChanged();
+//						for (int i = VariloidForm2.NOME_MAE; i < VariloidForm2.campos.length; i++) {
+//							setPreferences(i, "", true,  false);
+//						}
+//						for (int i = VariloidForm2.NOME_MAE; i < VariloidForm2.campos.length; i++) {
+//							myAdapter.updateItens(i, VariloidForm2.campos[i]);
+//						}
+//						myAdapter.notifyDataSetChanged();
 						
 					}else{
 						setPreferences(arg2, "", false, false);
@@ -2822,37 +2822,37 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 							setPreferences(arg2, inputNDosesVaric.getText().toString(), false,  true);
 							((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
 							
-							for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_MMR; i++) {
-								setPreferences(i, "", true,  false);
-							}
-							for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
-								myAdapter.updateItens(i, VariloidForm2.campos[i]);
-							}
-							myAdapter.notifyDataSetChanged();	
+//							for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_MMR; i++) {
+//								setPreferences(i, "", true,  false);
+//							}
+//							for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
+//								myAdapter.updateItens(i, VariloidForm2.campos[i]);
+//							}
+//							myAdapter.notifyDataSetChanged();	
 						}else{
 							setPreferences(arg2, inputNDosesVaric.getText().toString(), false,  true);
 							((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
 							
-							for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_MMR; i++) {
-								setPreferences(i, "", false,  false);
-							}
-							for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
-								myAdapter.updateItens(i, VariloidForm2.campos[i]);
-							}
-							myAdapter.notifyDataSetChanged();	
+//							for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_MMR; i++) {
+//								setPreferences(i, "", false,  false);
+//							}
+//							for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
+//								myAdapter.updateItens(i, VariloidForm2.campos[i]);
+//							}
+//							myAdapter.notifyDataSetChanged();	
 						}
 						
 					}else{
 						setPreferences(arg2, "", false, false);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
 						
-						for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_MMR; i++) {
-							setPreferences(i, "", false,  false);
-						}
-						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
-							myAdapter.updateItens(i, VariloidForm2.campos[i]);
-						}
-						myAdapter.notifyDataSetChanged();
+//						for (int i = VariloidForm2.VAC_VARIC_DT_DOSE1; i < VariloidForm2.TITULO_VACINA_MMR; i++) {
+//							setPreferences(i, "", false,  false);
+//						}
+//						for (int i = VariloidForm2.TCLE; i < VariloidForm2.campos.length; i++) {
+//							myAdapter.updateItens(i, VariloidForm2.campos[i]);
+//						}
+//						myAdapter.notifyDataSetChanged();
 					}
 					dialog.cancel();
 				}
@@ -3216,23 +3216,23 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					if(radioButton90.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-						setPreferences(VariloidForm2.FREQCRECHE2, "", false,  false);
-						myAdapter.notifyDataSetChanged();
+//						setPreferences(VariloidForm2.FREQCRECHE2, "", false,  false);
+//						myAdapter.notifyDataSetChanged();
 					}else if(radioButton91.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-						setPreferences(VariloidForm2.FREQCRECHE2, "", true,  false);
-						myAdapter.notifyDataSetChanged();
+//						setPreferences(VariloidForm2.FREQCRECHE2, "", true,  false);
+//						myAdapter.notifyDataSetChanged();
 					}else if(radioButton92.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_nao_sabe), false, true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-						setPreferences(VariloidForm2.FREQCRECHE2, "", false,  false);
-						myAdapter.notifyDataSetChanged();
+//						setPreferences(VariloidForm2.FREQCRECHE2, "", false,  false);
+//						myAdapter.notifyDataSetChanged();
 					}else{
 						setPreferences(arg2, "", false, false);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
-						setPreferences(VariloidForm2.FREQCRECHE2, "", false,  false);
-						myAdapter.notifyDataSetChanged();
+//						setPreferences(VariloidForm2.FREQCRECHE2, "", false,  false);
+//						myAdapter.notifyDataSetChanged();
 					}
 					dialog.cancel();
 				}
@@ -3360,23 +3360,23 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					if(radioButton96.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-						setPreferences(VariloidForm2.FREQSERVSAUDE2, "", false,  false);
-						myAdapter.notifyDataSetChanged();
+//						setPreferences(VariloidForm2.FREQSERVSAUDE2, "", false,  false);
+//						myAdapter.notifyDataSetChanged();
 					}else if(radioButton97.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-						setPreferences(VariloidForm2.FREQSERVSAUDE2, "", true,  false);
-						myAdapter.notifyDataSetChanged();
+//						setPreferences(VariloidForm2.FREQSERVSAUDE2, "", true,  false);
+//						myAdapter.notifyDataSetChanged();
 					}else if(radioButton98.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_nao_sabe), false, true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-						setPreferences(VariloidForm2.FREQSERVSAUDE2, "", false,  false);
-						myAdapter.notifyDataSetChanged();
+//						setPreferences(VariloidForm2.FREQSERVSAUDE2, "", false,  false);
+//						myAdapter.notifyDataSetChanged();
 					}else{
 						setPreferences(arg2, "", false, false);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
-						setPreferences(VariloidForm2.FREQSERVSAUDE2, "", false,  false);
-						myAdapter.notifyDataSetChanged();
+//						setPreferences(VariloidForm2.FREQSERVSAUDE2, "", false,  false);
+//						myAdapter.notifyDataSetChanged();
 					}
 					dialog.cancel();
 				}
