@@ -43,6 +43,8 @@ public class Servico {
 			+ "/variloid/rest/entrevistas/enviar";
 	private String urlListaUsuarios = "http://" + IP
 			+ "/variloid/rest/usuarios/listar";
+	private String urlVersao = "http://" + IP
+			+ "/variloid/rest/arquivos/versao";
 	private String urlListaPendentes = "http://" + IP
 			+ "/variloid/rest/entrevistas/pendentes/";
 
@@ -92,6 +94,18 @@ public class Servico {
 		}
 
 		return listaDeUsuarios;
+	}
+	
+	public String getVersao() {
+		String versao;
+		try {
+			versao = restTemplate.getForObject(urlVersao, String.class);
+		} catch (Exception e) {
+			Log.w("e.printStackTrace()", e.toString());
+			versao = null;
+		}
+
+		return versao;
 	}
 
 	public List<Entrevista> getEntrevistaPendente(String idUsuario) {

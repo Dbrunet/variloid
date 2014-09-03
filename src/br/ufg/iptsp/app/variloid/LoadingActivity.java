@@ -2,12 +2,17 @@ package br.ufg.iptsp.app.variloid;
 
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
@@ -41,9 +46,9 @@ public class LoadingActivity extends BaseActivity {
 
 		setContentView(R.layout.activity_load);
 
-//		Log.v("Valida Campos", "campos: "+VariloidForm4.campos.length);
-//		Log.v("Valida Campos", "idCampos: "+VariloidForm4.idCampos.length);
-		
+		// Log.v("Valida Campos", "campos: "+VariloidForm4.campos.length);
+		// Log.v("Valida Campos", "idCampos: "+VariloidForm4.idCampos.length);
+
 		registerReceiver(br = new BroadcastReceiver() {
 
 			@Override
@@ -52,9 +57,8 @@ public class LoadingActivity extends BaseActivity {
 				boolean isNetworkDown = intent.getBooleanExtra(
 						ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
 
-				ServicoConexao
-				.verificaTipoConexao(LoadingActivity.this);
-				
+				ServicoConexao.verificaTipoConexao(LoadingActivity.this);
+
 				if (isNetworkDown) {
 					((RelativeLayout) findViewById(R.id.relativelayout)).setVisibility(View.GONE);
 					((Button) findViewById(R.id.button_reloader)).setVisibility(View.VISIBLE);
@@ -130,11 +134,11 @@ public class LoadingActivity extends BaseActivity {
 
 		public Service(Context context) {
 			this.context = context;
+			servico = new Servico(context);
 		}
 
 		@Override
 		protected void onPreExecute() {
-			servico = new Servico(context);
 			pd = new ProgressDialog(context);
 			pd.setMessage("Aguarde. Carregando...");
 			pd.show();
@@ -160,8 +164,63 @@ public class LoadingActivity extends BaseActivity {
 							.setVisibility(View.VISIBLE);
 				}
 			}
+			
+			new ServiceVersao(context).execute();
 			super.onPostExecute(result);
 		}
+	}
+
+	private class ServiceVersao extends AsyncTask<Void, Void, String> {
+
+		private Servico servico;
+		private Context context;
+
+		public ServiceVersao(Context context) {
+			this.context = context;
+			servico = new Servico(context);
+		}
+
+		@Override
+		protected String doInBackground(Void... params) {
+			return servico.getVersao();
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (result != null && getSoftwareVersion()!=null) {
+				if (!result.equals(getSoftwareVersion())) {
+					
+					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+					alertDialogBuilder.setTitle("Notificação de Versão");
+					alertDialogBuilder.setMessage("Existe uma nova versão do aplicativo no sistema.")
+					.setCancelable(false)
+					.setNeutralButton("OK",
+					new DialogInterface.OnClickListener() {
+						public void onClick(
+							DialogInterface dialog, int id) {
+							//
+							}
+						});
+					AlertDialog alertDialog = alertDialogBuilder.create();
+					alertDialog.show();
+					
+				}
+			}else{
+				Log.e("ERRO Versão", "null");
+			}
+			super.onPostExecute(result);
+		}
+	}
+
+	private String getSoftwareVersion() {
+			PackageInfo packageAppInfo = null;
+			try {
+				packageAppInfo = getPackageManager().getPackageInfo(
+						getPackageName(), 0);
+			} catch (NameNotFoundException e) {
+				e.printStackTrace();
+			}
+			return packageAppInfo.versionName;
 	}
 
 	private void spinner(final List<Usuario> listaDeUsuario) {
@@ -170,7 +229,7 @@ public class LoadingActivity extends BaseActivity {
 
 		for (int i = 0; i < nomeUsuario.length; i++) {
 			if (i > 0) {
-				nomeUsuario[i] = listaDeUsuario.get(i-1).getNome();
+				nomeUsuario[i] = listaDeUsuario.get(i - 1).getNome();
 			} else {
 				nomeUsuario[0] = "Escolhe o nome do Auxiliar.";
 			}
@@ -186,24 +245,26 @@ public class LoadingActivity extends BaseActivity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View v,
 					int posicao, long id) {
-				
+
 				if (posicao > 0) {
-					((TextView)v).setTextColor(Color.BLACK);
-					idAuxiliar = String.valueOf(listaDeUsuario.get(posicao-1).getId());
-					
+					((TextView) v).setTextColor(Color.BLACK);
+					idAuxiliar = String.valueOf(listaDeUsuario.get(posicao - 1)
+							.getId());
+
 					Data.mapService.add(Variloid.ID_ENTREVISTADOR, idAuxiliar);
-					
-					SharedPreferences pref = getSharedPreferences(Variloid.PREFERENCIAS, MODE_PRIVATE);
+
+					SharedPreferences pref = getSharedPreferences(
+							Variloid.PREFERENCIAS, MODE_PRIVATE);
 					SharedPreferences.Editor editor = pref.edit();
 					editor.putString(Variloid.ID_ENTREVISTADOR, idAuxiliar);
 					editor.commit();
 
 				} else {
-					((TextView)v).setTextColor(Color.BLACK);
+					((TextView) v).setTextColor(Color.BLACK);
 					idAuxiliar = "";
 				}
-				
-				Log.v("testeee", "idAuxiliar="+idAuxiliar);
+
+//				Log.v("testeee", "idAuxiliar=" + idAuxiliar);
 			}
 
 			@Override
