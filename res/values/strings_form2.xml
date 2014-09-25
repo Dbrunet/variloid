@@ -106,9 +106,9 @@
 	
 	<string name="formulario2_caso_casa_crianca">Foi enviado o caso da residência/local que a criança estava?</string>
 	<string name="formulario2_n_swabs">Número de swabs coletados</string>
-	<string name="formulario2_id_swabs_macula">ID do swab coletado da lesão máculo-papular</string>
-	<string name="formulario2_id_swabs_visicula">ID do swab coletado da vesícula</string>
-	<string name="formulario2_id_swabs_crosta">ID do swab coletado da crosta</string>
+	<string name="formulario2_id_swabs_macula">Swab coletado da lesão máculo-papular</string>
+	<string name="formulario2_id_swabs_visicula">Swab coletado da vesícula</string>
+	<string name="formulario2_id_swabs_crosta">Swab coletado da crosta</string>
 	<string name="formulario2_obs_caso">Observações relacionadas ao caso</string>
 	<!-- Fim formulário 2 -->
 	

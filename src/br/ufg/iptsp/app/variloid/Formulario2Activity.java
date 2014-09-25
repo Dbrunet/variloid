@@ -17,15 +17,11 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -47,10 +43,11 @@ import br.ufg.iptsp.app.variloid.adapter.CropOptionAdapter;
 import br.ufg.iptsp.app.variloid.adapter.MyAdapterForm2;
 import br.ufg.iptsp.app.variloid.negocio.CropOption;
 import br.ufg.iptsp.app.variloid.provider.Data;
+import br.ufg.iptsp.app.variloid.provider.GPSTracker;
 import br.ufg.iptsp.app.variloid.servico.ServicoConexao;
 import br.ufg.iptsp.app.variloid.util.Mask;
 
-public class Formulario2Activity extends BaseActivity implements OnItemClickListener, LocationListener{
+public class Formulario2Activity extends BaseActivity implements OnItemClickListener {
 	
 	private static final int PICK_FROM_CAMERA = 0;
 	private static final int CROP_FROM_CAMERA = 1;
@@ -72,6 +69,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 	private Bitmap bitmap;
 	private String fileAbsolutePath;
 	private int tipoFoto;
+	private boolean swabMarcado;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -452,54 +450,67 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 	@Override
 	protected void onStart() {
 
-		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		GPSTracker gps = new GPSTracker(this);
 
-		boolean enabledGPS = locationManager
-				.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		// Check if GPS enabled
+		if (gps.canGetLocation()) {
+			
+			latitude = gps.getLatitude();
+			longitude = gps.getLongitude();
 
-		if (!enabledGPS) {
-			Intent intent = new Intent(
-					Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			startActivity(intent);
-			
-			Toast.makeText(this, "GPS sinal não encontrado!",
-					Toast.LENGTH_LONG).show();
-			Toast.makeText(this, "Ative o GPS do dispositivo!",
-					Toast.LENGTH_LONG).show();
-			
 		} else {
-
-			Criteria criteria = new Criteria();
-			// Getting the name of the best provider
-			String provider = locationManager.getBestProvider(criteria,
-					true);
-			// Getting Current Location
-			Location location = locationManager
-					.getLastKnownLocation(provider);
-			if (location != null) {
-				onLocationChanged(location);
-			}
-			locationManager.requestLocationUpdates(provider, 20000, 0,
-					Formulario2Activity.this);
-		}		
+			gps.showSettingsAlert();
+		}
+        
+//		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+//
+//		
+//		boolean enabledGPS = locationManager
+//				.isProviderEnabled(LocationManager.GPS_PROVIDER);
+//
+//		if (!enabledGPS) {
+//			Intent intent = new Intent(
+//					Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//			startActivity(intent);
+//			
+//			Toast.makeText(this, "GPS sinal não encontrado!",
+//					Toast.LENGTH_LONG).show();
+//			Toast.makeText(this, "Ative o GPS do dispositivo!",
+//					Toast.LENGTH_LONG).show();
+//			
+//		} else {
+//
+//			Criteria criteria = new Criteria();
+//			// Getting the name of the best provider
+//			String provider = locationManager.getBestProvider(criteria,
+//					true);
+//			// Getting Current Location
+//			Location location = locationManager
+//					.getLastKnownLocation(provider);
+//			if (location != null) {
+//				onLocationChanged(location);
+//			}
+//			locationManager.requestLocationUpdates(provider, 20000, 0,
+//					Formulario2Activity.this);
+//		}		
 		super.onStart();
 	}
 
 
-	@Override
-	public void onLocationChanged(Location location) {
-	latitude = location.getLatitude();
-	longitude = location.getLongitude();
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {}
-	
-	@Override
-	public void onProviderEnabled(String provider) {}
-	
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {}
+//	@Override
+//	public void onLocationChanged(Location location) {
+//	latitude = location.getLatitude();
+//	longitude = location.getLongitude();
+//	}
+//
+//	@Override
+//	public void onProviderDisabled(String provider) {}
+//	
+//	@Override
+//	public void onProviderEnabled(String provider) {}
+//	
+//	@Override
+//	public void onStatusChanged(String provider, int status, Bundle extras) {}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, final View view, final int arg2, long arg3) {
@@ -1532,6 +1543,8 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					}else{
 						setPreferences(arg2, "", false, false);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+						setPreferences(VariloidForm2.OPER_CELULAR1, "", false, false);
+						
 					}
 					dialog.cancel();
 				}
@@ -1624,6 +1637,7 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					}else{
 						setPreferences(arg2, "", false, false);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+						setPreferences(VariloidForm2.OPER_CELULAR2, "", false, false);
 					}
 					dialog.cancel();
 				}
@@ -2611,9 +2625,25 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					if(radioButton81.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+						
+						setPreferences(VariloidForm2.MOTIVO_NAO_VACINACAO, "", true,  false);
+						setPreferences(VariloidForm2.N_DOSES_VARIC, "", false,  false);
+						setPreferences(VariloidForm2.VAC_VARIC_DT_DOSE1, "", false,  false);
+						setPreferences(VariloidForm2.VAC_VARIC_QUAL_DOSE1, "", false,  false);
+						setPreferences(VariloidForm2.VAC_VARIC_DT_DOSE2, "", false,  false);
+						setPreferences(VariloidForm2.VAC_VARIC_QUAL_DOSE2, "", false,  false);
+						
 					}else if(radioButton82.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+						
+						setPreferences(VariloidForm2.MOTIVO_NAO_VACINACAO, "", false,  false);
+						setPreferences(VariloidForm2.N_DOSES_VARIC, "", true,  false);
+						setPreferences(VariloidForm2.VAC_VARIC_DT_DOSE1, "", true,  false);
+						setPreferences(VariloidForm2.VAC_VARIC_QUAL_DOSE1, "", true,  false);
+						setPreferences(VariloidForm2.VAC_VARIC_DT_DOSE2, "", true,  false);
+						setPreferences(VariloidForm2.VAC_VARIC_QUAL_DOSE2, "", true,  false);
+						
 					}else if(radioButton83.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_nao_sabe_e_nao_tem_cartao), false, true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
@@ -3063,9 +3093,19 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 					if(radioButton812.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_sim), false,  true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+						
+						setPreferences(VariloidForm2.N_DOSES_TRIPLICE, "", false,  false);
+						setPreferences(VariloidForm2.MMR1, "", false,  false);
+						setPreferences(VariloidForm2.MMR2, "", false,  false);
+						
 					}else if(radioButton822.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_nao), false, true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+						
+						setPreferences(VariloidForm2.N_DOSES_TRIPLICE, "", true,  false);
+						setPreferences(VariloidForm2.MMR1, "", true,  false);
+						setPreferences(VariloidForm2.MMR2, "", true,  false);
+						
 					}else if(radioButton832.isChecked()){
 						setPreferences(arg2, getString(R.string.formulario2_opcao_ignorado), false, true);
 						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
@@ -4515,106 +4555,154 @@ public class Formulario2Activity extends BaseActivity implements OnItemClickList
 			alert.show();
 			break;
 		case VariloidForm2.ID_SWAB_MACULA:
-			final EditText numeroIdSwabs = new EditText(Formulario2Activity.this);
-			int maxLength24 = 3;    
-			numeroIdSwabs.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength24)});
-			numeroIdSwabs.setInputType(InputType.TYPE_CLASS_TEXT);
+
+			//-comSwabColetadoMaculoPapular
+			//-comSwabColetadoVesicula
+			//-comSwabColetadoCrosta
 			
-			if (!TextUtils.isEmpty(Data.formularioDois
-					.getIdSwabColetadoMaculoPapular()))
-				numeroIdSwabs.setText(Data.formularioDois
-						.getIdSwabColetadoMaculoPapular());
-			
+//			final EditText numeroIdSwabs = new EditText(Formulario2Activity.this);
+//			int maxLength24 = 3;    
+//			numeroIdSwabs.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength24)});
+//			numeroIdSwabs.setInputType(InputType.TYPE_CLASS_TEXT);
+					
 			alert.setTitle(getString(R.string.formulario2_id_swabs_macula));
-			alert.setView(numeroIdSwabs);
-			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+			alert.setMessage("Marcar essa opção?");
+			alert.setPositiveButton("Sim",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 
-					if(!TextUtils.isEmpty(numeroIdSwabs.getText().toString())){
-						setPreferences(arg2, numeroIdSwabs.getText().toString(), false,  true);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-					}else{
-						setPreferences(arg2, "0", false, false);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
-					}
+					setPreferences(arg2, "comSwabColetadoMaculoPapular", false,  true);
+					((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+
 					dialog.cancel();
 				}
 			});
 
-			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+			alert.setNegativeButton("Não",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
+					
+					setPreferences(arg2, "", false, false);
+					((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					
 					dialog.cancel();
 				}
 			});
 			alert.show();
 			break;
 		case VariloidForm2.ID_SWAB_VESICULA:
-			final EditText numeroIdSwabsVesicula = new EditText(Formulario2Activity.this);
-			int maxLength25 = 3;    
-			numeroIdSwabsVesicula.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength25)});
-			numeroIdSwabsVesicula.setInputType(InputType.TYPE_CLASS_TEXT);
-			
-			if (!TextUtils.isEmpty(Data.formularioDois
-					.getIdSwabColetadoVesicula()))
-				numeroIdSwabsVesicula.setText(Data.formularioDois
-						.getIdSwabColetadoVesicula());
 			
 			alert.setTitle(getString(R.string.formulario2_id_swabs_visicula));
-			alert.setView(numeroIdSwabsVesicula);
-			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+			alert.setMessage("Marcar essa opção?");
+			alert.setPositiveButton("Sim",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 
-					if(!TextUtils.isEmpty(numeroIdSwabsVesicula.getText().toString())){
-						setPreferences(arg2, numeroIdSwabsVesicula.getText().toString(), false,  true);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-					}else{
-						setPreferences(arg2, "0", false, false);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
-					}
+					setPreferences(arg2, "comSwabColetadoVesicula", false,  true);
+					((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+
 					dialog.cancel();
 				}
 			});
 
-			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+			alert.setNegativeButton("Não",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
+					
+					setPreferences(arg2, "", false, false);
+					((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					
 					dialog.cancel();
 				}
 			});
 			alert.show();
+			
+//			final EditText numeroIdSwabsVesicula = new EditText(Formulario2Activity.this);
+//			int maxLength25 = 3;    
+//			numeroIdSwabsVesicula.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength25)});
+//			numeroIdSwabsVesicula.setInputType(InputType.TYPE_CLASS_TEXT);
+//			
+//			if (!TextUtils.isEmpty(Data.formularioDois
+//					.getIdSwabColetadoVesicula()))
+//				numeroIdSwabsVesicula.setText(Data.formularioDois
+//						.getIdSwabColetadoVesicula());
+//			
+//			alert.setTitle(getString(R.string.formulario2_id_swabs_visicula));
+//			alert.setView(numeroIdSwabsVesicula);
+//			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int whichButton) {
+//
+//					if(!TextUtils.isEmpty(numeroIdSwabsVesicula.getText().toString())){
+//						setPreferences(arg2, numeroIdSwabsVesicula.getText().toString(), false,  true);
+//						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+//					}else{
+//						setPreferences(arg2, "0", false, false);
+//						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+//					}
+//					dialog.cancel();
+//				}
+//			});
+//
+//			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int whichButton) {
+//					dialog.cancel();
+//				}
+//			});
+//			alert.show();
 			break;
 		case VariloidForm2.ID_SWAB_CROSTA:
-			final EditText numeroIdSwabsCrosta = new EditText(Formulario2Activity.this);
-			int maxLength26 = 3;    
-			numeroIdSwabsCrosta.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength26)});
-			numeroIdSwabsCrosta.setInputType(InputType.TYPE_CLASS_TEXT);
-			
-			if (!TextUtils.isEmpty(Data.formularioDois
-					.getIdSwabColetadoCrosta()))
-				numeroIdSwabsCrosta.setText(Data.formularioDois
-						.getIdSwabColetadoCrosta());
 			
 			alert.setTitle(getString(R.string.formulario2_id_swabs_crosta));
-			alert.setView(numeroIdSwabsCrosta);
-			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+			alert.setMessage("Marcar essa opção?");
+			alert.setPositiveButton("Sim",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
 
-					if(!TextUtils.isEmpty(numeroIdSwabsCrosta.getText().toString())){
-						setPreferences(arg2, numeroIdSwabsCrosta.getText().toString(), false,  true);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
-					}else{
-						setPreferences(arg2, "0", false, false);
-						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
-					}
+					setPreferences(arg2, "comSwabColetadoCrosta", false,  true);
+					((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+
 					dialog.cancel();
 				}
 			});
 
-			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+			alert.setNegativeButton("Não",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int whichButton) {
+					
+					setPreferences(arg2, "", false, false);
+					((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+					
 					dialog.cancel();
 				}
 			});
 			alert.show();
+			
+//			final EditText numeroIdSwabsCrosta = new EditText(Formulario2Activity.this);
+//			int maxLength26 = 3;    
+//			numeroIdSwabsCrosta.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength26)});
+//			numeroIdSwabsCrosta.setInputType(InputType.TYPE_CLASS_TEXT);
+//			
+//			if (!TextUtils.isEmpty(Data.formularioDois
+//					.getIdSwabColetadoCrosta()))
+//				numeroIdSwabsCrosta.setText(Data.formularioDois
+//						.getIdSwabColetadoCrosta());
+//			
+//			alert.setTitle(getString(R.string.formulario2_id_swabs_crosta));
+//			alert.setView(numeroIdSwabsCrosta);
+//			alert.setPositiveButton("Ok",new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int whichButton) {
+//
+//					if(!TextUtils.isEmpty(numeroIdSwabsCrosta.getText().toString())){
+//						setPreferences(arg2, numeroIdSwabsCrosta.getText().toString(), false,  true);
+//						((ImageView)view.findViewById(R.id.nome_img_check)).setImageResource(R.drawable.ic_certo);
+//					}else{
+//						setPreferences(arg2, "0", false, false);
+//						((ImageView)view.findViewById(R.id.nome_img_check)).setImageDrawable(null);
+//					}
+//					dialog.cancel();
+//				}
+//			});
+//
+//			alert.setNegativeButton("Cancelar",new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int whichButton) {
+//					dialog.cancel();
+//				}
+//			});
+//			alert.show();
 			break;
 			
 		case VariloidForm2.CASO_CASA_CRIANCA:
